@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:async';
+import 'package:reog_apps_flutter/screens/dashboard.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -8,6 +10,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _startSplashScreen();
+  }
+
+  _startSplashScreen() async {
+    final duration = Duration(milliseconds: 2000);
+    return Timer(duration, () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+        return Dashboard();
+      }));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final SplashScreenLogo splashScreenLogo = SplashScreenLogo();
