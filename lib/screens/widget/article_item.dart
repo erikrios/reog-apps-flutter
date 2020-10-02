@@ -1,6 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class ArticleItem extends StatelessWidget {
+  final String _image;
+  final String _title;
+  final String _description;
+  final String _date;
+
+  ArticleItem(this._image, this._title, this._description, this._date);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,8 +23,9 @@ class ArticleItem extends StatelessWidget {
                 width: 100.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    'https://avatars3.githubusercontent.com/u/42199285?s=460',
+                  child: Image.memory(
+                    base64Decode(_image),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -30,7 +40,7 @@ class ArticleItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Jumlah Programmer di Ponorogo Meningkat Lebih Dari 50% dari Tahun ke Tahun Jumlah Programmer di Ponorogo Meningkat Lebih Dari 50% dari Tahun ke Tahun',
+                            _title,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.start,
@@ -40,8 +50,8 @@ class ArticleItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Dilansir dari Kompas.com, jumlah pemrogram kompas dari Kompas.com, jumlah pemrogram kompas dari Kompas.com, jumlah pemrogram kompas',
-                            maxLines: 2,
+                            _description,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 12.0),
                           ),
@@ -49,7 +59,7 @@ class ArticleItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: Text(
-                            'Fri, 2 Oct 20, 09.55 PM',
+                            _date,
                             style: TextStyle(
                                 fontSize: 10.0, color: Colors.black54),
                           ),
