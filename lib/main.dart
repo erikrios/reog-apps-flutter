@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/screens/dashboard.dart';
 import 'screens/splash_screen.dart';
 
 void main() => runApp(MyApp());
