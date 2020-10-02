@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/models/article.dart';
+import 'package:reog_apps_flutter/screens/widget/article_item.dart';
 
 class News extends StatefulWidget {
   @override
@@ -18,22 +19,11 @@ class _NewsState extends State<News> {
     setDummyArticles();
 
     return Container(
-      color: Color(0xffEFF4ED),
       child: ListView.builder(
+        padding: EdgeInsets.all(12.0),
         itemCount: articles.length,
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.blue,
-              ),
-              title: Text(
-                articles[index].title,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              subtitle: Text(articles[index].description),
-            ),
-          );
+          return ArticleItem();
         },
       ),
     );
