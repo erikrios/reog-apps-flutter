@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Reog Apps',
       theme: ThemeData(
         primarySwatch: MaterialColor(0xff97DA7B, swatch),
+        canvasColor: Color(0xffEFF4ED),
         primaryTextTheme: TextTheme(
           headline6: TextStyle(
             color: Colors.white,
