@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/splash_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,13 +10,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Reog Apps',
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: Center(
-        child: Text(
-          'Hello, World!',
-          textAlign: TextAlign.center,
-          style: TextStyle(decoration: TextDecoration.none),
-        ),
-      ),
+      home: SplashScreen(),
     );
   }
 }
