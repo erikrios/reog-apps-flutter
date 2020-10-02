@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/screens/explore.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     final _pages = <Widget>[
-      Text('Explore Widget'),
+      Explore(),
       Text('History Widget'),
       Text('Wallpaper Widget'),
     ];
@@ -51,9 +52,6 @@ class _DashboardState extends State<Dashboard> {
         ));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_title[_selectedTabIndex]),
-      ),
       body: Center(
         child: _pages[_selectedTabIndex],
       ),
