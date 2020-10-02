@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/screens/news.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -33,7 +34,7 @@ class _ExploreState extends State<Explore> {
           ),
         ),
         body: TabBarView(children: [
-          Text('News'),
+          News(),
           Text('Sites'),
           Text('Foods'),
         ]),
