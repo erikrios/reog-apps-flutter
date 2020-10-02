@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _startSplashScreen() async {
-    final duration = Duration(milliseconds: 2000);
+    final duration = Duration(milliseconds: 1500);
     return Timer(duration, () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return Dashboard();
@@ -29,39 +29,34 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final SplashScreenLogo splashScreenLogo = SplashScreenLogo();
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
-      child: Scaffold(
-        backgroundColor: Color(0xff97DA7B),
-        body: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(50.0),
-                  child: splashScreenLogo,
+    return Scaffold(
+      backgroundColor: Color(0xff97DA7B),
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: splashScreenLogo,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                bottom: 12.0,
+              ),
+              child: Text(
+                'Reog Apps',
+                style: TextStyle(
+                  color: Color(0xffFEE97D),
+                  fontSize: 20.0,
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 12.0,
-                ),
-                child: Text(
-                  'Reog Apps',
-                  style: TextStyle(
-                    color: Color(0xffFEE97D),
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
