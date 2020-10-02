@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -8,15 +9,18 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Reog Apps'),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
       ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
-          textAlign: TextAlign.center,
-          style: TextStyle(decoration: TextDecoration.none),
+      child: Scaffold(
+        backgroundColor: Color(0xff97DA7B),
+        body: Center(
+          child: Text(
+            'Hello, World!',
+            textAlign: TextAlign.center,
+            style: TextStyle(decoration: TextDecoration.none),
+          ),
         ),
       ),
     );
