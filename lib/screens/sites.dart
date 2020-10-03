@@ -19,7 +19,9 @@ class _SitesState extends State<Sites> {
     setDummyArticles();
 
     return Container(
+      color: Colors.red,
       child: ListView.builder(
+        padding: EdgeInsets.all(0.0),
         itemBuilder: (BuildContext context, int index) {
           return SitesItem(_articles[index].images[0], _articles[index].title);
         },
