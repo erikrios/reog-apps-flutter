@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/screens/foods.dart';
 import 'package:reog_apps_flutter/screens/news.dart';
 import 'package:reog_apps_flutter/screens/sites.dart';
 
@@ -37,7 +38,7 @@ class _ExploreState extends State<Explore> {
         body: TabBarView(children: [
           News(),
           Sites(),
-          Text('Foods'),
+          Foods(),
         ]),
       ),
     );
