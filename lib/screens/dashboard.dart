@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/screens/explore.dart';
+import 'package:reog_apps_flutter/screens/history.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     final _pages = <Widget>[
       Explore(),
-      Text('History Widget'),
+      History(),
       Text('Wallpaper Widget'),
     ];
 
@@ -41,13 +42,13 @@ class _DashboardState extends State<Dashboard> {
     ];
 
     final _bottomNavBar = BottomNavigationBar(
-          items: _bottomNavBarItems,
-          currentIndex: _selectedTabIndex,
-          selectedItemColor: Color(0xff66A84D),
-          unselectedItemColor: Color(0x8966A84D),
-          type: BottomNavigationBarType.shifting,
-          onTap: onNavBarTapped,
-        );
+      items: _bottomNavBarItems,
+      currentIndex: _selectedTabIndex,
+      selectedItemColor: Color(0xff66A84D),
+      unselectedItemColor: Color(0x8966A84D),
+      type: BottomNavigationBarType.shifting,
+      onTap: onNavBarTapped,
+    );
 
     return Scaffold(
       body: Center(
