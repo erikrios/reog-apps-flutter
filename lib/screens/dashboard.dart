@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/screens/explore.dart';
 import 'package:reog_apps_flutter/screens/history.dart';
+import 'package:reog_apps_flutter/screens/wallpaper.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -18,11 +19,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final _pages = <Widget>[
-      Explore(),
-      History(),
-      Text('Wallpaper Widget'),
-    ];
+    final _pages = <Widget>[Explore(), History(), Wallpaper()];
 
     final _title = <String>['Explore', 'History', 'Wallpaper'];
 
