@@ -8,38 +8,67 @@ class Explore extends StatefulWidget {
   _ExploreState createState() => _ExploreState();
 }
 
-class _ExploreState extends State<Explore> {
+class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
+  TabController _tabController;
+  ScrollController _scrollViewController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _scrollViewController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+    _scrollViewController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Explore'),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                text: 'NEWS',
+    return Scaffold(
+      body: NestedScrollView(
+        controller: _scrollViewController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              title: Text('Explore'),
+              pinned: true,
+              floating: true,
+              snap: true,
+              forceElevated: innerBoxIsScrolled,
+              bottom: TabBar(
+                controller: _tabController,
+                tabs: <Widget>[
+                  Tab(
+                    text: 'NEWS',
+                  ),
+                  Tab(
+                    text: 'SITES',
+                  ),
+                  Tab(
+                    text: 'FOODS',
+                  )
+                ],
+                indicatorColor: Color(0xffFEDF30),
+                labelColor: Colors.white,
+                labelStyle: TextStyle(
+                  fontSize: 14,
+                ),
               ),
-              Tab(
-                text: 'SITES',
-              ),
-              Tab(
-                text: 'FOODS',
-              )
-            ],
-            indicatorColor: Color(0xffFEDF30),
-            labelColor: Colors.white,
-            labelStyle: TextStyle(
-              fontSize: 14,
             ),
-          ),
+          ];
+        },
+        body: TabBarView(
+          children: [
+            News(),
+            Sites(),
+            Foods(),
+          ],
+          controller: _tabController,
         ),
-        body: TabBarView(children: [
-          News(),
-          Sites(),
-          Foods(),
-        ]),
       ),
     );
   }
