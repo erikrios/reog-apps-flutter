@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class FoodItem extends StatelessWidget {
-  String _image;
-  String _title;
+  final String _image;
+  final String _title;
 
   FoodItem(this._image, this._title);
 
