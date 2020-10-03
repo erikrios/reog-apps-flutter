@@ -40,16 +40,14 @@ class _DashboardState extends State<Dashboard> {
       ),
     ];
 
-    final _bottomNavBar = Theme(
-        data: Theme.of(context).copyWith(canvasColor: Color(0xffCAFFAB)),
-        child: BottomNavigationBar(
+    final _bottomNavBar = BottomNavigationBar(
           items: _bottomNavBarItems,
           currentIndex: _selectedTabIndex,
           selectedItemColor: Color(0xff66A84D),
           unselectedItemColor: Color(0x8966A84D),
           type: BottomNavigationBarType.shifting,
           onTap: onNavBarTapped,
-        ));
+        );
 
     return Scaffold(
       body: Center(

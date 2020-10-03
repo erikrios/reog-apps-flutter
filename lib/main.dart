@@ -10,8 +10,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Reog Apps',
       theme: ThemeData(
+        brightness: Brightness.light,
         primarySwatch: MaterialColor(0xff97DA7B, swatch),
-        canvasColor: Color(0xffEFF4ED),
         primaryTextTheme: TextTheme(
           headline6: TextStyle(
             color: Colors.white,
