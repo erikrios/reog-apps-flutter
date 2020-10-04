@@ -89,9 +89,9 @@ class _DetailsState extends State<Details> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              floating: true,
+              floating: false,
               pinned: true,
-              snap: true,
+              snap: false,
               forceElevated: innerBoxIsScrolled,
               leading: Icon(
                 Icons.arrow_back,
@@ -101,8 +101,12 @@ class _DetailsState extends State<Details> {
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(
                   _article.title,
+                  maxLines: 4,
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 13.0),
                 ),
+                titlePadding:
+                    EdgeInsetsDirectional.only(start: 50, end: 8, bottom: 16),
                 background: Container(
                   color: Colors.black,
                   child: Image.memory(
