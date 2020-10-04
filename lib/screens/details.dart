@@ -89,15 +89,15 @@ class _DetailsState extends State<Details> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              floating: false,
+              floating: true,
               pinned: true,
-              snap: false,
+              snap: true,
               forceElevated: innerBoxIsScrolled,
               leading: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
               ),
-              expandedHeight: 56.0 * 4.5,
+              expandedHeight: 56.0 * 3.5,
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(
                   _article.title,
