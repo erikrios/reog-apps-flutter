@@ -20,30 +20,6 @@ class _DetailsState extends State<Details> {
 
   _DetailsState(this._article);
 
-  void onNavBarTapped(int index) {
-    setState(() {
-      _selectedNavBar = index;
-      switch (_selectedNavBar) {
-        case 0:
-          {
-            if (_isBookmarked) {
-              _isBookmarked = false;
-              print('Bookmark removed');
-            } else {
-              _isBookmarked = true;
-              print('Bookmard added');
-            }
-          }
-          break;
-        case 1:
-          print('Show comments');
-          break;
-        default:
-          print('Show viewers');
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -83,49 +59,86 @@ class _DetailsState extends State<Details> {
       onTap: onNavBarTapped,
     );
 
-    return Scaffold(
-      body: NestedScrollView(
-        controller: _scrollViewController,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              floating: false,
-              pinned: true,
-              snap: false,
-              forceElevated: innerBoxIsScrolled,
-              leading: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              expandedHeight: 56.0 * 3.5,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text(
-                  _article.title,
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 13.0),
+    return WillPopScope(
+      // ignore: missing_return
+      onWillPop: () {
+        _navigateBack();
+      },
+      child: Scaffold(
+        body: NestedScrollView(
+          controller: _scrollViewController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                floating: false,
+                pinned: true,
+                snap: false,
+                forceElevated: innerBoxIsScrolled,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color: Colors.white,
+                  onPressed: () {
+                    _navigateBack();
+                  },
                 ),
-                titlePadding:
-                    EdgeInsetsDirectional.only(start: 50, end: 8, bottom: 16),
-                background: Container(
-                  color: Colors.black,
-                  child: Image.memory(
-                    base64Decode(_article.images[0]),
-                    fit: BoxFit.cover,
+                expandedHeight: 56.0 * 3.5,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(
+                    _article.title,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 13.0),
+                  ),
+                  titlePadding:
+                      EdgeInsetsDirectional.only(start: 50, end: 8, bottom: 16),
+                  background: Container(
+                    color: Colors.black,
+                    child: Image.memory(
+                      base64Decode(_article.images[0]),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
+            ];
+          },
+          body: SingleChildScrollView(
+            padding: EdgeInsets.all(8),
+            child: Text(
+              _article.description,
             ),
-          ];
-        },
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            _article.description,
           ),
         ),
+        bottomNavigationBar: _bottomNavBar,
       ),
-      bottomNavigationBar: _bottomNavBar,
     );
+  }
+
+  void onNavBarTapped(int index) {
+    setState(() {
+      _selectedNavBar = index;
+      switch (_selectedNavBar) {
+        case 0:
+          {
+            if (_isBookmarked) {
+              _isBookmarked = false;
+              print('Bookmark removed');
+            } else {
+              _isBookmarked = true;
+              print('Bookmard added');
+            }
+          }
+          break;
+        case 1:
+          print('Show comments');
+          break;
+        default:
+          print('Show viewers');
+      }
+    });
+  }
+
+  void _navigateBack() {
+    Navigator.pop(context, true);
   }
 }
