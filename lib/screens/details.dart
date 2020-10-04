@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/models/article.dart';
 
@@ -87,12 +89,28 @@ class _DetailsState extends State<Details> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text(
-                _article.title,
-                overflow: TextOverflow.ellipsis,
-              ),
-              floating: true,
+              floating: false,
+              pinned: true,
+              snap: false,
               forceElevated: innerBoxIsScrolled,
+              leading: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              expandedHeight: 56.0 * 4.5,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(
+                  _article.title,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                background: Container(
+                  color: Colors.black,
+                  child: Image.memory(
+                    base64Decode(_article.images[0]),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
           ];
         },
