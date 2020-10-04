@@ -26,15 +26,15 @@ class _DashboardState extends State<Dashboard> {
     final _bottomNavBarItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: Icon(Icons.explore),
-        title: Text(_title[0]),
+        label: _title[0],
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.history),
-        title: Text(_title[1]),
+        label: _title[1],
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.wallpaper),
-        title: Text(_title[2]),
+        label: _title[2],
       ),
     ];
 
