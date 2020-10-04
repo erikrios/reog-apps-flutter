@@ -8,7 +8,20 @@ class Wallpaper extends StatefulWidget {
 }
 
 class _WallpaperState extends State<Wallpaper> {
+  ScrollController _scrollViewController;
   List<Article> _articles;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollViewController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollViewController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +32,29 @@ class _WallpaperState extends State<Wallpaper> {
     setDummyArticles();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wallpaper'),
-      ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 2 / 3,
-        ),
-        itemCount: _articles.length,
-        padding: EdgeInsets.all(3.0),
-        itemBuilder: (BuildContext context, int index) {
-          return WallpaperItem(_articles[index].images[0]);
+      body: NestedScrollView(
+        controller: _scrollViewController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              title: Text('Wallpaper'),
+              floating: true,
+              snap: true,
+              forceElevated: innerBoxIsScrolled,
+            ),
+          ];
         },
+        body: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 2 / 3,
+          ),
+          itemCount: _articles.length,
+          padding: EdgeInsets.all(3.0),
+          itemBuilder: (BuildContext context, int index) {
+            return WallpaperItem(_articles[index].images[0]);
+          },
+        ),
       ),
     );
   }
