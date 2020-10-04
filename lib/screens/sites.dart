@@ -19,7 +19,6 @@ class _SitesState extends State<Sites> {
     setDummyArticles();
 
     return Container(
-      color: Colors.red,
       child: ListView.builder(
         padding: EdgeInsets.all(0.0),
         itemBuilder: (BuildContext context, int index) {
