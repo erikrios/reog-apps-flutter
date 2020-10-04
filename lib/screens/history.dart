@@ -8,7 +8,20 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
+  ScrollController _scrollViewController;
   List<Article> _articles;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollViewController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollViewController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +32,29 @@ class _HistoryState extends State<History> {
     setDummyArticles();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('History'),
-      ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return ArticleItem(_articles[index].images[0], _articles[index].title,
-              _articles[index].description, _articles[index].date);
+      body: NestedScrollView(
+        controller: _scrollViewController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              title: Text('History'),
+              floating: true,
+              snap: true,
+              forceElevated: innerBoxIsScrolled,
+            ),
+          ];
         },
-        itemCount: _articles.length,
-        padding: EdgeInsets.all(12.0),
+        body: ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return ArticleItem(
+                _articles[index].images[0],
+                _articles[index].title,
+                _articles[index].description,
+                _articles[index].date);
+          },
+          itemCount: _articles.length,
+          padding: EdgeInsets.all(12.0),
+        ),
       ),
     );
   }
