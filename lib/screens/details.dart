@@ -119,6 +119,7 @@ class _DetailsState extends State<Details> {
           ];
         },
         body: SingleChildScrollView(
+          padding: EdgeInsets.all(8),
           child: Text(
             _article.description,
           ),
