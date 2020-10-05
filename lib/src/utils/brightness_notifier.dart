@@ -7,6 +7,11 @@ class BrightnessNotifier with ChangeNotifier {
     return _isDark ? true : false;
   }
 
+  void setBrightness(bool isDark) {
+    _isDark = isDark;
+    notifyListeners();
+  }
+
   void switchBrightness() {
     _isDark = !_isDark;
     notifyListeners();
