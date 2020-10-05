@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 
 class WallpaperDetailsPage extends StatefulWidget {
   final String _url;
@@ -28,6 +29,9 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
                 _navigateBack();
               }),
           title: Text('Wallpaper'),
+          actions: <Widget>[
+            MainPopUpMenu(false),
+          ],
         ),
         body: Container(
           child: Column(
