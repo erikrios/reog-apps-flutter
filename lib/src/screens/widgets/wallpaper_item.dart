@@ -1,18 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 class WallpaperItem extends StatelessWidget {
-  final String _image;
+  final String _url;
 
-  WallpaperItem(this._image);
+  WallpaperItem(this._url);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(3.0),
-      child: Image.memory(
-        base64Decode(_image),
+      child: Image.network(
+        _url,
         fit: BoxFit.cover,
       ),
     );
