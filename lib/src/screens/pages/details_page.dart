@@ -150,6 +150,7 @@ class _DetailsPageState extends State<DetailsPage> {
             padding: EdgeInsets.all(8),
             child: Text(
               _article.description,
+              textAlign: TextAlign.justify,
             ),
           ),
         ),
