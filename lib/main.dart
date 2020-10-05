@@ -15,6 +15,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    currentBrightness.addListener(() {
+      setState(() {});
+    });
+
     _getIsDarkMode().then((value) {
       setState(() {
         currentBrightness.setBrightness(value);
@@ -28,8 +33,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Reog Apps',
       theme: ThemeData(
-        brightness:
-            currentBrightness.isDark() ? Brightness.dark : Brightness.light,
+        brightness: currentBrightness.isDark(),
         primarySwatch: MaterialColor(0xff97DA7B, swatch),
         primaryTextTheme: TextTheme(
           headline6: TextStyle(

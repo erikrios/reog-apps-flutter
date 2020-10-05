@@ -13,7 +13,7 @@ class _BrightnessMenuState extends State<BrightnessMenu> {
   Widget build(BuildContext context) {
     return IconButton(
         icon: Icon(
-          currentBrightness.isDark() ? Icons.wb_sunny : Icons.nights_stay,
+          currentBrightness.state() ? Icons.wb_sunny : Icons.nights_stay,
           color: Colors.white,
         ),
         onPressed: () async {
@@ -22,7 +22,7 @@ class _BrightnessMenuState extends State<BrightnessMenu> {
             SharedPreferences preferences =
                 await SharedPreferences.getInstance();
             preferences.setBool(
-                DARK_MODE_SHARED_PREFS_KEY, currentBrightness.isDark());
+                DARK_MODE_SHARED_PREFS_KEY, currentBrightness.state());
             setState(() {});
           } catch (err) {
             print(err);
