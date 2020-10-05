@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/screens/explore.dart';
-import 'package:reog_apps_flutter/screens/history.dart';
-import 'package:reog_apps_flutter/screens/wallpaper.dart';
+import 'package:reog_apps_flutter/src/screens/pages/explore_page.dart';
+import 'package:reog_apps_flutter/src/screens/pages/history_page.dart';
+import 'package:reog_apps_flutter/src/screens/pages/wallpaper_page.dart';
 
-class Dashboard extends StatefulWidget {
+class DashboardPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _DashboardState();
+  State<StatefulWidget> createState() => _DashboardPageState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardPageState extends State<DashboardPage> {
   int _selectedTabIndex = 0;
 
   void onNavBarTapped(int index) {
@@ -19,7 +19,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final _pages = <Widget>[Explore(), History(), Wallpaper()];
+    final _pages = <Widget>[ExplorePage(), HistoryPage(), WallpaperPage()];
 
     final _title = <String>['Explore', 'History', 'Wallpaper'];
 

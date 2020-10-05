@@ -1,24 +1,24 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/models/article.dart';
+import 'package:reog_apps_flutter/src/models/article.dart';
 
-class Details extends StatefulWidget {
+class DetailsPage extends StatefulWidget {
   final Article _article;
 
-  Details(this._article);
+  DetailsPage(this._article);
 
   @override
-  _DetailsState createState() => _DetailsState(_article);
+  _DetailsPageState createState() => _DetailsPageState(_article);
 }
 
-class _DetailsState extends State<Details> {
+class _DetailsPageState extends State<DetailsPage> {
   ScrollController _scrollViewController;
   final Article _article;
   bool _isBookmarked;
   int _selectedNavBar = 0;
 
-  _DetailsState(this._article);
+  _DetailsPageState(this._article);
 
   @override
   void initState() {

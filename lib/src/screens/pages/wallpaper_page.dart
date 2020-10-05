@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/models/article.dart';
-import 'package:reog_apps_flutter/screens/widget/wallpaper_item.dart';
+import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/wallpaper_item.dart';
 
-class Wallpaper extends StatefulWidget {
+class WallpaperPage extends StatefulWidget {
   @override
-  _WallpaperState createState() => _WallpaperState();
+  _WallpaperPageState createState() => _WallpaperPageState();
 }
 
-class _WallpaperState extends State<Wallpaper> {
+class _WallpaperPageState extends State<WallpaperPage> {
   ScrollController _scrollViewController;
   List<Article> _articles;
 

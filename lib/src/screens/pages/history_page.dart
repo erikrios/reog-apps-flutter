@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/models/article.dart';
-import 'package:reog_apps_flutter/screens/widget/article_item.dart';
+import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 
-class History extends StatefulWidget {
+class HistoryPage extends StatefulWidget {
   @override
-  _HistoryState createState() => _HistoryState();
+  _HistoryPageState createState() => _HistoryPageState();
 }
 
-class _HistoryState extends State<History> {
+class _HistoryPageState extends State<HistoryPage> {
   ScrollController _scrollViewController;
   List<Article> _articles;
 

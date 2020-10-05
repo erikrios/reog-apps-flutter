@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/screens/foods.dart';
-import 'package:reog_apps_flutter/screens/news.dart';
-import 'package:reog_apps_flutter/screens/sites.dart';
+import 'package:reog_apps_flutter/src/screens/pages/foods_page.dart';
+import 'package:reog_apps_flutter/src/screens/pages/news_page.dart';
+import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
 
-class Explore extends StatefulWidget {
+class ExplorePage extends StatefulWidget {
   @override
-  _ExploreState createState() => _ExploreState();
+  _ExplorePageState createState() => _ExplorePageState();
 }
 
-class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
+class _ExplorePageState extends State<ExplorePage> with SingleTickerProviderStateMixin {
   TabController _tabController;
   ScrollController _scrollViewController;
 
@@ -63,9 +63,9 @@ class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
         },
         body: TabBarView(
           children: [
-            News(),
-            Sites(),
-            Foods(),
+            NewsPage(),
+            SitesPage(),
+            FoodsPage(),
           ],
           controller: _tabController,
         ),

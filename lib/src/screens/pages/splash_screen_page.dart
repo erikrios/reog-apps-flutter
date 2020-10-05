@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:reog_apps_flutter/src/screens/pages/dashboard_page.dart';
 import 'dart:async';
-import 'package:reog_apps_flutter/screens/dashboard.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreenPage extends StatefulWidget {
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashScreenPageState createState() => _SplashScreenPageState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final duration = Duration(milliseconds: 1500);
     return Timer(duration, () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-        return Dashboard();
+        return DashboardPage();
       }));
     });
   }

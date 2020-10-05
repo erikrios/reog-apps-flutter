@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/models/article.dart';
-import 'package:reog_apps_flutter/screens/widget/food_item.dart';
+import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/food_item.dart';
 
-class Foods extends StatefulWidget {
+class FoodsPage extends StatefulWidget {
   @override
-  _FoodsState createState() => _FoodsState();
+  _FoodsPageState createState() => _FoodsPageState();
 }
 
-class _FoodsState extends State<Foods> {
+class _FoodsPageState extends State<FoodsPage> {
   List<Article> _articles;
 
   @override
