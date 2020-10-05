@@ -22,7 +22,7 @@ class _BrightnessMenuState extends State<BrightnessMenu> {
         ),
         onPressed: () {
           setState(() {
-            _isDarkMode = _isDarkMode ? false : true;
+            _isDarkMode = !_isDarkMode;
           });
         });
   }
