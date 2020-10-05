@@ -18,6 +18,7 @@ class _DetailsPageState extends State<DetailsPage> {
   final Article _article;
   bool _isBookmarked;
   int _selectedNavBar = 0;
+  int _currentSliderIndex = 0;
 
   _DetailsPageState(this._article);
 
@@ -94,23 +95,51 @@ class _DetailsPageState extends State<DetailsPage> {
                       EdgeInsetsDirectional.only(start: 50, end: 8, bottom: 16),
                   background: Container(
                     color: Colors.black,
-                    child: CarouselSlider(
-                      items: _article.images.map((image) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          child: Image.memory(
-                            base64Decode(image),
-                            fit: BoxFit.cover,
+                    child: Stack(
+                      children: <Widget>[
+                        CarouselSlider(
+                          items: _article.images.map((image) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                              child: Image.memory(
+                                base64Decode(image),
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          }).toList(),
+                          options: CarouselOptions(
+                              autoPlay: true,
+                              height: MediaQuery.of(context).size.height,
+                              enableInfiniteScroll: false,
+                              autoPlayInterval: Duration(seconds: 5),
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _currentSliderIndex = index;
+                                });
+                              }),
+                        ),
+                        Align(
+                          alignment: Alignment(0, 0.9),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: _article.images.map((image) {
+                              int index = _article.images.indexOf(image);
+                              return Container(
+                                width: 8,
+                                height: 8,
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: _currentSliderIndex == index
+                                      ? Color.fromRGBO(255, 255, 255, 0.9)
+                                      : Color.fromRGBO(255, 255, 255, 0.4),
+                                ),
+                              );
+                            }).toList(),
                           ),
-                        );
-                      }).toList(),
-                      options: CarouselOptions(
-                        autoPlay: true,
-                        height: MediaQuery.of(context).size.height,
-                        enableInfiniteScroll: false,
-                        autoPlayInterval: Duration(seconds: 5),
-                      ),
+                        )
+                      ],
                     ),
                   ),
                 ),
