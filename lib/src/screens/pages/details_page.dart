@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
 
@@ -93,9 +94,23 @@ class _DetailsPageState extends State<DetailsPage> {
                       EdgeInsetsDirectional.only(start: 50, end: 8, bottom: 16),
                   background: Container(
                     color: Colors.black,
-                    child: Image.memory(
-                      base64Decode(_article.images[0]),
-                      fit: BoxFit.cover,
+                    child: CarouselSlider(
+                      items: _article.images.map((image) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: Image.memory(
+                            base64Decode(image),
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      }).toList(),
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        height: MediaQuery.of(context).size.height,
+                        enableInfiniteScroll: false,
+                        autoPlayInterval: Duration(seconds: 5),
+                      ),
                     ),
                   ),
                 ),
