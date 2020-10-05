@@ -89,14 +89,17 @@ class _DetailsPageState extends State<DetailsPage> {
                 ],
                 expandedHeight: 56.0 * 3.5,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text(
-                    _article.title,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 13.0),
+                  title: Padding(
+                    padding: EdgeInsets.only(right: 6),
+                    child: Text(
+                      _article.title,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 13.0),
+                    ),
                   ),
-                  titlePadding:
-                      EdgeInsetsDirectional.only(start: 50, end: 8, bottom: 16),
+                  titlePadding: EdgeInsetsDirectional.only(
+                      start: 50, end: 16, bottom: 16),
                   background: Container(
                     color: Colors.black,
                     child: Stack(
