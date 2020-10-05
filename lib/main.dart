@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'src/screens/pages/splash_screen_page.dart';
-import 'src/constants.dart' as Constants;
+import 'src/utils/constants.dart' as Constants;
 
 void main() => runApp(MyApp());
 
