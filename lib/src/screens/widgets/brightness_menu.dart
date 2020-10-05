@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/src/utils/config.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BrightnessMenu extends StatefulWidget {
-  final bool _isDarkMode;
-
-  BrightnessMenu(this._isDarkMode);
-
   @override
-  _BrightnessMenuState createState() => _BrightnessMenuState(_isDarkMode);
+  _BrightnessMenuState createState() => _BrightnessMenuState();
 }
 
 class _BrightnessMenuState extends State<BrightnessMenu> {
-  bool _isDarkMode;
-
-  _BrightnessMenuState(this._isDarkMode);
   @override
   Widget build(BuildContext context) {
     return IconButton(
         icon: Icon(
-          _isDarkMode ? Icons.wb_sunny : Icons.nights_stay,
+          currentBrightness.isDark() ? Icons.wb_sunny : Icons.nights_stay,
           color: Colors.white,
         ),
-        onPressed: () {
-          setState(() {
-            _isDarkMode = !_isDarkMode;
-          });
+        onPressed: () async {
+          try {
+            currentBrightness.switchBrightness();
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            preferences.setBool(
+                DARK_MODE_SHARED_PREFS_KEY, currentBrightness.isDark());
+            setState(() {});
+          } catch (err) {
+            print(err);
+          }
         });
   }
 }
