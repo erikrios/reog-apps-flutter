@@ -73,7 +73,7 @@ class _WallpaperPageState extends State<WallpaperPage> {
       _urls.add((i % 2 == 0)
           ? 'https://1.bp.blogspot.com/-11c9jnZJ6UE/X2tLBOww-UI/AAAAAAAAAGw/dtX0eqmMlhArj3OtOGx95SATIzn2NzE8ACLcBGAsYHQ/s266/Screenshot%2Bfrom%2B2019-10-22%2B09-29-01.png'
           : (i % 3 == 0)
-              ? 'https://1.bp.blogspot.com/-DjP5PsDGZMs/X2tLDme0IQI/AAAAAAAAAHE/O4n8xbcYiAUn3IVHg3qt1YopgZcUvmO3wCLcBGAsYHQ/s388/Screenshot%2Bfrom%2B2019-10-22%2B10-06-54.png'
+              ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/800px-The_Earth_seen_from_Apollo_17.jpg'
               : 'https://archive.org/download/shimla_phoenix_K011P-01c_panelscan/Fromental_Conversational/F006-willow-with-embroidery-col-custom.jpg');
     }
   }
