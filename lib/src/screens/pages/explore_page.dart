@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/pages/foods_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/news_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -42,6 +43,7 @@ class _ExplorePageState extends State<ExplorePage>
               snap: true,
               forceElevated: innerBoxIsScrolled,
               actions: <Widget>[
+                BrightnessMenu(),
                 MainPopUpMenu(true),
               ],
               bottom: TabBar(
