@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/src/utils/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'src/screens/pages/splash_screen_page.dart';
 import 'src/utils/constants.dart' as Constants;
@@ -11,14 +12,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isDarkMode = false;
-
   @override
   void initState() {
     super.initState();
     _getIsDarkMode().then((value) {
       setState(() {
-        _isDarkMode = value;
+        currentBrightness.setBrightness(value);
       });
     });
   }
@@ -29,7 +28,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Reog Apps',
       theme: ThemeData(
-        brightness: _isDarkMode ? Brightness.dark : Brightness.light,
+        brightness:
+            currentBrightness.isDark() ? Brightness.dark : Brightness.light,
         primarySwatch: MaterialColor(0xff97DA7B, swatch),
         primaryTextTheme: TextTheme(
           headline6: TextStyle(
