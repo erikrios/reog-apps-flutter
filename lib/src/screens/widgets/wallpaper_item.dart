@@ -12,6 +12,18 @@ class WallpaperItem extends StatelessWidget {
       child: Image.network(
         _url,
         fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          return (loadingProgress == null)
+              ? child
+              : Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+        },
       ),
     );
   }
