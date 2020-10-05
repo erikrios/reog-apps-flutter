@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/pages/wallpaper_details_page.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/wallpaper_item.dart';
 
 class WallpaperPage extends StatefulWidget {
@@ -41,6 +42,9 @@ class _WallpaperPageState extends State<WallpaperPage> {
               floating: true,
               snap: true,
               forceElevated: innerBoxIsScrolled,
+              actions: <Widget>[
+                MainPopUpMenu(true),
+              ],
             ),
           ];
         },
