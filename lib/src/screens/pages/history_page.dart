@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -46,11 +47,20 @@ class _HistoryPageState extends State<HistoryPage> {
         },
         body: ListView.builder(
           itemBuilder: (BuildContext context, int index) {
-            return ArticleItem(
-                _articles[index].images[0],
-                _articles[index].title,
-                _articles[index].description,
-                _articles[index].date);
+            return InkWell(
+              child: ArticleItem(
+                  _articles[index].images[0],
+                  _articles[index].title,
+                  _articles[index].description,
+                  _articles[index].date),
+              onTap: () async {
+                bool result = await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) {
+                  return DetailsPage(_articles[index]);
+                }));
+                print(result);
+              },
+            );
           },
           itemCount: _articles.length,
           padding: EdgeInsets.all(12.0),

@@ -23,7 +23,7 @@ class _SitesPageState extends State<SitesPage> {
       child: ListView.builder(
         padding: EdgeInsets.all(0.0),
         itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
+          return InkWell(
             child:
                 SitesItem(_articles[index].images[0], _articles[index].title),
             onTap: () async {

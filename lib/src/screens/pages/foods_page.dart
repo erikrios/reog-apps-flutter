@@ -27,7 +27,7 @@ class _FoodsPageState extends State<FoodsPage> {
         padding: EdgeInsets.all(3.0),
         itemCount: _articles.length,
         itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
+          return InkWell(
             child: FoodItem(_articles[index].images[0], _articles[index].title),
             onTap: () async {
               bool result = await Navigator.push(context,
