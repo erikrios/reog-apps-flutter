@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'src/screens/pages/splash_screen_page.dart';
+import 'src/constants.dart' as Constants;
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isDarkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _getIsDarkMode().then((value) {
+      setState(() {
+        _isDarkMode = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Reog Apps',
       theme: ThemeData(
-        brightness: Brightness.light,
+        brightness: _isDarkMode ? Brightness.dark : Brightness.light,
         primarySwatch: MaterialColor(0xff97DA7B, swatch),
         primaryTextTheme: TextTheme(
           headline6: TextStyle(
@@ -20,6 +39,17 @@ class MyApp extends StatelessWidget {
       ),
       home: SplashScreenPage(),
     );
+  }
+
+  _getIsDarkMode() async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      bool isDarkMode =
+          preferences.getBool(Constants.DARK_MODE_SHARED_PREFS_KEY);
+      return isDarkMode != null ? isDarkMode : false;
+    } catch (err) {
+      print(err);
+    }
   }
 }
 
