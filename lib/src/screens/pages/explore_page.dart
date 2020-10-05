@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/pages/foods_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/news_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
   _ExplorePageState createState() => _ExplorePageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> with SingleTickerProviderStateMixin {
+class _ExplorePageState extends State<ExplorePage>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
   ScrollController _scrollViewController;
 
@@ -39,6 +41,9 @@ class _ExplorePageState extends State<ExplorePage> with SingleTickerProviderStat
               floating: true,
               snap: true,
               forceElevated: innerBoxIsScrolled,
+              actions: <Widget>[
+                MainPopUpMenu(true),
+              ],
               bottom: TabBar(
                 controller: _tabController,
                 tabs: <Widget>[
