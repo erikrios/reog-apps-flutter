@@ -29,6 +29,33 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
               }),
           title: Text('Wallpaper'),
         ),
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: Center(
+                  child: Image.network(_url,
+                      fit: BoxFit.contain,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width),
+                ),
+              ),
+              FlatButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                minWidth: MediaQuery.of(context).size.width,
+                onPressed: () {},
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  'SET AS WALLPAPER',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
