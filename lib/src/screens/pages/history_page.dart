@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -42,6 +43,9 @@ class _HistoryPageState extends State<HistoryPage> {
               floating: true,
               snap: true,
               forceElevated: innerBoxIsScrolled,
+              actions: <Widget>[
+                MainPopUpMenu(false),
+              ],
             ),
           ];
         },
