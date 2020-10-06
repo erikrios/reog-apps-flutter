@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/pages/explore_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/history_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/wallpaper_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     final _pages = <Widget>[ExplorePage(), HistoryPage(), WallpaperPage()];
 
-    final _title = <String>['Explore', 'History', 'Wallpaper'];
+    final _title = <String>['explore'.tr(), 'history'.tr(), 'wallpaper'.tr()];
 
     final _bottomNavBarItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
