@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class WallpaperDetailsPage extends StatefulWidget {
   final String _url;
@@ -28,7 +29,7 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
               onPressed: () {
                 _navigateBack();
               }),
-          title: Text('Wallpaper'),
+          title: Text('wallpaper'.tr()),
           actions: <Widget>[
             MainPopUpMenu(false),
           ],
@@ -52,7 +53,7 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
                 onPressed: () {},
                 color: Theme.of(context).primaryColor,
                 child: Text(
-                  'SET AS WALLPAPER',
+                  'set_wallpaper'.tr().toUpperCase(),
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
