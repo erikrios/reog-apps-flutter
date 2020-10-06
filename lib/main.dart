@@ -11,7 +11,8 @@ void main() {
     supportedLocales: <Locale>[
       Locale('en'),
       Locale('en', 'US'),
-      Locale('id', 'ID')
+      Locale('id', 'ID'),
+      Locale('hi', 'IN')
     ],
     path: 'assets/translations',
     fallbackLocale: Locale('en'),
