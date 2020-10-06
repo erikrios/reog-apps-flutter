@@ -12,7 +12,10 @@ void main() {
       Locale('en'),
       Locale('en', 'US'),
       Locale('id', 'ID'),
-      Locale('hi', 'IN')
+      Locale('hi', 'IN'),
+      Locale('es', 'ES'),
+      Locale('ru', 'RU'),
+      Locale('vi', 'VN')
     ],
     path: 'assets/translations',
     fallbackLocale: Locale('en'),
