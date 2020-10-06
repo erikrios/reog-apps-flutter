@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reog_apps_flutter/src/screens/pages/dashboard_page.dart';
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 
 class SplashScreenPage extends StatefulWidget {
   @override
@@ -47,7 +48,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 bottom: 12.0,
               ),
               child: Text(
-                'Reog Apps',
+                'app_name'.tr(),
                 style: TextStyle(
                   color: Color(0xffFEE97D),
                   fontSize: 20.0,
