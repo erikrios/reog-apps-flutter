@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,22 +18,26 @@ class _State extends State<LoginPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xff97DA7B),
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 70,horizontal: 30), child: Column(
+          padding: EdgeInsets.symmetric(vertical: 70, horizontal: 30),
+          child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Container(
                   height: 160,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Login',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40, color: Colors.white),
+                    'login'.tr().toUpperCase(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                        color: Colors.white),
                   )),
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Email Adress',
+                      'email_address'.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 25, color: Colors.white),
                     ),
@@ -42,16 +47,17 @@ class _State extends State<LoginPage> {
                     Container(
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                        onFieldSubmitted: (_) =>
+                            FocusScope.of(context).nextFocus(),
                         validator: (String value) {
-                          return value.isEmpty ? 'Enter your Email adress *' : null;
+                          return value.isEmpty ? 'email_hint'.tr() : null;
                         },
                         controller: nameController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
                           border: OutlineInputBorder(),
-                          hintText: 'Enter your Email adress',
+                          hintText: 'email_hint'.tr().toString(),
                         ),
                         keyboardType: TextInputType.emailAddress,
                         onSaved: (String value) {
@@ -71,7 +77,7 @@ class _State extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Password',
+                      'password'.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 25, color: Colors.white),
                     ),
@@ -80,16 +86,17 @@ class _State extends State<LoginPage> {
                     ),
                     TextFormField(
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                      onFieldSubmitted: (_) =>
+                          FocusScope.of(context).nextFocus(),
                       validator: (String value) {
-                        return value.isEmpty ? 'Enter your Pasword *' : null;
+                        return value.isEmpty ? 'password_hint'.tr() : null;
                       },
                       controller: passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         fillColor: Colors.white,
                         filled: true,
                         border: OutlineInputBorder(),
-                        hintText: 'Enter your Pasword',
+                        hintText: 'password_hint'.tr(),
                       ),
                       keyboardType: TextInputType.visiblePassword,
                       onSaved: (String value) {
@@ -114,7 +121,9 @@ class _State extends State<LoginPage> {
                   color: Colors.yellow.shade700,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 60),
-                    child: Text('LOGIN', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
+                    child: Text('login'.toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 20)),
                   ),
                   onPressed: () {
                     print(nameController.text);
@@ -129,14 +138,17 @@ class _State extends State<LoginPage> {
                   child: Row(
                 children: <Widget>[
                   Text(
-                    'Haven\'t an account?',
+                    'have_not_account'.tr(),
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   FlatButton(
                     textColor: Colors.blue,
                     child: Text(
-                      'Register',
-                      style: TextStyle(color: Colors.yellow, fontSize: 20, decoration: TextDecoration.underline),
+                      'register'.tr(),
+                      style: TextStyle(
+                          color: Colors.yellow,
+                          fontSize: 20,
+                          decoration: TextDecoration.underline),
                     ),
                     onPressed: () {
                       //signup screen
