@@ -1,6 +1,8 @@
 {
     "add_bookmark": "बुकमार्क जोड़ें",
     "app_name": "Reog Apps",
+    "bookmark_added": "बुकमार्क जोड़ा गया",
+    "bookmark_removed": "बुकमार्क निकाला गया",
     "comment_hint": "अपनी टिप्पणी यहां लिखें ...",
     "comments": "टिप्पणियाँ",
     "email_address": "ईमेल पता",

@@ -27,5 +27,7 @@
     "saved_articles": "Saved Articles",
     "set_wallpaper": "Set as Wallpaper",
     "sites": "Sites",
-    "wallpaper": "Wallpaper"
+    "wallpaper": "Wallpaper",
+    "bookmark_added": "Bookmark Added",
+    "bookmark_removed": "Bookmark Removed"
 }

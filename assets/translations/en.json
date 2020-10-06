@@ -1,6 +1,8 @@
 {
     "add_bookmark": "Add Bookmark",
     "app_name": "Reog Apps",
+    "bookmark_added": "Bookmark Added",
+    "bookmark_removed": "Bookmark Removed",
     "comment_hint": "Type your comment here...",
     "comments": "Comments",
     "email_address": "Email Address",

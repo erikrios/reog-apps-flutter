@@ -1,6 +1,8 @@
 {
     "add_bookmark": "Tambahkan Penanda",
     "app_name": "Reog Apps",
+    "bookmark_added": "Penanda Ditambahkan",
+    "bookmark_removed": "Penanda Dihapus",
     "comment_hint": "Ketikkan komentar Anda disini...",
     "comments": "Komentar",
     "email_address": "Alamat Email",
