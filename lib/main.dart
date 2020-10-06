@@ -1,10 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/utils/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'src/screens/pages/splash_screen_page.dart';
 import 'src/utils/constants.dart' as Constants;
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(EasyLocalization(
+    child: MyApp(),
+    supportedLocales: <Locale>[
+      Locale('en'),
+      Locale('en', 'US'),
+      Locale('id', 'ID')
+    ],
+    path: 'assets/translations',
+    fallbackLocale: Locale('en'),
+  ));
+}
 
 class MyApp extends StatefulWidget {
   @override
