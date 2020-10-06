@@ -3,6 +3,7 @@ import 'package:reog_apps_flutter/src/screens/pages/wallpaper_details_page.dart'
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/wallpaper_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class WallpaperPage extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class _WallpaperPageState extends State<WallpaperPage> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('Wallpaper'),
+              title: Text('wallpaper'.tr()),
               floating: true,
               snap: true,
               forceElevated: innerBoxIsScrolled,
