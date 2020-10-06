@@ -4,6 +4,7 @@ import 'package:reog_apps_flutter/src/screens/pages/news_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _ExplorePageState extends State<ExplorePage>
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('Explore'),
+              title: Text('explore'.tr()),
               pinned: true,
               floating: true,
               snap: true,
@@ -50,13 +51,13 @@ class _ExplorePageState extends State<ExplorePage>
                 controller: _tabController,
                 tabs: <Widget>[
                   Tab(
-                    text: 'NEWS',
+                    text: 'news'.tr().toUpperCase(),
                   ),
                   Tab(
-                    text: 'SITES',
+                    text: 'sites'.tr().toUpperCase(),
                   ),
                   Tab(
-                    text: 'FOODS',
+                    text: 'foods'.tr().toUpperCase(),
                   )
                 ],
                 indicatorColor: Color(0xffFEDF30),
