@@ -4,6 +4,7 @@ import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _HistoryPageState extends State<HistoryPage> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('History'),
+              title: Text('history'.tr()),
               floating: true,
               snap: true,
               forceElevated: innerBoxIsScrolled,
