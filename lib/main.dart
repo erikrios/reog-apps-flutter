@@ -15,7 +15,8 @@ void main() {
       Locale('hi', 'IN'),
       Locale('es', 'ES'),
       Locale('ru', 'RU'),
-      Locale('vi', 'VN')
+      Locale('vi', 'VN'),
+      Locale('pt', 'PT')
     ],
     path: 'assets/translations',
     fallbackLocale: Locale('en'),
