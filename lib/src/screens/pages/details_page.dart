@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class DetailsPage extends StatefulWidget {
   final Article _article;
@@ -43,7 +44,8 @@ class _DetailsPageState extends State<DetailsPage> {
           icon: (_isBookmarked)
               ? Icon(Icons.bookmark)
               : Icon(Icons.bookmark_border),
-          label: (_isBookmarked) ? 'Remove Bookmark' : 'Add Bookmark'),
+          label:
+              (_isBookmarked) ? 'remove_bookmark'.tr() : 'add_bookmark'.tr()),
       BottomNavigationBarItem(
         icon: Icon(Icons.comment),
         label: 25.toString(),
@@ -174,10 +176,10 @@ class _DetailsPageState extends State<DetailsPage> {
           {
             if (_isBookmarked) {
               _isBookmarked = false;
-              print('Bookmark removed');
+              print('bookmark_removed'.tr());
             } else {
               _isBookmarked = true;
-              print('Bookmard added');
+              print('bookmark_added'.tr());
             }
           }
           break;
