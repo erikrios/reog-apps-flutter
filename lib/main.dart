@@ -16,7 +16,15 @@ void main() {
       Locale('es', 'ES'),
       Locale('ru', 'RU'),
       Locale('vi', 'VN'),
-      Locale('pt', 'PT')
+      Locale('pt', 'PT'),
+      Locale('af', 'ZA'),
+      Locale('ar', 'AR'),
+      Locale('bn', 'IN'),
+      Locale('cs', 'CZ'),
+      Locale('fr', 'FR'),
+      Locale('ja', 'JP'),
+      Locale('ms', 'MY'),
+      Locale('zh', 'CN')
     ],
     path: 'assets/translations',
     fallbackLocale: Locale('en'),
