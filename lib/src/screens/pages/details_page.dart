@@ -184,7 +184,57 @@ class _DetailsPageState extends State<DetailsPage> {
           }
           break;
         case 1:
-          print('Show comments');
+          {
+            showModalBottomSheet(
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                context: context,
+                builder: (builder) {
+                  return Container(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 32),
+                          width: 100,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.green,
+                                ),
+                                title: Text('Tes'),
+                              );
+                            },
+                            itemCount: 30,
+                          ),
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                });
+          }
           break;
         default:
           print('Show viewers');
