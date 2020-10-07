@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Reog Apps',
+      title: 'app_name'.tr(),
       theme: ThemeData(
         brightness: currentBrightness.isDark(),
         primarySwatch: MaterialColor(0xff97DA7B, swatch),
