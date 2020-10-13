@@ -201,6 +201,9 @@ class _DetailsPageState extends State<DetailsPage> {
                     'https://archive.org/download/shimla_phoenix_K011P-01c_panelscan/Fromental_Conversational/F006-willow-with-embroidery-col-custom.jpg',
                     'Tue, $i Oct 20 08:50 pm'));
             }
+
+            TextEditingController controller = TextEditingController();
+
             showModalBottomSheet(
                 isScrollControlled: true,
                 shape: RoundedRectangleBorder(
@@ -235,14 +238,32 @@ class _DetailsPageState extends State<DetailsPage> {
                             itemCount: 30,
                           ),
                         ),
-                        TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(0)),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: TextField(
+                            controller: controller,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              suffixIcon: Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.only(end: 8.0),
+                                child: IconButton(
+                                  icon: Icon(Icons.send),
+                                  onPressed: () {
+                                    print('Send');
+                                  },
+                                ),
+                              ),
+                              hintText: 'Type your comment...',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(0)),
+                              ),
                             ),
-                            filled: true,
-                            fillColor: Colors.white,
                           ),
                         )
                       ],
