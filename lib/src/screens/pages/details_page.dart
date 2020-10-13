@@ -1,8 +1,9 @@
 import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/models/comment.dart';
+import 'package:reog_apps_flutter/src/screens/widgets/comment_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -185,6 +186,21 @@ class _DetailsPageState extends State<DetailsPage> {
           break;
         case 1:
           {
+            List<Comment> comments = new List<Comment>();
+            for (int i = 0; i < 30; i++) {
+              if (i % 2 == 0)
+                comments.add(new Comment(
+                    'Author Name $i',
+                    '$i Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea',
+                    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/800px-The_Earth_seen_from_Apollo_17.jpg',
+                    'Tue, $i Oct 20 08:50 pm'));
+              else
+                comments.add(new Comment(
+                    'Author Name $i',
+                    '$i Lorem ipsum dolor sit amet dolore magna aliqua. Sed do eiusmod tempor.',
+                    'https://archive.org/download/shimla_phoenix_K011P-01c_panelscan/Fromental_Conversational/F006-willow-with-embroidery-col-custom.jpg',
+                    'Tue, $i Oct 20 08:50 pm'));
+            }
             showModalBottomSheet(
                 isScrollControlled: true,
                 shape: RoundedRectangleBorder(
@@ -210,12 +226,11 @@ class _DetailsPageState extends State<DetailsPage> {
                           flex: 1,
                           child: ListView.builder(
                             itemBuilder: (context, index) {
-                              return ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.green,
-                                ),
-                                title: Text('Tes'),
-                              );
+                              return CommentItem(
+                                  comments[index].author,
+                                  comments[index].comment,
+                                  comments[index].url,
+                                  comments[index].date);
                             },
                             itemCount: 30,
                           ),
@@ -224,7 +239,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(0)),
                             ),
                             filled: true,
                             fillColor: Colors.white,
