@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:reog_apps_flutter/src/screens/pages/my_profile_page.dart';
 
 class MainPopUpMenu extends StatelessWidget {
   final bool _isLoggedIn;
@@ -30,7 +31,7 @@ class MainPopUpMenu extends StatelessWidget {
         } else if (value == login) {
           print(login);
         } else if (value == myProfile) {
-          print(myProfile);
+          _navigateToMyProfile(context);
         } else {
           print(logout);
         }
@@ -44,5 +45,11 @@ class MainPopUpMenu extends StatelessWidget {
         }).toList();
       },
     );
+  }
+
+  void _navigateToMyProfile(BuildContext context) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return MyProfilePage();
+    }));
   }
 }
