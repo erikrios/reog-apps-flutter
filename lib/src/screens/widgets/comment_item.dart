@@ -45,7 +45,7 @@ class CommentItem extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: 8),
                             Text(comment),
                             SizedBox(
                               height: 4,
@@ -56,7 +56,11 @@ class CommentItem extends StatelessWidget {
                                 date,
                                 style: TextStyle(fontSize: 12),
                               ),
-                            )
+                            ),
+                            Divider(
+                              height: 24,
+                              color: Colors.black26,
+                            ),
                           ],
                         ),
                       ),
@@ -64,10 +68,6 @@ class CommentItem extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(
-                height: 24,
-                color: Colors.black26,
-              )
             ],
           ),
         )
