@@ -33,15 +33,16 @@ class MyProfilePage extends StatelessWidget {
               SizedBox(height: 28),
               Container(
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 48),
+                margin: EdgeInsets.only(left: 58),
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    textItem('Name', 'Erik Rio Setiawan'),
-                    textItem('Email Address', 'erikriosetiawan15@gmail.com'),
-                    textItem('Member Since', '2020/09/12'),
-                    textItem('Last Login', '2020/09/12'),
+                    textItem('name'.tr(), 'Erik Rio Setiawan'),
+                    textItem(
+                        'email_address'.tr(), 'erikriosetiawan15@gmail.com'),
+                    textItem('member_since'.tr(), '2020/09/12'),
+                    textItem('last_login'.tr(), '2020/09/12'),
                   ],
                 ),
               ),
@@ -58,7 +59,7 @@ class MyProfilePage extends StatelessWidget {
       children: [
         Text(
           header,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 15),
         ),
         SizedBox(
           height: 8,
@@ -66,7 +67,7 @@ class MyProfilePage extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 17,
             fontWeight: FontWeight.bold,
           ),
           maxLines: 1,
