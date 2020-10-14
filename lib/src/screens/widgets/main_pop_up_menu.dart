@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:reog_apps_flutter/src/screens/pages/login_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/my_profile_page.dart';
 
 class MainPopUpMenu extends StatelessWidget {
@@ -29,7 +30,7 @@ class MainPopUpMenu extends StatelessWidget {
         if (value == savedArticles) {
           print(savedArticles);
         } else if (value == login) {
-          print(login);
+          _navigateToLogin(context);
         } else if (value == myProfile) {
           _navigateToMyProfile(context);
         } else {
@@ -50,6 +51,12 @@ class MainPopUpMenu extends StatelessWidget {
   void _navigateToMyProfile(BuildContext context) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return MyProfilePage();
+    }));
+  }
+
+  void _navigateToLogin(BuildContext context) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LoginPage();
     }));
   }
 }
