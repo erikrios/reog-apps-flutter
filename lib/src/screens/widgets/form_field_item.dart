@@ -24,10 +24,12 @@ class FormFieldItem extends StatelessWidget {
         TextField(
           controller: controller,
           obscureText: obsecureText,
+          style: TextStyle(color: Colors.black),
           decoration: InputDecoration(
             filled: true,
             fillColor: Color(0xffEBEBEB),
             hintText: hint,
+            hintStyle: TextStyle(color: Colors.black54),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none),
