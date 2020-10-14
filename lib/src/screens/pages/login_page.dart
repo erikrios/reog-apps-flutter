@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:reog_apps_flutter/src/screens/pages/register_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
 
 class LoginPage extends StatefulWidget {
@@ -94,7 +95,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(width: 4),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            _navigateToRegister(context);
+                          },
                           child: Text(
                             'register'.tr(),
                             style: TextStyle(
@@ -114,5 +117,11 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _navigateToRegister(BuildContext context) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return RegisterPage();
+    }));
   }
 }
