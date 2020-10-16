@@ -1,6 +1,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:reog_apps_flutter/src/models/news_result.dart';
+import 'package:reog_apps_flutter/src/service/header_interceptor.dart';
 
 part 'reog_apps_service.chopper.dart';
 
@@ -10,7 +11,7 @@ abstract class ReogAppsService extends ChopperService {
   Future<Response<NewsResult>> getNews(
       {@Query('page') int page, @Query('limit') int limit = 20});
 
-  static ReogAppsService create() {
+  static ReogAppsService create(String authTokenValue) {
     final client = ChopperClient(
       baseUrl: DotEnv().env['BASE_URL'],
       services: [
@@ -18,6 +19,7 @@ abstract class ReogAppsService extends ChopperService {
       ],
       interceptors: [
         HttpLoggingInterceptor(),
+        HeaderInterceptor(authTokenValue: authTokenValue),
       ],
     );
 
