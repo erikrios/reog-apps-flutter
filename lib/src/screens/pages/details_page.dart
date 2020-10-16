@@ -113,7 +113,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
                               child: Image.memory(
-                                base64Decode(image),
+                                base64Decode(""),
                                 fit: BoxFit.cover,
                               ),
                             );
