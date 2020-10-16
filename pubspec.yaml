@@ -31,12 +31,13 @@ dependencies:
   carousel_slider: ^2.3.1
   shared_preferences: ^0.5.12
   easy_localization: ^2.3.3
-  chopper: ^2.0.0
+  chopper: ^3.0.3
+  json_annotation: ^3.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.10.3
+  build_runner:
   chopper_generator: ^3.0.3
 
 
