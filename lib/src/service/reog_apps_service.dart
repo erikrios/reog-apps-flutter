@@ -11,7 +11,7 @@ abstract class ReogAppsService extends ChopperService {
   Future<Response<NewsResult>> getNews(
       {@Query('page') int page, @Query('limit') int limit = 20});
 
-  static ReogAppsService create(String authTokenValue) {
+  static ReogAppsService create({String authTokenValue = ""}) {
     final client = ChopperClient(
       baseUrl: DotEnv().env['BASE_URL'],
       services: [
