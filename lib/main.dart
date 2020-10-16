@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:logging/logging.dart';
 import 'package:reog_apps_flutter/src/utils/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'src/screens/pages/splash_screen_page.dart';
@@ -8,6 +9,7 @@ import 'src/utils/constants.dart' as Constants;
 
 Future main() async {
   await DotEnv().load('.env');
+  _setupLogging();
   runApp(EasyLocalization(
     child: MyApp(),
     supportedLocales: <Locale>[
@@ -31,6 +33,13 @@ Future main() async {
     path: 'assets/translations',
     fallbackLocale: Locale('en'),
   ));
+}
+
+void _setupLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((rec) {
+    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
 }
 
 class MyApp extends StatefulWidget {
