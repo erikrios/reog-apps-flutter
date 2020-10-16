@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/models/news.dart';
 
 part 'news_result.g.dart';
