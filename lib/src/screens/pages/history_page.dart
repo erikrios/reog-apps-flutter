@@ -53,11 +53,7 @@ class _HistoryPageState extends State<HistoryPage> {
         body: ListView.builder(
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
-              child: ArticleItem(
-                  "_articles[index].images[0]",
-                  _articles[index].title,
-                  _articles[index].description,
-                  _articles[index].date),
+              child: ArticleItem(),
               onTap: () async {
                 bool result = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) {
@@ -73,6 +69,4 @@ class _HistoryPageState extends State<HistoryPage> {
       ),
     );
   }
-
-  
 }

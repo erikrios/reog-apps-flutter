@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class ArticleItem extends StatelessWidget {
-  final String _image;
-  final String _title;
-  final String _description;
-  final String _date;
+  final String image;
+  final String title;
+  final String description;
+  final String date;
 
-  ArticleItem(this._image, this._title, this._description, this._date);
+  ArticleItem({this.image, this.title, this.description, this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ArticleItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.memory(
-                    base64Decode(_image),
+                    base64Decode(image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -40,7 +40,7 @@ class ArticleItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            _title,
+                            title,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.start,
@@ -50,7 +50,7 @@ class ArticleItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            _description,
+                            description,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 12.0),
@@ -59,7 +59,7 @@ class ArticleItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: Text(
-                            _date,
+                            date,
                             style: TextStyle(
                                 fontSize: 10.0, color: Colors.black54),
                           ),
