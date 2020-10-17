@@ -22,6 +22,7 @@ class NewsPage extends StatelessWidget {
     return StreamBuilder<Response>(
         stream: bloc.stream,
         builder: (context, snapshot) {
+          print(snapshot.hasData);
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),

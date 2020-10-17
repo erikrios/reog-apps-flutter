@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reog_apps_flutter/src/bloc/bloc_provider.dart';
-import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/foods_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/news_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
