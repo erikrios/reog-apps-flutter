@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
+import 'package:reog_apps_flutter/src/bloc/bloc_provider.dart';
+import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/splash_screen_page.dart';
 import 'package:reog_apps_flutter/src/utils/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,19 +67,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'app_name'.tr(),
-      theme: ThemeData(
-        brightness: currentBrightness.isDark(),
-        primarySwatch: MaterialColor(0xff97DA7B, swatch),
-        primaryTextTheme: TextTheme(
-          headline6: TextStyle(
-            color: Colors.white,
+    return BlocProvider<NewsResultBloc>(
+      bloc: NewsResultBloc(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'app_name'.tr(),
+        theme: ThemeData(
+          brightness: currentBrightness.isDark(),
+          primarySwatch: MaterialColor(0xff97DA7B, swatch),
+          primaryTextTheme: TextTheme(
+            headline6: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
+        home: SplashScreenPage(),
       ),
-      home: SplashScreenPage(),
     );
   }
 

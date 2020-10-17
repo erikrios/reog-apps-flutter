@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/src/bloc/bloc_provider.dart';
+import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/foods_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/news_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
@@ -32,6 +34,10 @@ class _ExplorePageState extends State<ExplorePage>
 
   @override
   Widget build(BuildContext context) {
+    final newsPage = NewsPage();
+    final sitesPage = SitesPage();
+    final foodsPage = FoodsPage();
+
     return Scaffold(
       body: NestedScrollView(
         controller: _scrollViewController,
@@ -71,9 +77,9 @@ class _ExplorePageState extends State<ExplorePage>
         },
         body: TabBarView(
           children: [
-            NewsPage(),
-            SitesPage(),
-            FoodsPage(),
+            newsPage,
+            sitesPage,
+            foodsPage,
           ],
           controller: _tabController,
         ),

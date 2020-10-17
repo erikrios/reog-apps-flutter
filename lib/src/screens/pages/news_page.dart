@@ -13,16 +13,9 @@ import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = NewsResultBloc();
+    final bloc = BlocProvider.of<NewsResultBloc>(context);
     bloc.getNews();
-    return _buildNews(bloc);
-  }
-
-  BlocProvider<NewsResultBloc> _buildNews(NewsResultBloc bloc) {
-    return BlocProvider<NewsResultBloc>(
-      bloc: bloc,
-      child: _buldStreamBuilder(bloc),
-    );
+    return _buldStreamBuilder(bloc);
   }
 
   StreamBuilder _buldStreamBuilder(NewsResultBloc bloc) {
