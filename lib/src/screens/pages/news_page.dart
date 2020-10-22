@@ -12,7 +12,7 @@ class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<NewsResultBloc>(context);
-    bloc.add(NewsResultFetching());
+    if (!(bloc.state is NewsResultSuccessState)) bloc.add(NewsResultFetching());
 
     return _buildBlocBuilder(bloc);
   }
