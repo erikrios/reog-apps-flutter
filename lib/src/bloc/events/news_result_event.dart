@@ -6,3 +6,5 @@ abstract class NewsResultEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class NewsResultFetching extends NewsResultEvent {}
