@@ -1,21 +1,32 @@
-import 'dart:async';
+import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:reog_apps_flutter/src/bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/events/news_result_event.dart';
+import 'package:reog_apps_flutter/src/bloc/states/news_result_state.dart';
+import 'package:reog_apps_flutter/src/models/news_result.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
 
-class NewsResultBloc implements Bloc {
-  final _controller = StreamController<Response>.broadcast();
-  final _client = ReogAppsService.create();
-  Stream<Response> get stream => _controller.stream;
+class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
+  final ReogAppsService service;
 
-  void getNews() async {
-    final results = await _client.getNews();
-    _controller.sink.add(results);
-  }
+  NewsResultBloc({@required this.service})
+      : assert(service != null),
+        super(NewsResultLoadingState());
 
   @override
-  void dispose() {
-    _controller.close();
+  Stream<NewsResultState> mapEventToState(NewsResultEvent event) async* {
+    if (event is NewsResultFetching) {
+      yield NewsResultLoadingState();
+      try {
+        Response response =
+            await service.getNews(page: event.page, limit: event.limit);
+        NewsResult newsResult = jsonDecode(response.body);
+        yield NewsResultSuccessState(newsResult: newsResult);
+      } catch (e) {
+        yield NewsResultErrorState(error: e.toString());
+      }
+    }
   }
 }
