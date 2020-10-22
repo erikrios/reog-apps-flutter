@@ -7,4 +7,9 @@ abstract class NewsResultEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class NewsResultFetching extends NewsResultEvent {}
+class NewsResultFetching extends NewsResultEvent {
+  final int page;
+  final int limit;
+
+  const NewsResultFetching({this.page, this.limit});
+}
