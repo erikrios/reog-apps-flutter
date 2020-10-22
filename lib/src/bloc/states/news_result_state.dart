@@ -18,3 +18,12 @@ class NewsResultSuccessState extends NewsResultState {
   @override
   List<Object> get props => [newsResult];
 }
+
+class NewsResultErrorState extends NewsResultState {
+  final String error;
+
+  NewsResultErrorState({this.error});
+
+  @override
+  List<Object> get props => [error];
+}
