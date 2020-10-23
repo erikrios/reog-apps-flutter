@@ -52,7 +52,7 @@ class NewsPage extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       child: ArticleItem(
-                        image: news.news[index].images[0].image ?? "",
+                        image: news.news[index].images.isEmpty? "" : news.news[index].images[0],
                         title: news.news[index].title ?? "",
                         date: news.news[index].date ?? "",
                         description: news.news[index].description ?? "",
