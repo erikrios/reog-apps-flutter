@@ -60,6 +60,7 @@ class NewsPage extends StatelessWidget {
                       onTap: () {
                         _navigateToDetails(
                           context: context,
+                          article: news.news[index]
                         );
                       },
                     );
