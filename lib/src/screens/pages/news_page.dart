@@ -52,10 +52,10 @@ class NewsPage extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       child: ArticleItem(
-                        image: news.news[index].images[0].image,
-                        title: news.news[index].title,
-                        date: news.news[index].date,
-                        description: news.news[index].description,
+                        image: news.news[index].images[0].image ?? "",
+                        title: news.news[index].title ?? "",
+                        date: news.news[index].date ?? "",
+                        description: news.news[index].description ?? "",
                       ),
                       onTap: () {
                         _navigateToDetails(
