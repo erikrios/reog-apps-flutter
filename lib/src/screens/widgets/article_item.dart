@@ -23,10 +23,20 @@ class ArticleItem extends StatelessWidget {
                 width: 100.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.memory(
-                    base64Decode(image),
-                    fit: BoxFit.cover,
-                  ),
+                  child: image.isEmpty
+                      ? Container(
+                          color: Colors.grey,
+                          child: Center(child: Text('No Image')),
+                        )
+                      : image.contains('http')
+                          ? Image.network(
+                              image,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.memory(
+                              base64Decode(image),
+                              fit: BoxFit.cover,
+                            ),
                 ),
               ),
               Expanded(
