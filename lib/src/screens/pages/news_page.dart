@@ -51,6 +51,7 @@ class NewsPage extends StatelessWidget {
               : ListView.builder(
                   padding: EdgeInsets.all(12.0),
                   itemCount: news.news.length,
+                  controller: _controller,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       child: ArticleItem(
