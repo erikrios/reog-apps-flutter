@@ -22,10 +22,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    print('Call');
-    // bloc = BlocProvider.of<NewsResultBloc>(context);
-    // if (!(bloc.state is NewsResultSuccessState))
-    //   bloc.add(NewsResultFetching(page: _currentPage, limit: 15));
+    bloc = BlocProvider.of<NewsResultBloc>(context);
   }
 
   @override
@@ -43,20 +40,20 @@ class _NewsPageState extends State<NewsPage> {
 
   Widget _buildBlocBuilder(NewsResultBloc bloc) {
     return BlocBuilder<NewsResultBloc, NewsResultState>(
-      cubit: bloc,
-      builder: (BuildContext context, NewsResultState state) {
-        return state is NewsResultLoadingState
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : state is NewsResultErrorState
-                ? Center(
-                    child: Text(state.error),
-                  )
-                : _buildNewsResults(
-                    (state as NewsResultSuccessState).newsResult);
-      },
-    );
+        cubit: bloc,
+        builder: (BuildContext context, NewsResultState state) {
+          if (state is NewsResultInitialState) {
+            bloc.add(NewsResultFetching(page: _currentPage, limit: 5));
+            return Center(child: CircularProgressIndicator());
+          } else if (state is NewsResultLoadingState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is NewsResultErrorState) {
+            return Center(child: Text(state.error));
+          } else {
+            return _buildNewsResults(
+                (state as NewsResultSuccessState).newsResult);
+          }
+        });
   }
 
   Widget _buildNewsResults(NewsResult newsResult) {

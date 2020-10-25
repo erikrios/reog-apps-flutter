@@ -25,6 +25,7 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
         final newsResult = NewsResult.fromJson(jsonDecode(response.body));
         yield NewsResultSuccessState(newsResult: newsResult);
       } catch (e) {
+        print(e);
         yield NewsResultErrorState(error: e.toString());
       }
     }
