@@ -40,7 +40,9 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
         newsResult.data[0].news.clear();
         newsResult.data[0].news.addAll(news);
         yield NewsResultSuccessState(newsResult: newsResult);
-      } catch (e) {}
+      } catch (e) {
+        yield NewsResultErrorState(error: e.toString());
+      }
     }
   }
 }
