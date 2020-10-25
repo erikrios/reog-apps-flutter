@@ -5,6 +5,11 @@ abstract class NewsResultState extends Equatable {
   const NewsResultState();
 }
 
+class NewsResultInitialState extends NewsResultState {
+  @override
+  List<Object> get props => [];
+}
+
 class NewsResultLoadingState extends NewsResultState {
   @override
   List<Object> get props => [];

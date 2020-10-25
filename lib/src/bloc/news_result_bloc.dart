@@ -13,7 +13,7 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
 
   NewsResultBloc({@required this.service})
       : assert(service != null),
-        super(NewsResultLoadingState());
+        super(NewsResultInitialState());
 
   @override
   Stream<NewsResultState> mapEventToState(NewsResultEvent event) async* {

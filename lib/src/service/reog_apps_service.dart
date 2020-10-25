@@ -8,7 +8,7 @@ part 'reog_apps_service.chopper.dart';
 abstract class ReogAppsService extends ChopperService {
   @Get(path: 'api/news')
   Future<Response> getNews(
-      {@Query('page') int page = 1, @Query('limit') int limit = 20});
+      {@Query('page') int page = 1, @Query('limit') int limit = 10});
 
   static ReogAppsService create({String authTokenValue = ""}) {
     final client = ChopperClient(

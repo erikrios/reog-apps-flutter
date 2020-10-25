@@ -8,13 +8,35 @@ import 'package:reog_apps_flutter/src/models/news_result.dart';
 import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 
-class NewsPage extends StatelessWidget {
+class NewsPage extends StatefulWidget {
+  @override
+  _NewsPageState createState() => _NewsPageState();
+}
+
+class _NewsPageState extends State<NewsPage> {
+  NewsResultBloc bloc;
   final ScrollController _controller = ScrollController();
+  int _currentPage = 1;
+  int _totalPages = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    print('Call');
+    // bloc = BlocProvider.of<NewsResultBloc>(context);
+    // if (!(bloc.state is NewsResultSuccessState))
+    //   bloc.add(NewsResultFetching(page: _currentPage, limit: 15));
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<NewsResultBloc>(context);
-    if (!(bloc.state is NewsResultSuccessState)) bloc.add(NewsResultFetching());
+    // _controller.addListener(() {
+    //   if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+    //     if (_currentPage <= _totalPages) {
+    //       print('Last');
+    //     }
+    //   }
+    // });
 
     return _buildBlocBuilder(bloc);
   }
@@ -40,6 +62,8 @@ class NewsPage extends StatelessWidget {
   Widget _buildNewsResults(NewsResult newsResult) {
     final status = newsResult.status;
     final news = newsResult.data[0];
+    _currentPage = newsResult.data[0].currentPage;
+    _totalPages = newsResult.data[0].totalPages;
 
     return Container(
       child: status.toLowerCase() == 'error'
