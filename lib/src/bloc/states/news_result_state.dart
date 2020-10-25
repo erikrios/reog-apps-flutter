@@ -15,6 +15,11 @@ class NewsResultLoadingState extends NewsResultState {
   List<Object> get props => [];
 }
 
+class NewsResultLoadingMoreState extends NewsResultState {
+  @override
+  List<Object> get props => [];
+}
+
 class NewsResultSuccessState extends NewsResultState {
   final NewsResult newsResult;
 
