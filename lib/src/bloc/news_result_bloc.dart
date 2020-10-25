@@ -35,7 +35,7 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
       try {
         Response response =
             await service.getNews(page: event.page, limit: event.limit);
-        final newsResult = NewsResult.fromJson(jsonDecode(response.bodyString));
+        final newsResult = NewsResult.fromJson(jsonDecode(response.body));
         news.addAll(newsResult.data[0].news);
         newsResult.data[0].news.clear();
         newsResult.data[0].news.addAll(news);
