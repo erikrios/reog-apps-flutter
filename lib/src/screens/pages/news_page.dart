@@ -77,20 +77,23 @@ class _NewsPageState extends State<NewsPage> {
                           padding: EdgeInsets.all(12.0),
                           itemCount: news.news.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                              child: ArticleItem(
-                                image: news.news[index].images.isEmpty
-                                    ? ""
-                                    : news.news[index].images[0],
-                                title: news.news[index].title ?? "",
-                                date: news.news[index].date ?? "",
-                                description: news.news[index].description ?? "",
+                            return Material(
+                              child: InkWell(
+                                child: ArticleItem(
+                                  image: news.news[index].images.isEmpty
+                                      ? ""
+                                      : news.news[index].images[0],
+                                  title: news.news[index].title ?? "",
+                                  date: news.news[index].date ?? "",
+                                  description:
+                                      news.news[index].description ?? "",
+                                ),
+                                onTap: () {
+                                  _navigateToDetails(
+                                      context: context,
+                                      article: news.news[index]);
+                                },
                               ),
-                              onTap: () {
-                                _navigateToDetails(
-                                    context: context,
-                                    article: news.news[index]);
-                              },
                             );
                           },
                         ),
