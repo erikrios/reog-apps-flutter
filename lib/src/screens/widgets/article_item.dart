@@ -71,7 +71,8 @@ class ArticleItem extends StatelessWidget {
                           child: Text(
                             date,
                             style: TextStyle(
-                                fontSize: 10.0, color: Colors.black54),
+                              fontSize: 10.0,
+                            ),
                           ),
                         ),
                       ],
