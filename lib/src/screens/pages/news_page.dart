@@ -82,7 +82,7 @@ class _NewsPageState extends State<NewsPage> {
                                 child: ArticleItem(
                                   image: news.news[index].images.isEmpty
                                       ? ""
-                                      : news.news[index].images[0],
+                                      : news.news[index].images[0].image,
                                   title: news.news[index].title ?? "",
                                   date: news.news[index].date ?? "",
                                   description:

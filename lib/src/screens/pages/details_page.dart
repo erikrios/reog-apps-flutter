@@ -1,11 +1,11 @@
-import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/models/comment.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/comment_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class DetailsPage extends StatefulWidget {
   final Article _article;
@@ -112,8 +112,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             return Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
-                              child: Image.memory(
-                                base64Decode(""),
+                              child: Image.network(
+                                image.image,
                                 fit: BoxFit.cover,
                               ),
                             );
