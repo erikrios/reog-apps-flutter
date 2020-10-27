@@ -32,6 +32,23 @@ class ArticleItem extends StatelessWidget {
                           ? Image.network(
                               image,
                               fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                return (loadingProgress == null)
+                                    ? child
+                                    : Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes
+                                              : null,
+                                        ),
+                                      );
+                              },
                             )
                           : Image.memory(
                               base64Decode(image),
