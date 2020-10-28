@@ -65,10 +65,12 @@ class _NewsPageState extends State<NewsPage> {
                   return;
                 },
                 child: ListView(children: [
-                  Center(
-                      child: Text((state as NewsResultSuccessState)
-                          .newsResult
-                          .message)),
+                  Container(
+                    child: Center(
+                        child: Text((state as NewsResultSuccessState)
+                            .newsResult
+                            .message)),
+                  ),
                 ]),
               )
             : news.news.isEmpty
