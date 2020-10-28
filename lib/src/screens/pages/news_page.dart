@@ -43,7 +43,17 @@ class _NewsPageState extends State<NewsPage> {
           } else if (state is NewsResultLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is NewsResultErrorState) {
-            return Center(child: Text(state.error));
+            return RefreshIndicator(
+              onRefresh: () {
+                _bloc.add(NewsResultFetching(page: 1, limit: _limit));
+                return;
+              },
+              child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(child: Text(state.error)))),
+            );
           } else {
             return _buildNewsResults(state);
           }
@@ -64,14 +74,16 @@ class _NewsPageState extends State<NewsPage> {
                   _bloc.add(NewsResultFetching(page: 1, limit: _limit));
                   return;
                 },
-                child: ListView(children: [
-                  Container(
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
                     child: Center(
                         child: Text((state as NewsResultSuccessState)
                             .newsResult
                             .message)),
                   ),
-                ]),
+                ),
               )
             : news.news.isEmpty
                 ? Center(
