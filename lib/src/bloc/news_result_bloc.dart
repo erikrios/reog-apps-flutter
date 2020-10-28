@@ -25,6 +25,7 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
         Response response =
             await service.getNews(page: event.page, limit: event.limit);
         final newsResult = NewsResult.fromJson(jsonDecode(response.body));
+        news.clear();
         news.addAll(newsResult.data[0].news);
         yield NewsResultSuccessState(newsResult: newsResult);
       } catch (e) {

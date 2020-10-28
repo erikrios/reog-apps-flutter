@@ -68,41 +68,48 @@ class _NewsPageState extends State<NewsPage> {
                   )
                 : LazyLoadScrollView(
                     onEndOfPage: _loadMoreData,
-                    child: ListView(
-                      padding: EdgeInsets.all(0),
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.all(12.0),
-                          itemCount: news.news.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Material(
-                              child: InkWell(
-                                child: ArticleItem(
-                                  image: news.news[index].images.isEmpty
-                                      ? ""
-                                      : news.news[index].images[0].image,
-                                  title: news.news[index].title ?? "",
-                                  date: news.news[index].date ?? "",
-                                  description:
-                                      news.news[index].description ?? "",
+                    child: RefreshIndicator(
+                      onRefresh: () {
+                        _bloc.add(
+                            NewsResultFetching(page: 1, limit: _limit));
+                        return;
+                      },
+                      child: ListView(
+                        padding: EdgeInsets.all(0),
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.all(12.0),
+                            itemCount: news.news.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Material(
+                                child: InkWell(
+                                  child: ArticleItem(
+                                    image: news.news[index].images.isEmpty
+                                        ? ""
+                                        : news.news[index].images[0].image,
+                                    title: news.news[index].title ?? "",
+                                    date: news.news[index].date ?? "",
+                                    description:
+                                        news.news[index].description ?? "",
+                                  ),
+                                  onTap: () {
+                                    _navigateToDetails(
+                                        context: context,
+                                        article: news.news[index]);
+                                  },
                                 ),
-                                onTap: () {
-                                  _navigateToDetails(
-                                      context: context,
-                                      article: news.news[index]);
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                        (state is NewsResultLoadingMoreState)
-                            ? Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : SizedBox()
-                      ],
+                              );
+                            },
+                          ),
+                          (state is NewsResultLoadingMoreState)
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : SizedBox()
+                        ],
+                      ),
                     ),
                   ));
   }
