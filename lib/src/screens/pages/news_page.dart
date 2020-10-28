@@ -59,9 +59,18 @@ class _NewsPageState extends State<NewsPage> {
     }
     return Container(
         child: status.toLowerCase() == 'error'
-            ? Center(
-                child:
-                    Text((state as NewsResultSuccessState).newsResult.message))
+            ? RefreshIndicator(
+                onRefresh: () {
+                  _bloc.add(NewsResultFetching(page: 1, limit: _limit));
+                  return;
+                },
+                child: ListView(children: [
+                  Center(
+                      child: Text((state as NewsResultSuccessState)
+                          .newsResult
+                          .message)),
+                ]),
+              )
             : news.news.isEmpty
                 ? Center(
                     child: Text('News is empty.'),
@@ -70,8 +79,7 @@ class _NewsPageState extends State<NewsPage> {
                     onEndOfPage: _loadMoreData,
                     child: RefreshIndicator(
                       onRefresh: () {
-                        _bloc.add(
-                            NewsResultFetching(page: 1, limit: _limit));
+                        _bloc.add(NewsResultFetching(page: 1, limit: _limit));
                         return;
                       },
                       child: ListView(
