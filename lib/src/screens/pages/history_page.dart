@@ -5,6 +5,7 @@ import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:reog_apps_flutter/src/utils/article_type.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -57,7 +58,7 @@ class _HistoryPageState extends State<HistoryPage> {
               onTap: () async {
                 bool result = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) {
-                  return DetailsPage(_articles[index]);
+                  return DetailsPage(_articles[index], ArticleType.history);
                 }));
                 print(result);
               },
