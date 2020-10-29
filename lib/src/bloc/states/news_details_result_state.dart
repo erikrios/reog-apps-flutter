@@ -9,3 +9,8 @@ class NewsDetailsResultInitialState extends NewsDetailsResultState {
   List<Object> get props => [];
 }
 
+class NewsDetailsResultLoadingState extends NewsDetailsResultState {
+  @override
+  List<Object> get props => [];
+}
+
