@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:reog_apps_flutter/src/models/article_details_result.dart';
 
 abstract class NewsDetailsResultState extends Equatable {
   const NewsDetailsResultState();
@@ -14,3 +15,11 @@ class NewsDetailsResultLoadingState extends NewsDetailsResultState {
   List<Object> get props => [];
 }
 
+class NewsDetailsResultSuccessState extends NewsDetailsResultState {
+  final ArticleDetailsResult newsDetailsResult;
+
+  NewsDetailsResultSuccessState({this.newsDetailsResult});
+
+  @override
+  List<Object> get props => [newsDetailsResult];
+}
