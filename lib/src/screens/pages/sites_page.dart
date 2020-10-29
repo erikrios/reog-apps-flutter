@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/sites_item.dart';
+import 'package:reog_apps_flutter/src/utils/article_type.dart';
 
 class SitesPage extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _SitesPageState extends State<SitesPage> {
             onTap: () async {
               bool result = await Navigator.push(context,
                   MaterialPageRoute(builder: (context) {
-                return DetailsPage(_articles[index]);
+                return DetailsPage(_articles[index], ArticleType.sites);
               }));
               print(result);
             },
