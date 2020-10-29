@@ -8,6 +8,7 @@ import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/models/articles.dart';
 import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
+import 'package:reog_apps_flutter/src/utils/article_type.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -147,7 +148,7 @@ class _NewsPageState extends State<NewsPage> {
       {@required BuildContext context, Article article}) async {
     bool result =
         await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return DetailsPage(article);
+      return DetailsPage(article, ArticleType.news);
     }));
 
     print(result);
