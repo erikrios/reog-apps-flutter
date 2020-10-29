@@ -17,10 +17,17 @@ class _$ReogAppsService extends ReogAppsService {
   final definitionType = ReogAppsService;
 
   @override
-  Future<Response<dynamic>> getNews({int page, int limit = 20}) {
+  Future<Response<dynamic>> getNews({int page = 1, int limit = 10}) {
     final $url = 'api/news';
     final $params = <String, dynamic>{'page': page, 'limit': limit};
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getNewsDetails(String id) {
+    final $url = 'api/news/$id';
+    final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 }
