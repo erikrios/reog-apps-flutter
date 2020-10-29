@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +27,9 @@ class ArticleDetailsResultBloc
       yield ArticleDetailsResultLoadingState();
       try {
         Response response = await _getResponse(service, type, event.id);
+        print(response.body);
         final articleDetailsResult =
-            ArticleDetailsResult.fromJson(response.body);
+            ArticleDetailsResult.fromJson(jsonDecode(response.body));
         article = articleDetailsResult.data[0];
         yield ArticleDetailsResultSuccessState(
             articleDetailsResult: articleDetailsResult);
