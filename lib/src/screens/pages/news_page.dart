@@ -5,7 +5,7 @@ import 'package:reog_apps_flutter/src/bloc/events/news_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/states/news_result_state.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
-import 'package:reog_apps_flutter/src/models/news.dart';
+import 'package:reog_apps_flutter/src/models/articles.dart';
 import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 
@@ -20,7 +20,7 @@ class _NewsPageState extends State<NewsPage> {
   int _totalPages = 1;
   final int _limit = 5;
   String status;
-  News news;
+  Articles news;
 
   @override
   void initState() {
@@ -85,7 +85,7 @@ class _NewsPageState extends State<NewsPage> {
                   ),
                 ),
               )
-            : news.news.isEmpty
+            : news.articles.isEmpty
                 ? Center(
                     child: Text('News is empty.'),
                   )
@@ -103,23 +103,23 @@ class _NewsPageState extends State<NewsPage> {
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.all(12.0),
-                            itemCount: news.news.length,
+                            itemCount: news.articles.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Material(
                                 child: InkWell(
                                   child: ArticleItem(
-                                    image: news.news[index].images.isEmpty
+                                    image: news.articles[index].images.isEmpty
                                         ? ""
-                                        : news.news[index].images[0].image,
-                                    title: news.news[index].title ?? "",
-                                    date: news.news[index].date ?? "",
+                                        : news.articles[index].images[0].image,
+                                    title: news.articles[index].title ?? "",
+                                    date: news.articles[index].date ?? "",
                                     description:
-                                        news.news[index].description ?? "",
+                                        news.articles[index].description ?? "",
                                   ),
                                   onTap: () {
                                     _navigateToDetails(
                                         context: context,
-                                        article: news.news[index]);
+                                        article: news.articles[index]);
                                   },
                                 ),
                               );

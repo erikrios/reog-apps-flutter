@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:reog_apps_flutter/src/models/news_result.dart';
+import 'package:reog_apps_flutter/src/models/articles_result.dart';
 
 abstract class NewsResultState extends Equatable {
   const NewsResultState();
@@ -21,7 +21,7 @@ class NewsResultLoadingMoreState extends NewsResultState {
 }
 
 class NewsResultSuccessState extends NewsResultState {
-  final NewsResult newsResult;
+  final ArticlesResult newsResult;
 
   NewsResultSuccessState({this.newsResult});
 

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/events/news_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/news_result_state.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
-import 'package:reog_apps_flutter/src/models/news_result.dart';
+import 'package:reog_apps_flutter/src/models/articles_result.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
 
 class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
@@ -24,9 +24,9 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
       try {
         Response response =
             await service.getNews(page: event.page, limit: event.limit);
-        final newsResult = NewsResult.fromJson(jsonDecode(response.body));
+        final newsResult = ArticlesResult.fromJson(jsonDecode(response.body));
         news.clear();
-        news.addAll(newsResult.data[0].news);
+        news.addAll(newsResult.data[0].articles);
         yield NewsResultSuccessState(newsResult: newsResult);
       } catch (e) {
         yield NewsResultErrorState(error: e.toString());
@@ -36,10 +36,10 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
       try {
         Response response =
             await service.getNews(page: event.page, limit: event.limit);
-        final newsResult = NewsResult.fromJson(jsonDecode(response.body));
-        news.addAll(newsResult.data[0].news);
-        newsResult.data[0].news.clear();
-        newsResult.data[0].news.addAll(news);
+        final newsResult = ArticlesResult.fromJson(jsonDecode(response.body));
+        news.addAll(newsResult.data[0].articles);
+        newsResult.data[0].articles.clear();
+        newsResult.data[0].articles.addAll(news);
         yield NewsResultSuccessState(newsResult: newsResult);
       } catch (e) {
         yield NewsResultErrorState(error: e.toString());
