@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/sites_result_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/splash_screen_page.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
 import 'package:reog_apps_flutter/src/utils/config.dart';
@@ -69,9 +70,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) =>
-          NewsResultBloc(service: ReogAppsService.create(authTokenValue: "")),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NewsResultBloc>(
+          create: (BuildContext context) => NewsResultBloc(
+              service: ReogAppsService.create(authTokenValue: "")),
+        ),
+        BlocProvider<SitesResultBloc>(
+          create: (BuildContext context) => SitesResultBloc(
+              service: ReogAppsService.create(authTokenValue: "")),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'app_name'.tr(),
