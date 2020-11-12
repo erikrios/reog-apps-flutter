@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:reog_apps_flutter/src/bloc/events/sites_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/sites_result_bloc.dart';
-import 'package:reog_apps_flutter/src/bloc/states/news_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/states/sites_result_state.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/models/articles.dart';
@@ -132,7 +131,7 @@ class _SitesPageState extends State<SitesPage> {
                               );
                             },
                           ),
-                          (state is NewsResultLoadingMoreState)
+                          (state is SitesResultLoadingMoreState)
                               ? Center(
                                   child: CircularProgressIndicator(),
                                 )
