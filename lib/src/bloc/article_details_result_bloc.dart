@@ -50,7 +50,7 @@ class ArticleDetailsResultBloc
         // TODO
         break;
       case ArticleType.sites:
-        // TODO
+        response = service.getSitesDetails(articleId);
         break;
       case ArticleType.history:
         // TODO
