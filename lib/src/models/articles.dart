@@ -5,7 +5,7 @@ part 'articles.g.dart';
 
 @JsonSerializable()
 class Articles {
-  @JsonKey(name: 'news')
+  @JsonKey(name: 'articles')
   List<Article> articles;
   @JsonKey(name: 'totalPages')
   int totalPages;
