@@ -30,4 +30,19 @@ class _$ReogAppsService extends ReogAppsService {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getSites({int page = 1, int limit = 10}) {
+    final $url = 'api/sites';
+    final $params = <String, dynamic>{'page': page, 'limit': limit};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getSitesDetails(String id) {
+    final $url = 'api/sites/$id';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
