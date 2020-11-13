@@ -135,7 +135,7 @@ class _SitesPageState extends State<SitesPage> {
                               ? Center(
                                   child: CircularProgressIndicator(),
                                 )
-                              : SizedBox()
+                              : SizedBox(),
                         ],
                       ),
                     ),
