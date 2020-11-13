@@ -20,10 +20,10 @@ class FoodsResultLoadingMoreState extends FoodsResultState {
   List<Object> get props => [];
 }
 
-class FoodsResultSuccessStata extends FoodsResultState {
+class FoodsResultSuccessState extends FoodsResultState {
   final ArticlesResult foodsResult;
 
-  FoodsResultSuccessStata({this.foodsResult});
+  FoodsResultSuccessState({this.foodsResult});
 
   @override
   List<Object> get props => [foodsResult];
