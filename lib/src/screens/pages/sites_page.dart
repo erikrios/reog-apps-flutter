@@ -36,7 +36,7 @@ class _SitesPageState extends State<SitesPage> {
 
   Widget _buildBlocBuilder(SitesResultBloc bloc) {
     return BlocBuilder<SitesResultBloc, SitesResultState>(
-        cubit: _bloc,
+        cubit: bloc,
         builder: (BuildContext context, SitesResultState state) {
           if (state is SitesResultInitialState) {
             bloc.add(SitesResultFetching(page: _currentPage, limit: _limit));
@@ -46,7 +46,7 @@ class _SitesPageState extends State<SitesPage> {
           } else if (state is SitesResultErrorState) {
             return RefreshIndicator(
               onRefresh: () {
-                _bloc.add(SitesResultFetching(page: 1, limit: _limit));
+                bloc.add(SitesResultFetching(page: 1, limit: _limit));
                 return;
               },
               child: SingleChildScrollView(
