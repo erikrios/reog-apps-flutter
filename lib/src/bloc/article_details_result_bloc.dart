@@ -47,7 +47,7 @@ class ArticleDetailsResultBloc
         response = service.getNewsDetails(articleId);
         break;
       case ArticleType.foods:
-        // TODO
+        response = service.getFoodsDetails(articleId);
         break;
       case ArticleType.sites:
         response = service.getSitesDetails(articleId);
