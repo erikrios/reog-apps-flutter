@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
+import 'package:reog_apps_flutter/src/bloc/foods_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/sites_result_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/splash_screen_page.dart';
@@ -78,6 +79,10 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<SitesResultBloc>(
           create: (BuildContext context) => SitesResultBloc(
+              service: ReogAppsService.create(authTokenValue: "")),
+        ),
+        BlocProvider<FoodsResultBloc>(
+          create: (BuildContext context) => FoodsResultBloc(
               service: ReogAppsService.create(authTokenValue: "")),
         ),
       ],
