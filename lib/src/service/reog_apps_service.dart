@@ -28,6 +28,13 @@ abstract class ReogAppsService extends ChopperService {
   @Get(path: 'api/foods/{id}}')
   Future<Response> getFoodsDetails(@Path('id') String id);
 
+  @Get(path: 'api/histories')
+  Future<Response> getHistories(
+      {@Query('page') int page = 1, @Query('limit') int limit = 10});
+
+  @Get(path: 'api/histories/{id}')
+  Future<Response> getHistoriesDetails({@Path('id') String id});
+
   static ReogAppsService create({String authTokenValue = ""}) {
     final client = ChopperClient(
       baseUrl: DotEnv().env['BASE_URL'],
