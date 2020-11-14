@@ -70,7 +70,7 @@ class _$ReogAppsService extends ReogAppsService {
   }
 
   @override
-  Future<Response<dynamic>> getHistoriesDetails({String id}) {
+  Future<Response<dynamic>> getHistoriesDetails(String id) {
     final $url = 'api/histories/$id';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
