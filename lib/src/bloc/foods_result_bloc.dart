@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/events/foods_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/foods_result_state.dart';
