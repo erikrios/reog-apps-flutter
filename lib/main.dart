@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 import 'package:reog_apps_flutter/src/bloc/foods_result_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/histories_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/sites_result_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/splash_screen_page.dart';
@@ -85,6 +86,10 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) => FoodsResultBloc(
               service: ReogAppsService.create(authTokenValue: "")),
         ),
+        BlocProvider<HistoriesResultBloc>(
+          create: (BuildContext context) => HistoriesResultBloc(
+              service: ReogAppsService.create(authTokenValue: "")),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
