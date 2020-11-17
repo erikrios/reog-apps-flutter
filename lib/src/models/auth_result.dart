@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_result.g.dart';
@@ -14,7 +14,8 @@ class AuthResult {
 
   AuthResult({this.status, this.data, this.message});
 
-  factory AuthResult.fromJson(Map<String, dynamic> json) => _$AuthResultFromJson(json);
+  factory AuthResult.fromJson(Map<String, dynamic> json) =>
+      _$AuthResultFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthResultToJson(this);
 }
