@@ -2,7 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/authentication_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/events/auth_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/auth_result_state.dart';
+import 'package:reog_apps_flutter/src/models/auth.dart';
+import 'package:reog_apps_flutter/src/screens/pages/dashboard_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/register_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
 
@@ -64,6 +67,14 @@ class LoginPage extends StatelessWidget {
                             cubit: _bloc,
                             builder:
                                 (BuildContext context, AuthResultState state) {
+                              if (state is AuthResultErrorState) {
+                                final snackbar =
+                                    SnackBar(content: Text(state.error));
+                                Scaffold.of(context).showSnackBar(snackbar);
+                              } else if (state is AuthResultSuccessState) {
+                                _navigateToDashboard(context);
+                              }
+
                               return RaisedButton(
                                 padding: EdgeInsets.only(top: 8, bottom: 8),
                                 color: Color(0xffE6CB34),
@@ -73,12 +84,24 @@ class LoginPage extends StatelessWidget {
                                 onPressed: () {
                                   String email = emailController.text;
                                   String password = passwordController.text;
+                                  if (!_validateLogin(email, password)) {
+                                    final snackbar = SnackBar(
+                                      content:
+                                          Text('Invalid email or password'),
+                                    );
+                                    Scaffold.of(context).showSnackBar(snackbar);
+                                  } else {
+                                    _bloc.add(Authenticating(Auth(
+                                        email: email, password: password)));
+                                  }
                                 },
-                                child: Text(
-                                  'login'.tr().toUpperCase(),
-                                  style: TextStyle(
-                                      fontSize: 26, color: Colors.white),
-                                ),
+                                child: (state is AuthResultLoadingState)
+                                    ? CircularProgressIndicator()
+                                    : Text(
+                                        'login'.tr().toUpperCase(),
+                                        style: TextStyle(
+                                            fontSize: 26, color: Colors.white),
+                                      ),
                               );
                             },
                           ),
@@ -130,6 +153,13 @@ class LoginPage extends StatelessWidget {
   void _navigateToRegister(BuildContext context) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return RegisterPage();
+    }));
+  }
+
+  void _navigateToDashboard(BuildContext context) async {
+    await Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) {
+      return DashboardPage();
     }));
   }
 
