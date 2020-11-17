@@ -24,6 +24,7 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthResultState> {
         final authResult = AuthResult.fromJson(jsonDecode(response.body));
         if (response.isSuccessful) {
           yield AuthResultSuccessState(authResult: authResult);
+          print(authResult.data[0]);
         } else
           yield AuthResultErrorState(error: authResult.message);
       } catch (e) {
