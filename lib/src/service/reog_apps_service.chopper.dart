@@ -77,7 +77,7 @@ class _$ReogAppsService extends ReogAppsService {
   }
 
   @override
-  Future<Response<dynamic>> authenticate(Map<String, dynamic> body) {
+  Future<Response<dynamic>> authenticate(String body) {
     final $url = 'api/auth';
     final $body = body;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
