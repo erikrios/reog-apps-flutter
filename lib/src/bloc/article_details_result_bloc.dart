@@ -27,7 +27,6 @@ class ArticleDetailsResultBloc
       yield ArticleDetailsResultLoadingState();
       try {
         Response response = await _getResponse(service, type, event.id);
-        print(response.body);
         final articleDetailsResult =
             ArticleDetailsResult.fromJson(jsonDecode(response.body));
         article = articleDetailsResult.data[0];
