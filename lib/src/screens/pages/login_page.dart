@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/authentication_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/states/auth_result_state.dart';
 import 'package:reog_apps_flutter/src/screens/pages/register_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
 
@@ -58,21 +59,28 @@ class LoginPage extends StatelessWidget {
                       Center(
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 2,
-                          child: RaisedButton(
-                            padding: EdgeInsets.only(top: 8, bottom: 8),
-                            color: Color(0xffE6CB34),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            onPressed: () {
-                              print(emailController.text);
-                              print(passwordController.text);
+                          child:
+                              BlocBuilder<AuthenticationBloc, AuthResultState>(
+                            cubit: _bloc,
+                            builder:
+                                (BuildContext context, AuthResultState state) {
+                              return RaisedButton(
+                                padding: EdgeInsets.only(top: 8, bottom: 8),
+                                color: Color(0xffE6CB34),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                onPressed: () {
+                                  String email = emailController.text;
+                                  String password = passwordController.text;
+                                },
+                                child: Text(
+                                  'login'.tr().toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: 26, color: Colors.white),
+                                ),
+                              );
                             },
-                            child: Text(
-                              'login'.tr().toUpperCase(),
-                              style:
-                                  TextStyle(fontSize: 26, color: Colors.white),
-                            ),
                           ),
                         ),
                       )
@@ -123,5 +131,16 @@ class LoginPage extends StatelessWidget {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return RegisterPage();
     }));
+  }
+
+  bool _validateLogin(String email, String password) {
+    bool isValid = true;
+
+    if (email.isEmpty || password.isEmpty) isValid = false;
+    if (!RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+            .hasMatch(email) ||
+        password.length < 5) isValid = false;
+
+    return isValid;
   }
 }
