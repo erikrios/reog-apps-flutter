@@ -1,14 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/authentication_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/register_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+  AuthenticationBloc _bloc;
 
   @override
   Widget build(BuildContext context) {
+    _bloc = BlocProvider.of<AuthenticationBloc>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
