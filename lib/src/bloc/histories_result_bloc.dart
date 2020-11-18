@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
@@ -31,7 +32,8 @@ class HistoriesResultBloc
           histories.addAll(historiesResult.data[0].articles);
           yield HistoriesResultSuccessState(historiesResult: historiesResult);
         } else {
-          final historiesResult = ArticlesResult.fromJson(response.error);
+          final historiesResult =
+              ArticlesResult.fromJson(jsonDecode(response.error));
           yield HistoriesResultErrorSState(error: historiesResult.message);
         }
       } catch (e) {
@@ -49,7 +51,8 @@ class HistoriesResultBloc
           historiesResult.data[0].articles.addAll(histories);
           yield HistoriesResultSuccessState(historiesResult: historiesResult);
         } else {
-          final historiesResult = ArticlesResult.fromJson(response.error);
+          final historiesResult =
+              ArticlesResult.fromJson(jsonDecode(response.error));
           yield HistoriesResultErrorSState(error: historiesResult.message);
         }
       } catch (e) {
