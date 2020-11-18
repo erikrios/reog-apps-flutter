@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
@@ -21,10 +20,11 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthResultState> {
       yield AuthResultLoadingState();
       try {
         Response response = await service.authenticate(event.auth.toJson());
-        final authResult = AuthResult.fromJson(jsonDecode(response.bodyString));
         if (response.isSuccessful) {
+          final authResult = AuthResult.fromJson(response.body);
           yield AuthResultSuccessState(authResult: authResult);
         } else {
+          final authResult = AuthResult.fromJson(response.error);
           yield AuthResultErrorState(error: authResult.message);
         }
       } catch (e) {
