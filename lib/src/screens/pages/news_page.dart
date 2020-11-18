@@ -20,7 +20,6 @@ class _NewsPageState extends State<NewsPage> {
   int _currentPage = 1;
   int _totalPages = 1;
   final int _limit = 5;
-  String status;
   Articles news;
 
   @override
@@ -63,78 +62,61 @@ class _NewsPageState extends State<NewsPage> {
 
   Widget _buildNewsResults(NewsResultState state) {
     if (state is NewsResultSuccessState) {
-      status = state.newsResult.status;
       news = state.newsResult.data[0];
       _currentPage = state.newsResult.data[0].currentPage;
       _totalPages = state.newsResult.data[0].totalPages;
     }
+
     return Container(
-        child: status.toLowerCase() == 'error'
-            ? RefreshIndicator(
-                onRefresh: () {
-                  _bloc.add(NewsResultFetching(page: 1, limit: _limit));
-                  return;
-                },
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Center(
-                        child: Text((state as NewsResultSuccessState)
-                            .newsResult
-                            .message)),
+        child: news.articles.isEmpty
+            ? Center(
+                child: Text('News is empty.'),
+              )
+            : LazyLoadScrollView(
+                onEndOfPage: _loadMoreData,
+                child: RefreshIndicator(
+                  onRefresh: () {
+                    _bloc.add(NewsResultFetching(page: 1, limit: _limit));
+                    return;
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.all(0),
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(12.0),
+                        itemCount: news.articles.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Material(
+                            child: InkWell(
+                              child: ArticleItem(
+                                image: news.articles[index].images.isEmpty
+                                    ? ""
+                                    : news.articles[index].images[0].image,
+                                title: news.articles[index].title ?? "",
+                                date: news.articles[index].date ?? "",
+                                description:
+                                    news.articles[index].description ?? "",
+                              ),
+                              onTap: () {
+                                _navigateToDetails(
+                                    context: context,
+                                    article: news.articles[index]);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      (state is NewsResultLoadingMoreState)
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : SizedBox()
+                    ],
                   ),
                 ),
-              )
-            : news.articles.isEmpty
-                ? Center(
-                    child: Text('News is empty.'),
-                  )
-                : LazyLoadScrollView(
-                    onEndOfPage: _loadMoreData,
-                    child: RefreshIndicator(
-                      onRefresh: () {
-                        _bloc.add(NewsResultFetching(page: 1, limit: _limit));
-                        return;
-                      },
-                      child: ListView(
-                        padding: EdgeInsets.all(0),
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.all(12.0),
-                            itemCount: news.articles.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Material(
-                                child: InkWell(
-                                  child: ArticleItem(
-                                    image: news.articles[index].images.isEmpty
-                                        ? ""
-                                        : news.articles[index].images[0].image,
-                                    title: news.articles[index].title ?? "",
-                                    date: news.articles[index].date ?? "",
-                                    description:
-                                        news.articles[index].description ?? "",
-                                  ),
-                                  onTap: () {
-                                    _navigateToDetails(
-                                        context: context,
-                                        article: news.articles[index]);
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                          (state is NewsResultLoadingMoreState)
-                              ? Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : SizedBox()
-                        ],
-                      ),
-                    ),
-                  ));
+              ));
   }
 
   void _loadMoreData() {
