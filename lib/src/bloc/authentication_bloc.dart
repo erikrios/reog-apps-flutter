@@ -1,4 +1,3 @@
-
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,9 +25,11 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthResultState> {
         } else {
           final authResult = AuthResult.fromJson(response.error);
           yield AuthResultErrorState(error: authResult.message);
+          yield AuthResultInitialState();
         }
       } catch (e) {
         yield AuthResultErrorState(error: e.toString());
+        yield AuthResultInitialState();
         throw e;
       }
     }
