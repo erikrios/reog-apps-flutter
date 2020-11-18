@@ -27,11 +27,18 @@ class ArticleDetailsResultBloc
       yield ArticleDetailsResultLoadingState();
       try {
         Response response = await _getResponse(service, type, event.id);
-        final articleDetailsResult =
-            ArticleDetailsResult.fromJson(jsonDecode(response.body));
-        article = articleDetailsResult.data[0];
-        yield ArticleDetailsResultSuccessState(
-            articleDetailsResult: articleDetailsResult);
+        if (response.isSuccessful) {
+          final articleDetailsResult =
+              ArticleDetailsResult.fromJson(response.body);
+          article = articleDetailsResult.data[0];
+          yield ArticleDetailsResultSuccessState(
+              articleDetailsResult: articleDetailsResult);
+        } else {
+          final articleDetailsResult =
+              ArticleDetailsResult.fromJson(jsonDecode(response.error));
+          yield ArticleDetailsResultErrorState(
+              error: articleDetailsResult.message);
+        }
       } catch (e) {
         yield ArticleDetailsResultErrorState(error: e.toString());
       }
