@@ -8,16 +8,16 @@ import 'package:reog_apps_flutter/src/models/auth.dart';
 import 'package:reog_apps_flutter/src/screens/pages/dashboard_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/register_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
+import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
-  AuthenticationBloc _bloc;
+  final AuthenticationBloc _bloc =
+      AuthenticationBloc(service: ReogAppsService.create());
 
   @override
   Widget build(BuildContext context) {
-    _bloc = BlocProvider.of<AuthenticationBloc>(context);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -67,14 +67,6 @@ class LoginPage extends StatelessWidget {
                             cubit: _bloc,
                             builder:
                                 (BuildContext context, AuthResultState state) {
-                              if (state is AuthResultErrorState) {
-                                final snackbar =
-                                    SnackBar(content: Text(state.error));
-                                Scaffold.of(context).showSnackBar(snackbar);
-                              } else if (state is AuthResultSuccessState) {
-                                _navigateToDashboard(context);
-                              }
-
                               return RaisedButton(
                                 padding: EdgeInsets.only(top: 8, bottom: 8),
                                 color: Color(0xffE6CB34),
@@ -93,6 +85,14 @@ class LoginPage extends StatelessWidget {
                                   } else {
                                     _bloc.add(Authenticating(Auth(
                                         email: email, password: password)));
+                                  }
+
+                                  if (state is AuthResultErrorState) {
+                                    final snackbar =
+                                        SnackBar(content: Text(state.error));
+                                    Scaffold.of(context).showSnackBar(snackbar);
+                                  } else if (state is AuthResultSuccessState) {
+                                    _navigateToDashboard(context);
                                   }
                                 },
                                 child: (state is AuthResultLoadingState)

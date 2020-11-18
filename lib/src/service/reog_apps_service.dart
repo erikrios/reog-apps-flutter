@@ -36,7 +36,7 @@ abstract class ReogAppsService extends ChopperService {
   Future<Response> getHistoriesDetails(@Path('id') String id);
 
   @Post(path: 'api/auth')
-  Future<Response> authenticate(@Body() String body);
+  Future<Response> authenticate(@Body() Map<String, dynamic> body);
 
   static ReogAppsService create({String authTokenValue = ""}) {
     final client = ChopperClient(
@@ -46,8 +46,9 @@ abstract class ReogAppsService extends ChopperService {
       ],
       interceptors: [
         HttpLoggingInterceptor(),
-        HeaderInterceptor(authTokenValue: authTokenValue),
+        // HeaderInterceptor(authTokenValue: authTokenValue),
       ],
+      converter: JsonConverter(),
     );
 
     return _$ReogAppsService(client);

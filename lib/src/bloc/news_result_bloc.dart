@@ -36,13 +36,16 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
       try {
         Response response =
             await service.getNews(page: event.page, limit: event.limit);
-        final newsResult = ArticlesResult.fromJson(jsonDecode(response.body));
-        news.addAll(newsResult.data[0].articles);
-        newsResult.data[0].articles.clear();
-        newsResult.data[0].articles.addAll(news);
-        yield NewsResultSuccessState(newsResult: newsResult);
+        // print(jsonDecode(response.body));
+        // final newsResult =
+        //     ArticlesResult.fromJson(jsonDecode(response.bodyString));
+        // news.addAll(newsResult.data[0].articles);
+        // newsResult.data[0].articles.clear();
+        // newsResult.data[0].articles.addAll(news);
+        // yield NewsResultSuccessState(newsResult: newsResult);
       } catch (e) {
         yield NewsResultErrorState(error: e.toString());
+        throw e;
       }
     }
   }

@@ -21,14 +21,15 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthResultState> {
       yield AuthResultLoadingState();
       try {
         Response response = await service.authenticate(event.auth.toJson());
-        final authResult = AuthResult.fromJson(jsonDecode(response.body));
+        final authResult = AuthResult.fromJson(jsonDecode(response.bodyString));
         if (response.isSuccessful) {
           yield AuthResultSuccessState(authResult: authResult);
-          print(authResult.data[0]);
-        } else
+        } else {
           yield AuthResultErrorState(error: authResult.message);
+        }
       } catch (e) {
         yield AuthResultErrorState(error: e.toString());
+        throw e;
       }
     }
   }

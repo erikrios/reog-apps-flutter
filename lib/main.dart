@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
-import 'package:reog_apps_flutter/src/bloc/authentication_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/foods_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/histories_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
@@ -91,9 +90,6 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) => HistoriesResultBloc(
               service: ReogAppsService.create(authTokenValue: "")),
         ),
-        BlocProvider<AuthenticationBloc>(
-            create: (BuildContext context) => AuthenticationBloc(
-                service: ReogAppsService.create(authTokenValue: ""))),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
