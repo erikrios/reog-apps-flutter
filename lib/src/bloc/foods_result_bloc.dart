@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
@@ -24,10 +23,15 @@ class FoodsResultBloc extends Bloc<FoodsResultEvent, FoodsResultState> {
       try {
         Response response =
             await service.getFoods(page: event.page, limit: event.limit);
-        final foodsResult = ArticlesResult.fromJson(jsonDecode(response.body));
-        foods.clear();
-        foods.addAll(foodsResult.data[0].articles);
-        yield FoodsResultSuccessState(foodsResult: foodsResult);
+        if (response.isSuccessful) {
+          final foodsResult = ArticlesResult.fromJson(response.body);
+          foods.clear();
+          foods.addAll(foodsResult.data[0].articles);
+          yield FoodsResultSuccessState(foodsResult: foodsResult);
+        } else {
+          final foodsResult = ArticlesResult.fromJson(response.error);
+          yield FoodsResultErrorState(error: foodsResult.message);
+        }
       } catch (e) {
         yield FoodsResultErrorState(error: e.toString());
       }
@@ -36,11 +40,16 @@ class FoodsResultBloc extends Bloc<FoodsResultEvent, FoodsResultState> {
       try {
         Response response =
             await service.getFoods(page: event.page, limit: event.limit);
-        final foodsResult = ArticlesResult.fromJson(jsonDecode(response.body));
-        foods.addAll(foodsResult.data[0].articles);
-        foodsResult.data[0].articles.clear();
-        foodsResult.data[0].articles.addAll(foods);
-        yield FoodsResultSuccessState(foodsResult: foodsResult);
+        if (response.isSuccessful) {
+          final foodsResult = ArticlesResult.fromJson(response.body);
+          foods.addAll(foodsResult.data[0].articles);
+          foodsResult.data[0].articles.clear();
+          foodsResult.data[0].articles.addAll(foods);
+          yield FoodsResultSuccessState(foodsResult: foodsResult);
+        } else {
+          final foodsResult = ArticlesResult.fromJson(response.error);
+          yield FoodsResultErrorState(error: foodsResult.message);
+        }
       } catch (e) {
         yield FoodsResultErrorState(error: e.toString());
       }
