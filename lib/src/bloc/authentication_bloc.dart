@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +25,7 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthResultState> {
           final authResult = AuthResult.fromJson(response.body);
           yield AuthResultSuccessState(authResult: authResult);
         } else {
-          final authResult = AuthResult.fromJson(response.error);
+          final authResult = AuthResult.fromJson(jsonDecode(response.error));
           yield AuthResultErrorState(error: authResult.message);
           yield AuthResultInitialState();
         }
