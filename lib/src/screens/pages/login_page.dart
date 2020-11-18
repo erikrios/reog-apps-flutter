@@ -67,17 +67,8 @@ class LoginPage extends StatelessWidget {
                             cubit: _bloc,
                             builder:
                                 (BuildContext context, AuthResultState state) {
-                              if (state is AuthResultLoadingState) {
-                                return CircularProgressIndicator();
-                              } else if (state is AuthResultErrorState) {
-                                final snackbar =
-                                    SnackBar(content: Text(state.error));
-                                Scaffold.of(context).showSnackBar(snackbar);
-                                return SizedBox();
-                              } else if (state is AuthResultSuccessState) {
-                                _navigateToDashboard(context);
-                                return SizedBox();
-                              } else {
+                              print(state.toString());
+                              if (state is AuthResultInitialState) {
                                 return RaisedButton(
                                   padding: EdgeInsets.only(top: 8, bottom: 8),
                                   color: Color(0xffE6CB34),
@@ -105,6 +96,27 @@ class LoginPage extends StatelessWidget {
                                         fontSize: 26, color: Colors.white),
                                   ),
                                 );
+                              } else if (state is AuthResultLoadingState) {
+                                return Center(
+                                  child: SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.amber),
+                                      )),
+                                );
+                              } else if (state is AuthResultSuccessState) {
+                                _navigateToDashboard(context);
+                                return SizedBox();
+                              } else {
+                                print('Error state');
+                                final snackbar = SnackBar(
+                                    content: Text(
+                                        (state as AuthResultErrorState).error));
+                                Scaffold.of(context).showSnackBar(snackbar);
+                                return SizedBox();
                               }
                             },
                           ),
