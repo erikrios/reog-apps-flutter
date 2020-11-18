@@ -24,7 +24,7 @@ class AuthResultSuccessState extends AuthResultState {
   List<Object> get props => [authResult];
 }
 
-class AuthResultErrorState extends AuthResultSuccessState {
+class AuthResultErrorState extends AuthResultState {
   final String error;
 
   const AuthResultErrorState({this.error});
