@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,10 +23,15 @@ class SitesResultBloc extends Bloc<SitesResultEvent, SitesResultState> {
       try {
         Response response =
             await service.getSites(page: event.page, limit: event.limit);
-        final sitesResult = ArticlesResult.fromJson(jsonDecode(response.body));
-        sites.clear();
-        sites.addAll(sitesResult.data[0].articles);
-        yield SitesResultSuccessState(sitesResult: sitesResult);
+        if (response.isSuccessful) {
+          final sitesResult = ArticlesResult.fromJson(response.body);
+          sites.clear();
+          sites.addAll(sitesResult.data[0].articles);
+          yield SitesResultSuccessState(sitesResult: sitesResult);
+        } else {
+          final sitesResult = ArticlesResult.fromJson(response.error);
+          yield SitesResultErrorState(error: sitesResult.message);
+        }
       } catch (e) {
         yield SitesResultErrorState(error: e.toString());
       }
@@ -36,11 +40,16 @@ class SitesResultBloc extends Bloc<SitesResultEvent, SitesResultState> {
       try {
         Response response =
             await service.getSites(page: event.page, limit: event.limit);
-        final sitesResult = ArticlesResult.fromJson(jsonDecode(response.body));
-        sites.addAll(sitesResult.data[0].articles);
-        sitesResult.data[0].articles.clear();
-        sitesResult.data[0].articles.addAll(sites);
-        yield SitesResultSuccessState(sitesResult: sitesResult);
+        if (response.isSuccessful) {
+          final sitesResult = ArticlesResult.fromJson(response.body);
+          sites.addAll(sitesResult.data[0].articles);
+          sitesResult.data[0].articles.clear();
+          sitesResult.data[0].articles.addAll(sites);
+          yield SitesResultSuccessState(sitesResult: sitesResult);
+        } else {
+          final sitesResult = ArticlesResult.fromJson(response.error);
+          yield SitesResultErrorState(error: sitesResult.message);
+        }
       } catch (e) {
         yield SitesResultErrorState(error: e.toString());
       }
