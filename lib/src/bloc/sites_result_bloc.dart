@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,8 @@ class SitesResultBloc extends Bloc<SitesResultEvent, SitesResultState> {
           sites.addAll(sitesResult.data[0].articles);
           yield SitesResultSuccessState(sitesResult: sitesResult);
         } else {
-          final sitesResult = ArticlesResult.fromJson(response.error);
+          final sitesResult =
+              ArticlesResult.fromJson(jsonDecode(response.error));
           yield SitesResultErrorState(error: sitesResult.message);
         }
       } catch (e) {
@@ -47,7 +49,8 @@ class SitesResultBloc extends Bloc<SitesResultEvent, SitesResultState> {
           sitesResult.data[0].articles.addAll(sites);
           yield SitesResultSuccessState(sitesResult: sitesResult);
         } else {
-          final sitesResult = ArticlesResult.fromJson(response.error);
+          final sitesResult =
+              ArticlesResult.fromJson(jsonDecode(response.error));
           yield SitesResultErrorState(error: sitesResult.message);
         }
       } catch (e) {
