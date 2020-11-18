@@ -20,7 +20,6 @@ class _SitesPageState extends State<SitesPage> {
   int _currentPage = 1;
   int _totalPage = 1;
   final int _limit = 5;
-  String status;
   Articles sites;
 
   @override
@@ -67,79 +66,60 @@ class _SitesPageState extends State<SitesPage> {
 
   Widget _buildSitesResult(SitesResultState state) {
     if (state is SitesResultSuccessState) {
-      status = state.sitesResult.status;
       sites = state.sitesResult.data[0];
       _currentPage = state.sitesResult.data[0].currentPage;
       _totalPage = state.sitesResult.data[0].totalPages;
     }
     return Container(
-        child: status.toLowerCase() == 'error'
-            ? RefreshIndicator(
-                onRefresh: () {
-                  _bloc.add(SitesResultFetching(page: 1, limit: _limit));
-                  return;
-                },
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Center(
-                      child: Text((state as SitesResultSuccessState)
-                          .sitesResult
-                          .message),
-                    ),
+        child: sites.articles.isEmpty
+            ? Center(
+                child: Text('Sites is empty.'),
+              )
+            : LazyLoadScrollView(
+                onEndOfPage: _loadMoreData,
+                child: RefreshIndicator(
+                  onRefresh: () {
+                    _bloc.add(SitesResultFetching(page: 1, limit: _limit));
+                    return;
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.all(0),
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(12.0),
+                        itemCount: sites.articles.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Material(
+                            child: InkWell(
+                              child: ArticleItem(
+                                image: sites.articles[index].images.isEmpty
+                                    ? ""
+                                    : sites.articles[index].images[0].image,
+                                title: sites.articles[index].title ?? "",
+                                date: sites.articles[index].date ?? "",
+                                description:
+                                    sites.articles[index].description ?? "",
+                              ),
+                              onTap: () {
+                                _navigateToDetails(
+                                    context: context,
+                                    article: sites.articles[index]);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      (state is SitesResultLoadingMoreState)
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : SizedBox(),
+                    ],
                   ),
                 ),
-              )
-            : sites.articles.isEmpty
-                ? Center(
-                    child: Text('Sites is empty.'),
-                  )
-                : LazyLoadScrollView(
-                    onEndOfPage: _loadMoreData,
-                    child: RefreshIndicator(
-                      onRefresh: () {
-                        _bloc.add(SitesResultFetching(page: 1, limit: _limit));
-                        return;
-                      },
-                      child: ListView(
-                        padding: EdgeInsets.all(0),
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.all(12.0),
-                            itemCount: sites.articles.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Material(
-                                child: InkWell(
-                                  child: ArticleItem(
-                                    image: sites.articles[index].images.isEmpty
-                                        ? ""
-                                        : sites.articles[index].images[0].image,
-                                    title: sites.articles[index].title ?? "",
-                                    date: sites.articles[index].date ?? "",
-                                    description:
-                                        sites.articles[index].description ?? "",
-                                  ),
-                                  onTap: () {
-                                    _navigateToDetails(
-                                        context: context,
-                                        article: sites.articles[index]);
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                          (state is SitesResultLoadingMoreState)
-                              ? Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : SizedBox(),
-                        ],
-                      ),
-                    ),
-                  ));
+              ));
   }
 
   void _loadMoreData() {
