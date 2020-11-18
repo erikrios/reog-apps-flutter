@@ -5,7 +5,6 @@ import 'package:reog_apps_flutter/src/bloc/authentication_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/events/auth_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/auth_result_state.dart';
 import 'package:reog_apps_flutter/src/models/auth.dart';
-import 'package:reog_apps_flutter/src/screens/pages/dashboard_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/register_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
@@ -68,7 +67,21 @@ class LoginPage extends StatelessWidget {
                             builder:
                                 (BuildContext context, AuthResultState state) {
                               print(state.toString());
-                              if (state is AuthResultInitialState) {
+                              if (state is AuthResultLoadingState) {
+                                return Center(
+                                  child: SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.amber),
+                                      )),
+                                );
+                              } else if (state is AuthResultSuccessState) {
+                                _navigateToDashboard(context);
+                                return SizedBox();
+                              } else
                                 return RaisedButton(
                                   padding: EdgeInsets.only(top: 8, bottom: 8),
                                   color: Color(0xffE6CB34),
@@ -96,28 +109,6 @@ class LoginPage extends StatelessWidget {
                                         fontSize: 26, color: Colors.white),
                                   ),
                                 );
-                              } else if (state is AuthResultLoadingState) {
-                                return Center(
-                                  child: SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.amber),
-                                      )),
-                                );
-                              } else if (state is AuthResultSuccessState) {
-                                _navigateToDashboard(context);
-                                return SizedBox();
-                              } else {
-                                print('Error state');
-                                final snackbar = SnackBar(
-                                    content: Text(
-                                        (state as AuthResultErrorState).error));
-                                Scaffold.of(context).showSnackBar(snackbar);
-                                return SizedBox();
-                              }
                             },
                           ),
                         ),
@@ -171,11 +162,8 @@ class LoginPage extends StatelessWidget {
     }));
   }
 
-  void _navigateToDashboard(BuildContext context) async {
-    await Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) {
-      return DashboardPage();
-    }));
+  void _navigateToDashboard(BuildContext context) {
+    Navigator.pop(context);
   }
 
   bool _validateLogin(String email, String password) {
