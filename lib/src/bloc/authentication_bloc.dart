@@ -7,6 +7,8 @@ import 'package:reog_apps_flutter/src/bloc/events/auth_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/auth_result_state.dart';
 import 'package:reog_apps_flutter/src/models/auth_result.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationBloc extends Bloc<AuthEvent, AuthResultState> {
   final ReogAppsService service;
@@ -23,6 +25,10 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthResultState> {
         Response response = await service.authenticate(event.auth.toJson());
         if (response.isSuccessful) {
           final authResult = AuthResult.fromJson(response.body);
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.setString(
+              AUTH_TOKEN_SHARED_PREFS_KEY, authResult.data[0]);
           yield AuthResultSuccessState(authResult: authResult);
         } else {
           final authResult = AuthResult.fromJson(jsonDecode(response.error));
