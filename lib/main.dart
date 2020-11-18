@@ -55,6 +55,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String token;
+
   @override
   void initState() {
     super.initState();
@@ -70,7 +72,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     _getAuthToken().then((value) {
-      print(value);
+      token = value ?? "";
     });
   }
 
@@ -80,19 +82,19 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider<NewsResultBloc>(
           create: (BuildContext context) => NewsResultBloc(
-              service: ReogAppsService.create(authTokenValue: "")),
+              service: ReogAppsService.create(authTokenValue: token)),
         ),
         BlocProvider<SitesResultBloc>(
           create: (BuildContext context) => SitesResultBloc(
-              service: ReogAppsService.create(authTokenValue: "")),
+              service: ReogAppsService.create(authTokenValue: token)),
         ),
         BlocProvider<FoodsResultBloc>(
           create: (BuildContext context) => FoodsResultBloc(
-              service: ReogAppsService.create(authTokenValue: "")),
+              service: ReogAppsService.create(authTokenValue: token)),
         ),
         BlocProvider<HistoriesResultBloc>(
           create: (BuildContext context) => HistoriesResultBloc(
-              service: ReogAppsService.create(authTokenValue: "")),
+              service: ReogAppsService.create(authTokenValue: token)),
         ),
       ],
       child: MaterialApp(
