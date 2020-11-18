@@ -20,7 +20,6 @@ class _FoodsPageState extends State<FoodsPage> {
   int _currentPage = 1;
   int _totalPage = 1;
   final int _limit = 5;
-  String status;
   Articles foods;
 
   @override
@@ -70,76 +69,56 @@ class _FoodsPageState extends State<FoodsPage> {
 
   Widget _buildFoodsResult(FoodsResultState state) {
     if (state is FoodsResultSuccessState) {
-      status = state.foodsResult.status;
       foods = state.foodsResult.data[0];
       _currentPage = state.foodsResult.data[0].currentPage;
       _totalPage = state.foodsResult.data[0].totalPages;
     }
 
     return Container(
-        child: status.toLowerCase() == 'error'
-            ? RefreshIndicator(
-                onRefresh: () {
-                  _bloc.add(FoodsResultFetching(page: 1, limit: _limit));
-                  return;
-                },
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Center(
-                      child: Text((state as FoodsResultSuccessState)
-                          .foodsResult
-                          .message),
-                    ),
+        child: foods.articles.isEmpty
+            ? Center(
+                child: Text('Foods is empty.'),
+              )
+            : LazyLoadScrollView(
+                onEndOfPage: _loadMoreData,
+                child: RefreshIndicator(
+                  onRefresh: () {
+                    _bloc.add(FoodsResultFetching(page: 1, limit: _limit));
+                    return;
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.all(0),
+                    children: [
+                      GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        padding: EdgeInsets.all(3.0),
+                        itemCount: foods.articles.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            child: FoodItem(
+                                foods.articles[index].images.isEmpty
+                                    ? ""
+                                    : foods.articles[index].images[0].image,
+                                foods.articles[index].title ?? ""),
+                            onTap: () {
+                              _navigateToDetails(
+                                  context: context,
+                                  article: foods.articles[index]);
+                            },
+                          );
+                        },
+                      ),
+                      (state is FoodsResultLoadingMoreState)
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : SizedBox(),
+                    ],
                   ),
                 ),
-              )
-            : foods.articles.isEmpty
-                ? Center(
-                    child: Text('Foods is empty.'),
-                  )
-                : LazyLoadScrollView(
-                    onEndOfPage: _loadMoreData,
-                    child: RefreshIndicator(
-                      onRefresh: () {
-                        _bloc.add(FoodsResultFetching(page: 1, limit: _limit));
-                        return;
-                      },
-                      child: ListView(
-                        padding: EdgeInsets.all(0),
-                        children: [
-                          GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ),
-                            padding: EdgeInsets.all(3.0),
-                            itemCount: foods.articles.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                child: FoodItem(
-                                    foods.articles[index].images.isEmpty
-                                        ? ""
-                                        : foods.articles[index].images[0].image,
-                                    foods.articles[index].title ?? ""),
-                                onTap: () {
-                                  _navigateToDetails(
-                                      context: context,
-                                      article: foods.articles[index]);
-                                },
-                              );
-                            },
-                          ),
-                          (state is FoodsResultLoadingMoreState)
-                              ? Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : SizedBox(),
-                        ],
-                      ),
-                    ),
-                  ));
+              ));
   }
 
   void _loadMoreData() {
