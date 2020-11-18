@@ -68,6 +68,10 @@ class _MyAppState extends State<MyApp> {
         currentBrightness.setBrightness(value);
       });
     });
+
+    _getAuthToken().then((value) {
+      print(value);
+    });
   }
 
   @override
@@ -122,7 +126,9 @@ class _MyAppState extends State<MyApp> {
   _getAuthToken() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      return preferences.getString(Constants.AUTH_TOKEN_SHARED_PREFS_KEY);
+      String token =
+          preferences.getString(Constants.AUTH_TOKEN_SHARED_PREFS_KEY);
+      return token;
     } catch (err) {
       throw err;
     }
