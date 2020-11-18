@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
@@ -29,7 +30,8 @@ class FoodsResultBloc extends Bloc<FoodsResultEvent, FoodsResultState> {
           foods.addAll(foodsResult.data[0].articles);
           yield FoodsResultSuccessState(foodsResult: foodsResult);
         } else {
-          final foodsResult = ArticlesResult.fromJson(response.error);
+          final foodsResult =
+              ArticlesResult.fromJson(jsonDecode(response.error));
           yield FoodsResultErrorState(error: foodsResult.message);
         }
       } catch (e) {
@@ -47,7 +49,8 @@ class FoodsResultBloc extends Bloc<FoodsResultEvent, FoodsResultState> {
           foodsResult.data[0].articles.addAll(foods);
           yield FoodsResultSuccessState(foodsResult: foodsResult);
         } else {
-          final foodsResult = ArticlesResult.fromJson(response.error);
+          final foodsResult =
+              ArticlesResult.fromJson(jsonDecode(response.error));
           yield FoodsResultErrorState(error: foodsResult.message);
         }
       } catch (e) {
