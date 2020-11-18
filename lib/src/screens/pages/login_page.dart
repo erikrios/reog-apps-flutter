@@ -67,42 +67,45 @@ class LoginPage extends StatelessWidget {
                             cubit: _bloc,
                             builder:
                                 (BuildContext context, AuthResultState state) {
-                              return RaisedButton(
-                                padding: EdgeInsets.only(top: 8, bottom: 8),
-                                color: Color(0xffE6CB34),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                onPressed: () {
-                                  String email = emailController.text;
-                                  String password = passwordController.text;
-                                  if (!_validateLogin(email, password)) {
-                                    final snackbar = SnackBar(
-                                      content:
-                                          Text('Invalid email or password'),
-                                    );
-                                    Scaffold.of(context).showSnackBar(snackbar);
-                                  } else {
-                                    _bloc.add(Authenticating(Auth(
-                                        email: email, password: password)));
-                                  }
-
-                                  if (state is AuthResultErrorState) {
-                                    final snackbar =
-                                        SnackBar(content: Text(state.error));
-                                    Scaffold.of(context).showSnackBar(snackbar);
-                                  } else if (state is AuthResultSuccessState) {
-                                    _navigateToDashboard(context);
-                                  }
-                                },
-                                child: (state is AuthResultLoadingState)
-                                    ? CircularProgressIndicator()
-                                    : Text(
-                                        'login'.tr().toUpperCase(),
-                                        style: TextStyle(
-                                            fontSize: 26, color: Colors.white),
-                                      ),
-                              );
+                              if (state is AuthResultLoadingState) {
+                                return CircularProgressIndicator();
+                              } else if (state is AuthResultErrorState) {
+                                final snackbar =
+                                    SnackBar(content: Text(state.error));
+                                Scaffold.of(context).showSnackBar(snackbar);
+                                return SizedBox();
+                              } else if (state is AuthResultSuccessState) {
+                                _navigateToDashboard(context);
+                                return SizedBox();
+                              } else {
+                                return RaisedButton(
+                                  padding: EdgeInsets.only(top: 8, bottom: 8),
+                                  color: Color(0xffE6CB34),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  onPressed: () {
+                                    String email = emailController.text;
+                                    String password = passwordController.text;
+                                    if (!_validateLogin(email, password)) {
+                                      final snackbar = SnackBar(
+                                        content:
+                                            Text('Invalid email or password'),
+                                      );
+                                      Scaffold.of(context)
+                                          .showSnackBar(snackbar);
+                                    } else {
+                                      _bloc.add(Authenticating(Auth(
+                                          email: email, password: password)));
+                                    }
+                                  },
+                                  child: Text(
+                                    'login'.tr().toUpperCase(),
+                                    style: TextStyle(
+                                        fontSize: 26, color: Colors.white),
+                                  ),
+                                );
+                              }
                             },
                           ),
                         ),
