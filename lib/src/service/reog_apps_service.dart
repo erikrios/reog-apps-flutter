@@ -1,7 +1,6 @@
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:reog_apps_flutter/src/service/header_interceptor.dart';
 
 part 'reog_apps_service.chopper.dart';
 
