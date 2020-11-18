@@ -25,7 +25,6 @@ class _HistoryPageState extends State<HistoryPage> {
   int _currentPage = 1;
   int _totalPage = 1;
   final int _limit = 5;
-  String status;
   Articles histories;
 
   @override
@@ -101,85 +100,61 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Widget _buildHistoriesResult(HistoriesResultState state) {
     if (state is HistoriesResultSuccessState) {
-      status = state.historiesResult.status;
       histories = state.historiesResult.data[0];
       _currentPage = state.historiesResult.data[0].currentPage;
       _totalPage = state.historiesResult.data[0].totalPages;
     }
 
     return Container(
-        child: status.toLowerCase() == 'error'
-            ? RefreshIndicator(
-                onRefresh: () {
-                  _bloc.add(HistoriesResultFetching(page: 1, limit: _limit));
-                  return;
-                },
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Center(
-                      child: Text((state as HistoriesResultSuccessState)
-                          .historiesResult
-                          .message),
-                    ),
+        child: histories.articles.isEmpty
+            ? Center(
+                child: Text('Histories is empty.'),
+              )
+            : LazyLoadScrollView(
+                onEndOfPage: _loadMoreData,
+                child: RefreshIndicator(
+                  onRefresh: () {
+                    _bloc.add(HistoriesResultFetching(page: 1, limit: _limit));
+                    return;
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.all(0),
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(12.0),
+                        itemCount: histories.articles.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Material(
+                            child: InkWell(
+                              child: ArticleItem(
+                                image: histories.articles[index].images.isEmpty
+                                    ? ""
+                                    : histories.articles[index].images[0].image,
+                                title: histories.articles[index].title ?? "",
+                                date: histories.articles[index].date ?? "",
+                                description:
+                                    histories.articles[index].description ?? "",
+                              ),
+                              onTap: () {
+                                _navigateToDetails(
+                                    context: context,
+                                    article: histories.articles[index]);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      (state is HistoriesResultLoadingMoreState)
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : SizedBox(),
+                    ],
                   ),
                 ),
-              )
-            : histories.articles.isEmpty
-                ? Center(
-                    child: Text('Histories is empty.'),
-                  )
-                : LazyLoadScrollView(
-                    onEndOfPage: _loadMoreData,
-                    child: RefreshIndicator(
-                      onRefresh: () {
-                        _bloc.add(
-                            HistoriesResultFetching(page: 1, limit: _limit));
-                        return;
-                      },
-                      child: ListView(
-                        padding: EdgeInsets.all(0),
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.all(12.0),
-                            itemCount: histories.articles.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Material(
-                                child: InkWell(
-                                  child: ArticleItem(
-                                    image:
-                                        histories.articles[index].images.isEmpty
-                                            ? ""
-                                            : histories.articles[index]
-                                                .images[0].image,
-                                    title:
-                                        histories.articles[index].title ?? "",
-                                    date: histories.articles[index].date ?? "",
-                                    description:
-                                        histories.articles[index].description ??
-                                            "",
-                                  ),
-                                  onTap: () {
-                                    _navigateToDetails(
-                                        context: context,
-                                        article: histories.articles[index]);
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                          (state is HistoriesResultLoadingMoreState)
-                              ? Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : SizedBox(),
-                        ],
-                      ),
-                    ),
-                  ));
+              ));
   }
 
   void _loadMoreData() {
