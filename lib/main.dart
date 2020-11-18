@@ -115,7 +115,16 @@ class _MyAppState extends State<MyApp> {
           preferences.getBool(Constants.DARK_MODE_SHARED_PREFS_KEY);
       return isDarkMode != null ? isDarkMode : false;
     } catch (err) {
-      print(err);
+      throw err;
+    }
+  }
+
+  _getAuthToken() async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      return preferences.getString(Constants.AUTH_TOKEN_SHARED_PREFS_KEY);
+    } catch (err) {
+      throw err;
     }
   }
 }
