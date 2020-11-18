@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
@@ -24,10 +23,15 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
       try {
         Response response =
             await service.getNews(page: event.page, limit: event.limit);
-        final newsResult = ArticlesResult.fromJson(jsonDecode(response.body));
-        news.clear();
-        news.addAll(newsResult.data[0].articles);
-        yield NewsResultSuccessState(newsResult: newsResult);
+        if (response.isSuccessful) {
+          final newsResult = ArticlesResult.fromJson(response.body);
+          news.clear();
+          news.addAll(newsResult.data[0].articles);
+          yield NewsResultSuccessState(newsResult: newsResult);
+        } else {
+          final newsResult = ArticlesResult.fromJson(response.error);
+          yield NewsResultErrorState(error: newsResult.message);
+        }
       } catch (e) {
         yield NewsResultErrorState(error: e.toString());
       }
@@ -36,13 +40,16 @@ class NewsResultBloc extends Bloc<NewsResultEvent, NewsResultState> {
       try {
         Response response =
             await service.getNews(page: event.page, limit: event.limit);
-        // print(jsonDecode(response.body));
-        // final newsResult =
-        //     ArticlesResult.fromJson(jsonDecode(response.bodyString));
-        // news.addAll(newsResult.data[0].articles);
-        // newsResult.data[0].articles.clear();
-        // newsResult.data[0].articles.addAll(news);
-        // yield NewsResultSuccessState(newsResult: newsResult);
+        if (response.isSuccessful) {
+          final newsResult = ArticlesResult.fromJson(response.body);
+          news.addAll(newsResult.data[0].articles);
+          newsResult.data[0].articles.clear();
+          newsResult.data[0].articles.addAll(news);
+          yield NewsResultSuccessState(newsResult: newsResult);
+        } else {
+          final newsResult = ArticlesResult.fromJson(response.error);
+          yield NewsResultErrorState(error: newsResult.message);
+        }
       } catch (e) {
         yield NewsResultErrorState(error: e.toString());
         throw e;
