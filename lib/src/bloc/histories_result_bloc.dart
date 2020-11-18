@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
@@ -26,11 +25,15 @@ class HistoriesResultBloc
       try {
         Response response =
             await service.getHistories(page: event.page, limit: event.limit);
-        final historiesResult =
-            ArticlesResult.fromJson(jsonDecode(response.body));
-        histories.clear();
-        histories.addAll(historiesResult.data[0].articles);
-        yield HistoriesResultSuccessState(historiesResult: historiesResult);
+        if (response.isSuccessful) {
+          final historiesResult = ArticlesResult.fromJson(response.body);
+          histories.clear();
+          histories.addAll(historiesResult.data[0].articles);
+          yield HistoriesResultSuccessState(historiesResult: historiesResult);
+        } else {
+          final historiesResult = ArticlesResult.fromJson(response.error);
+          yield HistoriesResultErrorSState(error: historiesResult.message);
+        }
       } catch (e) {
         yield HistoriesResultErrorSState(error: e.toString());
       }
@@ -39,12 +42,16 @@ class HistoriesResultBloc
       try {
         Response response =
             await service.getHistories(page: event.page, limit: event.limit);
-        final historiesResult =
-            ArticlesResult.fromJson(jsonDecode(response.body));
-        histories.addAll(historiesResult.data[0].articles);
-        historiesResult.data[0].articles.clear();
-        historiesResult.data[0].articles.addAll(histories);
-        yield HistoriesResultSuccessState(historiesResult: historiesResult);
+        if (response.isSuccessful) {
+          final historiesResult = ArticlesResult.fromJson(response.body);
+          histories.addAll(historiesResult.data[0].articles);
+          historiesResult.data[0].articles.clear();
+          historiesResult.data[0].articles.addAll(histories);
+          yield HistoriesResultSuccessState(historiesResult: historiesResult);
+        } else {
+          final historiesResult = ArticlesResult.fromJson(response.error);
+          yield HistoriesResultErrorSState(error: historiesResult.message);
+        }
       } catch (e) {
         yield HistoriesResultErrorSState(error: e.toString());
       }
