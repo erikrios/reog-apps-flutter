@@ -7,8 +7,4 @@ abstract class UserResultEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UserResultFetching extends UserResultEvent {
-  final String token;
-
-  const UserResultFetching({this.token});
-}
+class UserResultFetching extends UserResultEvent {}
