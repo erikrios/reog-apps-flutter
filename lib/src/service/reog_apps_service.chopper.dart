@@ -88,7 +88,15 @@ class _$ReogAppsService extends ReogAppsService {
   Future<Response<dynamic>> getUserDetails(String authToken) {
     final $url = '/api/users/me';
     final $headers = {'Auth-Token': authToken};
-    final $request = Request('POST', $url, client.baseUrl, headers: $headers);
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getAvatar(String authToken) {
+    final $url = 'api/users/avatar';
+    final $headers = {'Auth-Token': authToken};
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 }
