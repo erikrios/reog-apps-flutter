@@ -107,7 +107,7 @@ class MyProfilePage extends StatelessWidget {
                             ),
                           )
                         : Image.memory(
-                            base64Decode((state as AvatarResultSuccessState)
+                            base64Decode((avatarState as AvatarResultSuccessState)
                                 .avatarResult
                                 .data[0]),
                             fit: BoxFit.cover,
