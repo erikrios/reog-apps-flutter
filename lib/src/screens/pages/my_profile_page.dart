@@ -94,7 +94,9 @@ class MyProfilePage extends StatelessWidget {
                 backgroundColor: Colors.amber,
                 child: avatarState is AvatarResultLoadingState
                     ? Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                        ),
                       )
                     : avatarState is AvatarResultErrorState
                         ? Center(
@@ -107,9 +109,10 @@ class MyProfilePage extends StatelessWidget {
                             ),
                           )
                         : Image.memory(
-                            base64Decode((avatarState as AvatarResultSuccessState)
-                                .avatarResult
-                                .data[0]),
+                            base64Decode(
+                                (avatarState as AvatarResultSuccessState)
+                                    .avatarResult
+                                    .data[0]),
                             fit: BoxFit.cover,
                           ),
               ),
