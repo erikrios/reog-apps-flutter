@@ -22,7 +22,7 @@ class UserResultBloc extends Bloc<UserResultEvent, UserResultState> {
       yield UserResultLoadingState();
       try {
         String token = await getAuthToken();
-        Response response = await service.getUserDetails(token);
+        Response response = await service.getUserDetails(token ?? "");
 
         if (response.isSuccessful) {
           UserResult userResult = UserResult.fromJson(response.body);
