@@ -108,12 +108,14 @@ class MyProfilePage extends StatelessWidget {
                                   fontSize: 40),
                             ),
                           )
-                        : Image.memory(
-                            base64Decode(
-                                (avatarState as AvatarResultSuccessState)
-                                    .avatarResult
-                                    .data[0]),
-                            fit: BoxFit.cover,
+                        : ClipOval(
+                            child: Image.memory(
+                              base64Decode(
+                                  (avatarState as AvatarResultSuccessState)
+                                      .avatarResult
+                                      .data[0]),
+                              fit: BoxFit.cover,
+                            ),
                           ),
               ),
             );
