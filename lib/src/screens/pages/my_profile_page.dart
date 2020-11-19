@@ -106,10 +106,12 @@ class MyProfilePage extends StatelessWidget {
                                   fontSize: 40),
                             ),
                           )
-                        : Image.memory(base64Decode(
-                            (state as AvatarResultSuccessState)
+                        : Image.memory(
+                            base64Decode((state as AvatarResultSuccessState)
                                 .avatarResult
-                                .data[0])),
+                                .data[0]),
+                            fit: BoxFit.cover,
+                          ),
               ),
             );
           },
