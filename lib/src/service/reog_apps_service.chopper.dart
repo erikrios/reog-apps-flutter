@@ -83,4 +83,12 @@ class _$ReogAppsService extends ReogAppsService {
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getUserDetails(String authToken) {
+    final $url = '/api/users/me';
+    final $headers = {'Auth-Token': authToken};
+    final $request = Request('POST', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
