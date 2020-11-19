@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/avatar_result_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/events/avatar_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/events/user_result_event.dart';
+import 'package:reog_apps_flutter/src/bloc/states/avatar_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/states/user_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/user_result_bloc.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
@@ -67,18 +72,47 @@ class MyProfilePage extends StatelessWidget {
 
   Widget _buildUserResult(
       {BuildContext context, UserResultSuccessState state}) {
+    String name = state.userResult.data[0].name;
+    String emailAddress = state.userResult.data[0].email;
+    String memberSince = state.userResult.data[0].dateRegistered;
+    String lastLogin = state.userResult.data[0].lastLogin;
+
+    // ignore: close_sinks
+    AvatarResultBloc bloc = AvatarResultBloc(service: ReogAppsService.create());
+    bloc.add(AvatarResultFetching());
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          width: 120,
-          height: 120,
-          child: CircleAvatar(
-            backgroundColor: Colors.brown[300],
-            backgroundImage: NetworkImage(
-              'https://archive.org/download/shimla_phoenix_K011P-01c_panelscan/Fromental_Conversational/F006-willow-with-embroidery-col-custom.jpg',
-            ),
-          ),
+        BlocBuilder<AvatarResultBloc, AvatarResultState>(
+          cubit: bloc,
+          builder: (BuildContext context, AvatarResultState avatarState) {
+            return SizedBox(
+              width: 120,
+              height: 120,
+              child: CircleAvatar(
+                backgroundColor: Colors.amber,
+                child: avatarState is AvatarResultLoadingState
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : avatarState is AvatarResultErrorState
+                        ? Center(
+                            child: Text(
+                              name[0],
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                          )
+                        : Image.memory(base64Decode(
+                            (state as AvatarResultSuccessState)
+                                .avatarResult
+                                .data[0])),
+              ),
+            );
+          },
         ),
         SizedBox(height: 28),
         Container(
@@ -88,10 +122,10 @@ class MyProfilePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              textItem('name'.tr(), 'Erik Rio Setiawan'),
-              textItem('email_address'.tr(), 'erikriosetiawan15@gmail.com'),
-              textItem('member_since'.tr(), '2020/09/12'),
-              textItem('last_login'.tr(), '2020/09/12'),
+              textItem('name'.tr(), name),
+              textItem('email_address'.tr(), emailAddress),
+              textItem('member_since'.tr(), memberSince),
+              textItem('last_login'.tr(), lastLogin),
             ],
           ),
         ),
