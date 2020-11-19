@@ -103,7 +103,7 @@ class MyProfilePage extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20),
+                                  fontSize: 40),
                             ),
                           )
                         : Image.memory(base64Decode(
