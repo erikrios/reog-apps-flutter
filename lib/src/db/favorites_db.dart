@@ -48,6 +48,12 @@ class FavoritesDb {
     _favoritesBox.close();
   }
 
+  static void deleteFavoriteArticleById(String id) {
+    openBox();
+    _favoritesBox.delete(id);
+    _favoritesBox.close();
+  }
+
   static bool isFavoriteArticleExists(String id) {
     openBox();
     bool isExists = _favoritesBox.containsKey(id);
