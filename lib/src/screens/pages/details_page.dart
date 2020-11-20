@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/article_details_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/events/article_details_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/article_details_result_state.dart';
+import 'package:reog_apps_flutter/src/db/favorites_db.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/models/comment.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/comment_item.dart';
@@ -36,6 +37,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
+    _isBookmarked = FavoritesDb.isFavoriteArticleExists(_article.id);
     _scrollViewController = ScrollController();
     _isBookmarked = false;
     _bloc = ArticleDetailsResultBloc(
@@ -233,9 +235,11 @@ class _DetailsPageState extends State<DetailsPage> {
           {
             if (_isBookmarked) {
               _isBookmarked = false;
+              FavoritesDb.deleteFavoriteArticleById(_article.id);
               print('bookmark_removed'.tr());
             } else {
               _isBookmarked = true;
+              FavoritesDb.addFavoriteArticle(_article);
               print('bookmark_added'.tr());
             }
           }
