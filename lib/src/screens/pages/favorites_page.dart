@@ -18,7 +18,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
     _scrollViewController = ScrollController();
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -31,23 +30,23 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body: NestedScrollView(
         controller: _scrollViewController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget
-          >[
-          SliverAppBar(
-          title: Text('Favorites'),
-          floating: true,
-          snap: true,
-          forceElevated: innerBoxIsScrolled,
-          actions: [
-          BrightnessMenu(),
-          MainPopUpMenu(true),
-          ],
-          )
+          return <Widget>[
+            SliverAppBar(
+              title: Text('Favorites'),
+              floating: true,
+              snap: true,
+              forceElevated: innerBoxIsScrolled,
+              actions: [
+                BrightnessMenu(),
+                MainPopUpMenu(true),
+              ],
+            )
           ];
         },
         body: LazyLoadScrollView(
           onEndOfPage: null,
-          child: ListView.builder(shrinkWrap: true,
+          child: ListView.builder(
+              shrinkWrap: true,
               padding: EdgeInsets.all(12.0),
               itemCount: null,
               itemBuilder: (BuildContext context, int index) {
