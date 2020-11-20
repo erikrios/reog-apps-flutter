@@ -7,6 +7,7 @@ import 'package:reog_apps_flutter/src/bloc/foods_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/histories_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/sites_result_bloc.dart';
+import 'package:reog_apps_flutter/src/db/favorites_db.dart';
 import 'package:reog_apps_flutter/src/screens/pages/splash_screen_page.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
 import 'package:reog_apps_flutter/src/utils/config.dart';
@@ -17,6 +18,7 @@ import 'src/utils/constants.dart' as Constants;
 Future main() async {
   await DotEnv().load('.env');
   _setupLogging();
+  await FavoritesDb.init();
   runApp(EasyLocalization(
     child: MyApp(),
     supportedLocales: <Locale>[
