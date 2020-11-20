@@ -42,10 +42,17 @@ class FavoritesDb {
     return articles;
   }
 
-  static void deleteArticle(Article article) {
+  static void deleteFavoriteArticle(Article article) {
     openBox();
     article.delete();
     favoritesBox.close();
+  }
+
+  static bool isFavoriteArticleExists(String id) {
+    openBox();
+    bool isExists = favoritesBox.containsKey(id);
+    favoritesBox.close();
+    return isExists;
   }
 
   static void openBox() async {
