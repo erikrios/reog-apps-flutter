@@ -42,7 +42,7 @@ class FavoritesDb {
     return articles;
   }
 
-  static void deleteArticleById(Article article) {
+  static void deleteArticle(Article article) {
     openBox();
     article.delete();
     favoritesBox.close();
