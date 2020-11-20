@@ -4,7 +4,7 @@ import 'package:reog_apps_flutter/src/models/article.dart';
 import 'package:reog_apps_flutter/src/models/image.dart';
 
 class FavoritesDb {
-  static Box favoritesBox;
+  static Box _favoritesBox;
   static const _boxNameKey = 'favorites';
 
   static Future<void> init() async {
@@ -12,8 +12,8 @@ class FavoritesDb {
     Hive.init(dir.path);
     _registerAdapter();
 
-    if (favoritesBox == null) {
-      favoritesBox = await Hive.openBox(_boxNameKey);
+    if (_favoritesBox == null) {
+      _favoritesBox = await Hive.openBox(_boxNameKey);
     }
   }
 
@@ -24,38 +24,38 @@ class FavoritesDb {
 
   static void addFavoriteArticle(Article article) {
     openBox();
-    favoritesBox.put(article.id, article);
-    favoritesBox.close();
+    _favoritesBox.put(article.id, article);
+    _favoritesBox.close();
   }
 
   static Article getFavoriteArticleById(String id) {
     openBox();
-    Article article = favoritesBox.get(id);
-    favoritesBox.close();
+    Article article = _favoritesBox.get(id);
+    _favoritesBox.close();
     return article;
   }
 
   static List<Article> getFavoriteArticles() {
     openBox();
-    List<Article> articles = favoritesBox.toMap().values.toList();
-    favoritesBox.close();
+    List<Article> articles = _favoritesBox.toMap().values.toList();
+    _favoritesBox.close();
     return articles;
   }
 
   static void deleteFavoriteArticle(Article article) {
     openBox();
     article.delete();
-    favoritesBox.close();
+    _favoritesBox.close();
   }
 
   static bool isFavoriteArticleExists(String id) {
     openBox();
-    bool isExists = favoritesBox.containsKey(id);
-    favoritesBox.close();
+    bool isExists = _favoritesBox.containsKey(id);
+    _favoritesBox.close();
     return isExists;
   }
 
   static void openBox() async {
-    if (!favoritesBox.isOpen) favoritesBox = await Hive.openBox(_boxNameKey);
+    if (!_favoritesBox.isOpen) _favoritesBox = await Hive.openBox(_boxNameKey);
   }
 }
