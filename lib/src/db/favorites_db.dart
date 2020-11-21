@@ -16,12 +16,12 @@ class FavoritesDb {
     _registerAdapter();
 
     if (_favoritesBox == null) {
-      _favoritesBox = await Hive.openBox(_boxNameKey);
+      _favoritesBox = await Hive.openBox<Article>(_boxNameKey);
       _favoritesBox.clear();
     }
 
     if (_articleTypeBox == null) {
-      _articleTypeBox = await Hive.openBox(_articleTypeBoxNameKey);
+      _articleTypeBox = await Hive.openBox<ArticleType>(_articleTypeBoxNameKey);
       _articleTypeBox.clear();
     }
   }

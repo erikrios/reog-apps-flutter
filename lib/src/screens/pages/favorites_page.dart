@@ -19,13 +19,16 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   ScrollController _scrollViewController;
-  FavoriteArticlesBloc _bloc;
+  FavoriteArticlesBloc _bloc = FavoriteArticlesBloc();
+
+  _FavoritesPageState() {
+    _bloc.add(GetFavoriteArticlesEvent());
+  }
 
   @override
   void initState() {
     super.initState();
     _scrollViewController = ScrollController();
-    _bloc = FavoriteArticlesBloc();
   }
 
   @override
@@ -37,32 +40,47 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        controller: _scrollViewController,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              title: Text('Favorites'),
-              floating: true,
-              snap: true,
-              forceElevated: innerBoxIsScrolled,
-              actions: [
-                BrightnessMenu(),
-                MainPopUpMenu(true),
-              ],
-            )
-          ];
-        },
-        body: BlocBuilder<FavoriteArticlesBloc, FavoriteArticlesState>(
-          cubit: _bloc,
-          builder: (BuildContext context, FavoriteArticlesState state) {
-            if (state is FavoriteArticlesLoadingState)
-              return _buildLoading();
-            else
-              return _buildFavoriteArticles(
-                  state as FavoriteArticlesSuccessState, _bloc);
+    return WillPopScope(
+      // ignore: missing_return
+      onWillPop: () {
+        _navigateBack();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              _navigateBack();
+            },
+          ),
+        ),
+        body: NestedScrollView(
+          controller: _scrollViewController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                title: Text('Favorites'),
+                floating: true,
+                snap: true,
+                forceElevated: innerBoxIsScrolled,
+                actions: [
+                  BrightnessMenu(),
+                  MainPopUpMenu(true),
+                ],
+              )
+            ];
           },
+          body: BlocBuilder<FavoriteArticlesBloc, FavoriteArticlesState>(
+            cubit: _bloc,
+            builder: (BuildContext context, FavoriteArticlesState state) {
+              if (state is FavoriteArticlesLoadingState)
+                return _buildLoading();
+              else
+                return _buildFavoriteArticles(
+                    state as FavoriteArticlesSuccessState, _bloc);
+            },
+          ),
         ),
       ),
     );
@@ -108,7 +126,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               ),
               key: Key(articles[index].id),
               onDismissed: (DismissDirection direction) {
-                bloc.add(DeleteFavoriteArticleEvent());
+                bloc.add(DeleteFavoriteArticleEvent(articles[index].id));
                 Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text('${articles[index].title} removed.')));
               },
@@ -143,5 +161,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
     }));
 
     print(result);
+  }
+
+  void _navigateBack() {
+    Navigator.pop(context, true);
   }
 }
