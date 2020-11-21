@@ -75,6 +75,13 @@ class FavoritesDb {
     return isExists;
   }
 
+  static ArticleType getArticleTypeById(String id) {
+    _openBox();
+    ArticleType type = _articleTypeBox.get(id);
+    _articleTypeBox.close();
+    return type;
+  }
+
   static void _openBox() async {
     if (!_favoritesBox.isOpen) _favoritesBox = await Hive.openBox(_boxNameKey);
     if (!_articleTypeBox.isOpen)
