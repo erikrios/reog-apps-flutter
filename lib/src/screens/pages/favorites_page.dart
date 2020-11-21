@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+import 'package:flutter/painting.dart';
+import 'package:reog_apps_flutter/src/bloc/events/favorite_articles_event.dart';
+import 'package:reog_apps_flutter/src/bloc/favorite_articles_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/states/favorite_articles_state.dart';
+import 'package:reog_apps_flutter/src/db/favorites_db.dart';
+import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/models/articles.dart';
+import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
+import 'package:reog_apps_flutter/src/utils/article_type.dart';
 
 class FavoritesPage extends StatefulWidget {
   @override
@@ -11,11 +19,13 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   ScrollController _scrollViewController;
+  FavoriteArticlesBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     _scrollViewController = ScrollController();
+    _bloc = FavoriteArticlesBloc();
   }
 
   @override
@@ -28,42 +38,77 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        controller: _scrollViewController,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              title: Text('Favorites'),
-              floating: true,
-              snap: true,
-              forceElevated: innerBoxIsScrolled,
-              actions: [
-                BrightnessMenu(),
-                MainPopUpMenu(true),
-              ],
-            )
-          ];
-        },
-        body: LazyLoadScrollView(
-          onEndOfPage: null,
-          child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(12.0),
-              itemCount: null,
-              itemBuilder: (BuildContext context, int index) {
-                return Material(
-                  child: InkWell(
-                    child: ArticleItem(
-                      image: null,
-                      title: null,
-                      date: null,
-                      description: null,
-                    ),
-                    onTap: () {},
-                  ),
-                );
-              }),
-        ),
+          controller: _scrollViewController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                title: Text('Favorites'),
+                floating: true,
+                snap: true,
+                forceElevated: innerBoxIsScrolled,
+                actions: [
+                  BrightnessMenu(),
+                  MainPopUpMenu(true),
+                ],
+              )
+            ];
+          },
+          body:
       ),
     );
+  }
+
+  Widget _buildFavoriteArticles(FavoriteArticlesSuccessState state,
+      FavoriteArticlesBloc bloc) {
+    if (state is FavoriteArticlesSuccessEmptyState) {
+      return Container(child: Center(child: Text(state.message,),),);
+    } else {
+      FavoriteArticlesSuccessNotEmptyState notEmptyState = state as FavoriteArticlesSuccessNotEmptyState;
+      List<Article> articles = notEmptyState.articles;
+      return ListView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.all(12.0),
+          itemCount: articles.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Dismissible(
+              background: Container(color: Colors.red,
+                child: Center(child: Text('Remove from favorites.',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),),),),
+              key: Key(articles[index].id),
+              onDismissed: (DismissDirection direction) {
+                bloc.add(DeleteFavoriteArticleEvent());
+                Scaffold.of(context).showSnackBar(SnackBar(content: Text(
+                    '${articles[index].title} removed.')));
+              },
+              child: Material(
+                child: InkWell(
+                  child: ArticleItem(
+                    image: articles[index].images[0].image,
+                    title: articles[index].title,
+                    date: articles[index].date,
+                    description: articles[index].description,
+                  ),
+                  onTap: () {
+                    ArticleType type = FavoritesDb.getFavoriteArticleTypeById(
+                        articles[index].id);
+                    _navigateToDetails(
+                        context: context, article: articles[index], type: type);
+                  },
+                ),
+              ),
+            );
+          });
+    }
+  }
+
+  void _navigateToDetails(
+      {@required BuildContext context, @required Article article, @required ArticleType type}) async {
+    bool result = await Navigator.push(
+        context, MaterialPageRoute(builder: (BuildContext context) {
+      return DetailsPage(article, type);
+    }));
+
+    print(result);
   }
 }
