@@ -31,60 +31,80 @@ class FavoritesDb {
   }
 
   static void addFavoriteArticle(Article article, ArticleType type) {
-    _openBox();
+    _openFavoriteBox();
     _favoritesBox.put(article.id, article);
-    _favoritesBox.close();
-    _articleTypeBox.put(article.id, type);
-    _articleTypeBox.close();
+    _closeFavoriteBox();
+    addFavoriteArticleTypeById(article.id, type);
   }
 
   static Article getFavoriteArticleById(String id) {
-    _openBox();
+    _openFavoriteBox();
     Article article = _favoritesBox.get(id);
-    _favoritesBox.close();
+    _closeFavoriteBox();
     return article;
   }
 
   static List<Article> getFavoriteArticles() {
-    _openBox();
+    _openFavoriteBox();
     List<Article> articles = _favoritesBox.toMap().values.toList();
-    _favoritesBox.close();
+    _closeFavoriteBox();
     return articles;
   }
 
   static void deleteFavoriteArticle(Article article) {
-    _openBox();
+    _openFavoriteBox();
     article.delete();
-    _favoritesBox.close();
-    _articleTypeBox.delete(article.id);
-    _articleTypeBox.close();
+    _closeFavoriteBox();
+    deleteFavoriteArticleTypeById(article.id);
   }
 
   static void deleteFavoriteArticleById(String id) {
-    _openBox();
+    _openFavoriteBox();
     _favoritesBox.delete(id);
-    _favoritesBox.close();
-    _articleTypeBox.delete(id);
-    _articleTypeBox.close();
+    _closeFavoriteBox();
+    deleteFavoriteArticleTypeById(id);
   }
 
   static bool isFavoriteArticleExists(String id) {
-    _openBox();
+    _openFavoriteBox();
     bool isExists = _favoritesBox.containsKey(id);
     _favoritesBox.close();
     return isExists;
   }
 
-  static ArticleType getArticleTypeById(String id) {
-    _openBox();
+  static void addFavoriteArticleTypeById(String id, ArticleType type) {
+    _openArticleTypeBox();
+    _articleTypeBox.put(id, type);
+    _closeArticleTypeBox();
+  }
+
+  static ArticleType getFavoriteArticleTypeById(String id) {
+    _openArticleTypeBox();
     ArticleType type = _articleTypeBox.get(id);
-    _articleTypeBox.close();
+    _closeArticleTypeBox();
     return type;
   }
 
-  static void _openBox() async {
+  static void deleteFavoriteArticleTypeById(String id) {
+    _openArticleTypeBox();
+    _articleTypeBox.delete(id);
+    _closeArticleTypeBox();
+  }
+
+  static void _openFavoriteBox() async {
     if (!_favoritesBox.isOpen) _favoritesBox = await Hive.openBox(_boxNameKey);
+  }
+
+  static void _closeFavoriteBox() async {
+    if (_favoritesBox.isOpen) _favoritesBox.close();
+  }
+
+  static void _openArticleTypeBox() async {
     if (!_articleTypeBox.isOpen)
       _articleTypeBox = await Hive.openBox(_articleTypeBoxNameKey);
+  }
+
+  static void _closeArticleTypeBox() async {
+    if (_articleTypeBox.isOpen) _articleTypeBox.close();
   }
 }
