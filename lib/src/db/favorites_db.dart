@@ -64,6 +64,8 @@ class FavoritesDb {
     _openBox();
     _favoritesBox.delete(id);
     _favoritesBox.close();
+    _articleTypeBox.delete(id);
+    _articleTypeBox.close();
   }
 
   static bool isFavoriteArticleExists(String id) {
