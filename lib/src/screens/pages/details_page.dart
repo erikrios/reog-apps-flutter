@@ -239,7 +239,7 @@ class _DetailsPageState extends State<DetailsPage> {
               print('bookmark_removed'.tr());
             } else {
               _isBookmarked = true;
-              FavoritesDb.addFavoriteArticle(_article);
+              FavoritesDb.addFavoriteArticle(_article, _type);
               print('bookmark_added'.tr());
             }
           }
