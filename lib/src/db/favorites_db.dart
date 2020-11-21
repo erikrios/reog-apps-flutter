@@ -30,10 +30,12 @@ class FavoritesDb {
     Hive.registerAdapter(ArticleTypeAdapter());
   }
 
-  static void addFavoriteArticle(Article article) {
+  static void addFavoriteArticle(Article article, ArticleType type) {
     _openBox();
     _favoritesBox.put(article.id, article);
     _favoritesBox.close();
+    _articleTypeBox.put(article.id, type);
+    _articleTypeBox.close();
   }
 
   static Article getFavoriteArticleById(String id) {
