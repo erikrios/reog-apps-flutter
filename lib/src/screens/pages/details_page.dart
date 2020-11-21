@@ -39,7 +39,6 @@ class _DetailsPageState extends State<DetailsPage> {
     super.initState();
     _isBookmarked = FavoritesDb.isFavoriteArticleExists(_article.id);
     _scrollViewController = ScrollController();
-    _isBookmarked = false;
     _bloc = ArticleDetailsResultBloc(
         service: ReogAppsService.create(), type: _type);
   }
