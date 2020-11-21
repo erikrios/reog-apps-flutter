@@ -6,7 +6,6 @@ import 'package:reog_apps_flutter/src/bloc/favorite_articles_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/states/favorite_articles_state.dart';
 import 'package:reog_apps_flutter/src/db/favorites_db.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
-import 'package:reog_apps_flutter/src/models/articles.dart';
 import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
@@ -33,6 +32,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   void dispose() {
     super.dispose();
     _scrollViewController.dispose();
+    _bloc.close();
   }
 
   @override
@@ -58,7 +58,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
           cubit: _bloc,
           builder: (BuildContext context, FavoriteArticlesState state) {
             if (state is FavoriteArticlesLoadingState)
-              return _buildLoading()
+              return _buildLoading();
             else
               return _buildFavoriteArticles(
                   state as FavoriteArticlesSuccessState, _bloc);
@@ -76,8 +76,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 
-  Widget _buildFavoriteArticles(FavoriteArticlesSuccessState state,
-      FavoriteArticlesBloc bloc) {
+  Widget _buildFavoriteArticles(
+      FavoriteArticlesSuccessState state, FavoriteArticlesBloc bloc) {
     if (state is FavoriteArticlesSuccessEmptyState) {
       return Container(
         child: Center(
@@ -88,7 +88,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       );
     } else {
       FavoriteArticlesSuccessNotEmptyState notEmptyState =
-      state as FavoriteArticlesSuccessNotEmptyState;
+          state as FavoriteArticlesSuccessNotEmptyState;
       List<Article> articles = notEmptyState.articles;
       return ListView.builder(
           shrinkWrap: true,
@@ -133,13 +133,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
     }
   }
 
-  void _navigateToDetails({@required BuildContext context,
-    @required Article article,
-    @required ArticleType type}) async {
+  void _navigateToDetails(
+      {@required BuildContext context,
+      @required Article article,
+      @required ArticleType type}) async {
     bool result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
-          return DetailsPage(article, type);
-        }));
+      return DetailsPage(article, type);
+    }));
 
     print(result);
   }
