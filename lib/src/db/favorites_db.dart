@@ -56,6 +56,8 @@ class FavoritesDb {
     _openBox();
     article.delete();
     _favoritesBox.close();
+    _articleTypeBox.delete(article.id);
+    _articleTypeBox.close();
   }
 
   static void deleteFavoriteArticleById(String id) {
