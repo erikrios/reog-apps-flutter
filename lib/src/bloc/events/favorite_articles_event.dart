@@ -7,4 +7,8 @@ class FavoriteArticlesEvent extends Equatable {
 
 class GetFavoriteArticlesEvent extends FavoriteArticlesEvent {}
 
-class DeleteFavoriteArticleEvent extends FavoriteArticlesEvent {}
+class DeleteFavoriteArticleEvent extends FavoriteArticlesEvent {
+  final String id;
+
+  DeleteFavoriteArticleEvent({this.id});
+}
