@@ -46,15 +46,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
         _navigateBack();
       },
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: Colors.white,
-            onPressed: () {
-              _navigateBack();
-            },
-          ),
-        ),
         body: NestedScrollView(
           controller: _scrollViewController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -64,6 +55,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 floating: true,
                 snap: true,
                 forceElevated: innerBoxIsScrolled,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color: Colors.white,
+                  onPressed: () {
+                    _navigateBack();
+                  },
+                ),
                 actions: [
                   BrightnessMenu(),
                   MainPopUpMenu(true),
