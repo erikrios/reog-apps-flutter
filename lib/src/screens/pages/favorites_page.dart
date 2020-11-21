@@ -58,6 +58,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 
+  Widget _buildLoading() {
+    return Container(child: Center(child: CircularProgressIndicator(),),);
+  }
+
   Widget _buildFavoriteArticles(FavoriteArticlesSuccessState state,
       FavoriteArticlesBloc bloc) {
     if (state is FavoriteArticlesSuccessEmptyState) {
