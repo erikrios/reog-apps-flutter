@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/article_details_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/comment_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/events/article_details_result_event.dart';
+import 'package:reog_apps_flutter/src/bloc/events/comment_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/article_details_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/states/comment_state.dart';
 import 'package:reog_apps_flutter/src/db/favorites_db.dart';
@@ -33,6 +34,7 @@ class _DetailsPageState extends State<DetailsPage> {
   int _selectedNavBar = 0;
   int _currentSliderIndex = 0;
   ArticleDetailsResultBloc _bloc;
+  CommentBloc _commentBloc;
 
   _DetailsPageState(this._article, this._type);
 
@@ -43,6 +45,8 @@ class _DetailsPageState extends State<DetailsPage> {
     _scrollViewController = ScrollController();
     _bloc = ArticleDetailsResultBloc(
         service: ReogAppsService.create(), type: _type);
+    _commentBloc = CommentBloc(service: ReogAppsService.create());
+    _commentBloc.add(CommentGetEvent(_article.id));
   }
 
   @override
@@ -58,30 +62,38 @@ class _DetailsPageState extends State<DetailsPage> {
         BlocBuilder<ArticleDetailsResultBloc, ArticleDetailsResultState>(
       cubit: _bloc,
       builder: (BuildContext context, ArticleDetailsResultState state) {
-        return BottomNavigationBar(
-          selectedItemColor: Color(0xff66A84D),
-          unselectedItemColor: Color(0xff66A84D),
-          currentIndex: _selectedNavBar,
-          onTap: onNavBarTapped,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: (_isBookmarked)
-                    ? Icon(Icons.bookmark)
-                    : Icon(Icons.bookmark_border),
-                label: (_isBookmarked)
-                    ? 'remove_bookmark'.tr()
-                    : 'add_bookmark'.tr()),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.comment),
-              label: 25.toString(),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.remove_red_eye),
-              label: (state is ArticleDetailsResultSuccessState)
-                  ? state.articleDetailsResult.data[0].views.toString()
-                  : "-",
-            )
-          ],
+        return BlocBuilder<CommentBloc, CommentState>(
+          cubit: _commentBloc,
+          builder: (BuildContext context, CommentState commentState) {
+            return BottomNavigationBar(
+              selectedItemColor: Color(0xff66A84D),
+              unselectedItemColor: Color(0xff66A84D),
+              currentIndex: _selectedNavBar,
+              onTap: onNavBarTapped,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: (_isBookmarked)
+                        ? Icon(Icons.bookmark)
+                        : Icon(Icons.bookmark_border),
+                    label: (_isBookmarked)
+                        ? 'remove_bookmark'.tr()
+                        : 'add_bookmark'.tr()),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.comment),
+                    label: (commentState is CommentSuccessState)
+                        ? (commentState is CommentSuccessNotEmptyState)
+                            ? commentState.commentResult.data.length.toString()
+                            : 0.toString()
+                        : '-'),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.remove_red_eye),
+                  label: (state is ArticleDetailsResultSuccessState)
+                      ? state.articleDetailsResult.data[0].views.toString()
+                      : '-',
+                )
+              ],
+            );
+          },
         );
       },
     );
