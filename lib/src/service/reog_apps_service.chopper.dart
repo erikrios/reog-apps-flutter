@@ -99,4 +99,24 @@ class _$ReogAppsService extends ReogAppsService {
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> postComment(
+      String authToken, String id, Map<String, dynamic> body) {
+    final $url = 'api/comments';
+    final $params = <String, dynamic>{'id': id};
+    final $headers = {'Auth-Token': authToken};
+    final $body = body;
+    final $request = Request('POST', $url, client.baseUrl,
+        body: $body, parameters: $params, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getComments(String id) {
+    final $url = 'api/comments';
+    final $params = <String, dynamic>{'id': id};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
