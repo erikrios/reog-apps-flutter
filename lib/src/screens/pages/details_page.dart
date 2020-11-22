@@ -267,9 +267,81 @@ class _DetailsPageState extends State<DetailsPage> {
                     borderRadius: BorderRadius.circular(10)),
                 context: context,
                 builder: (builder) {
-                  return RefreshIndicator(
-                    onRefresh: null,
-                    child: null,
+                  return Container(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 32),
+                          width: 100,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: RefreshIndicator(
+                            onRefresh: () {
+                              _commentBloc.add(CommentGetEvent(_article.id));
+                              return;
+                            },
+                            child: BlocBuilder<CommentBloc, CommentState>(
+                              cubit: _commentBloc,
+                              builder:
+                                  (BuildContext context, CommentState state) {
+                                if (state is CommentLoadingState)
+                                  return _buildLoadingComment();
+                                else if (state is CommentErrorState)
+                                  return _buildErrorComment(state);
+                                else
+                                  return _buildSuccessComment(state);
+                              },
+                            ),
+                          ),
+                        ),
+                        getAuthToken().then(
+                          (value) {
+                            (value != null)
+                                ? Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom),
+                                    child: TextField(
+                                      controller: controller,
+                                      keyboardType: TextInputType.multiline,
+                                      minLines: 1,
+                                      maxLines: 5,
+                                      decoration: InputDecoration(
+                                        suffixIcon: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  end: 8.0),
+                                          child: IconButton(
+                                            icon: Icon(Icons.send),
+                                            onPressed: () {
+                                              print('Send');
+                                            },
+                                          ),
+                                        ),
+                                        hintText: 'Type your comment...',
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(0)),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox();
+                          },
+                        )
+                      ],
+                    ),
                   );
                 });
           }
@@ -280,76 +352,38 @@ class _DetailsPageState extends State<DetailsPage> {
     });
   }
 
-  Widget _buildSuccessComment(CommentBloc bloc, CommentSuccessState state,
-      TextEditingController controller) {
+  Widget _buildLoadingComment() {
     return Container(
-      alignment: Alignment.topCenter,
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 32),
-            width: 100,
-            height: 10,
-            decoration: BoxDecoration(
-              color: Colors.black12,
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: (state is CommentSuccessNotEmptyState)
-                ? ListView.builder(
-                    itemBuilder: (context, index) {
-                      return CommentItem(
-                          state.commentResult.data[index].user.name,
-                          state.commentResult.data[index].comment,
-                          state.commentResult.data[index].date);
-                    },
-                    itemCount: state.commentResult.data.length,
-                  )
-                : Container(
-                    child: Center(
-                      child: Text((state as CommentSuccessEmptyState).message),
-                    ),
-                  ),
-          ),
-          getAuthToken().then(
-            (value) {
-              (value != null)
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: TextField(
-                        controller: controller,
-                        keyboardType: TextInputType.multiline,
-                        minLines: 1,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          suffixIcon: Padding(
-                            padding: const EdgeInsetsDirectional.only(end: 8.0),
-                            child: IconButton(
-                              icon: Icon(Icons.send),
-                              onPressed: () {
-                                print('Send');
-                              },
-                            ),
-                          ),
-                          hintText: 'Type your comment...',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
-                          ),
-                        ),
-                      ),
-                    )
-                  : SizedBox();
-            },
-          )
-        ],
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
+  }
+
+  Widget _buildErrorComment(CommentErrorState state) {
+    return Container(
+      child: Center(
+        child: Text(state.error),
+      ),
+    );
+  }
+
+  Widget _buildSuccessComment(CommentSuccessState state) {
+    return (state is CommentSuccessNotEmptyState)
+        ? ListView.builder(
+            itemBuilder: (context, index) {
+              return CommentItem(
+                  state.commentResult.data[index].user.name,
+                  state.commentResult.data[index].comment,
+                  state.commentResult.data[index].date);
+            },
+            itemCount: state.commentResult.data.length,
+          )
+        : Container(
+            child: Center(
+              child: Text((state as CommentSuccessEmptyState).message),
+            ),
+          );
   }
 
   void _navigateBack() {
