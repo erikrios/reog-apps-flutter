@@ -1,13 +1,26 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/models/user.dart';
+
+part 'comment.g.dart';
+
+@JsonSerializable()
 class Comment {
-  String _author;
-  String _comment;
-  String _url;
-  String _date;
+  @JsonKey(name: '_id')
+  String id;
+  @JsonKey(name: 'comment')
+  String comment;
+  @JsonKey(name: 'date')
+  String date;
+  @JsonKey(name: 'user')
+  User user;
+  @JsonKey(name: 'article')
+  Article article;
 
-  Comment(this._author, this._comment, this._url, this._date);
+  Comment({this.id, this.comment, this.date, this.user, this.article});
 
-  String get author => _author;
-  String get comment => _comment;
-  String get url => _url;
-  String get date => _date;
+  factory Comment.fromJson(Map<String, dynamic> json) =>
+      _$CommentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CommentToJson(this);
 }
