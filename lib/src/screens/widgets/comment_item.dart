@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 class CommentItem extends StatelessWidget {
   final String author;
   final String comment;
-  final String url;
   final String date;
 
-  CommentItem(this.author, this.comment, this.url, this.date);
+  CommentItem(this.author, this.comment, this.date);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,16 @@ class CommentItem extends StatelessWidget {
                       width: 55,
                       child: CircleAvatar(
                         backgroundColor: Colors.green,
-                        backgroundImage: NetworkImage(url),
+                        child: Center(
+                          child: Text(
+                            author[0],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Flexible(
