@@ -153,12 +153,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
       {@required BuildContext context,
       @required Article article,
       @required ArticleType type}) async {
-    bool result = await Navigator.push(context,
+    await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
       return DetailsPage(article, type);
-    }));
-
-    print(result);
+    })).then((value) => _bloc.add(GetFavoriteArticlesEvent()));
   }
 
   void _navigateBack() {
