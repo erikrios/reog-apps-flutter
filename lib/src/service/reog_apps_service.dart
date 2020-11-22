@@ -43,6 +43,13 @@ abstract class ReogAppsService extends ChopperService {
   @Get(path: 'api/users/avatar')
   Future<Response> getAvatar(@Header('Auth-Token') String authToken);
 
+  @Post(path: 'api/comments')
+  Future<Response> postComment(@Header('Auth-Token') String authToken,
+      @Query('id') String id, @Body() Map<String, dynamic> body);
+
+  @Get(path: 'api/comments')
+  Future<Response> getComments(@Query('id') String id);
+
   static ReogAppsService create({String authTokenValue = ""}) {
     final client = ChopperClient(
       baseUrl: DotEnv().env['BASE_URL'],
