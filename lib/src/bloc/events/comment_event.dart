@@ -9,11 +9,10 @@ abstract class CommentEvent extends Equatable {
 }
 
 class CommentPostEvent extends CommentEvent {
-  final String token;
   final String id;
   final CommentPost comment;
 
-  CommentPostEvent(this.token, this.id, this.comment);
+  CommentPostEvent(this.id, this.comment);
 }
 
 class CommentGetEvent extends CommentEvent {
