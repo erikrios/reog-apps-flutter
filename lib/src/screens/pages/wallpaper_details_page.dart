@@ -1,17 +1,21 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class WallpaperDetailsPage extends StatefulWidget {
   final String _url;
+
   WallpaperDetailsPage(this._url);
+
   @override
   _WallpaperDetailsPageState createState() => _WallpaperDetailsPageState(_url);
 }
 
 class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
   final String _url;
+
   _WallpaperDetailsPageState(this._url);
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -53,7 +57,23 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
                 onPressed: () {},
                 color: Theme.of(context).primaryColor,
                 child: Text(
-                  'set_wallpaper'.tr().toUpperCase(),
+                  'set_wallpaper'.tr().toUpperCase() +
+                      ' (Home Screen)'.toUpperCase(),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Divider(
+                height: 4,
+              ),
+              FlatButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                minWidth: MediaQuery.of(context).size.width,
+                onPressed: () {},
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  'set_wallpaper'.tr().toUpperCase() +
+                      ' (Lock Screen)'.toUpperCase(),
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
