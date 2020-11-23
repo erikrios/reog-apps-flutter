@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 
 class WallpaperDetailsPage extends StatefulWidget {
@@ -13,8 +14,15 @@ class WallpaperDetailsPage extends StatefulWidget {
 
 class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
   final String _url;
+  var file;
 
   _WallpaperDetailsPageState(this._url);
+
+  @override
+  void initState() async {
+    super.initState();
+    file = await DefaultCacheManager().getSingleFile(_url);
+  }
 
   @override
   Widget build(BuildContext context) {
