@@ -10,6 +10,7 @@ import 'package:reog_apps_flutter/src/bloc/states/article_details_result_state.d
 import 'package:reog_apps_flutter/src/bloc/states/comment_state.dart';
 import 'package:reog_apps_flutter/src/db/favorites_db.dart';
 import 'package:reog_apps_flutter/src/models/article.dart';
+import 'package:reog_apps_flutter/src/models/comment_post.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/comment_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
@@ -49,7 +50,8 @@ class _DetailsPageState extends State<DetailsPage> {
     });
     _bloc = ArticleDetailsResultBloc(
         service: ReogAppsService.create(), type: _type);
-    _commentBloc = CommentBloc(service: ReogAppsService.create());
+    _commentBloc =
+        CommentBloc(service: ReogAppsService.create(), id: _article.id);
     _commentBloc.add(CommentGetEvent(_article.id));
   }
 
@@ -325,7 +327,12 @@ class _DetailsPageState extends State<DetailsPage> {
                                       child: IconButton(
                                         icon: Icon(Icons.send),
                                         onPressed: () {
-                                          print('Send');
+                                          final CommentPost comment =
+                                              CommentPost(
+                                                  comment: controller.text);
+                                          _commentBloc.add(CommentPostEvent(
+                                              _article.id, comment));
+                                          controller.text = '';
                                         },
                                       ),
                                     ),
