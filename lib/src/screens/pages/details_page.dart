@@ -35,6 +35,7 @@ class _DetailsPageState extends State<DetailsPage> {
   int _currentSliderIndex = 0;
   ArticleDetailsResultBloc _bloc;
   CommentBloc _commentBloc;
+  String authToken;
 
   _DetailsPageState(this._article, this._type);
 
@@ -43,6 +44,9 @@ class _DetailsPageState extends State<DetailsPage> {
     super.initState();
     _isBookmarked = FavoritesDb.isFavoriteArticleExists(_article.id);
     _scrollViewController = ScrollController();
+    getAuthToken().then((value) {
+      authToken = value;
+    });
     _bloc = ArticleDetailsResultBloc(
         service: ReogAppsService.create(), type: _type);
     _commentBloc = CommentBloc(service: ReogAppsService.create());
@@ -303,43 +307,38 @@ class _DetailsPageState extends State<DetailsPage> {
                             ),
                           ),
                         ),
-                        getAuthToken().then(
-                          (value) {
-                            (value != null)
-                                ? Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: MediaQuery.of(context)
-                                            .viewInsets
-                                            .bottom),
-                                    child: TextField(
-                                      controller: controller,
-                                      keyboardType: TextInputType.multiline,
-                                      minLines: 1,
-                                      maxLines: 5,
-                                      decoration: InputDecoration(
-                                        suffixIcon: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.only(
-                                                  end: 8.0),
-                                          child: IconButton(
-                                            icon: Icon(Icons.send),
-                                            onPressed: () {
-                                              print('Send');
-                                            },
-                                          ),
-                                        ),
-                                        hintText: 'Type your comment...',
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(0)),
-                                        ),
+                        (authToken != null)
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                child: TextField(
+                                  controller: controller,
+                                  keyboardType: TextInputType.multiline,
+                                  minLines: 1,
+                                  maxLines: 5,
+                                  decoration: InputDecoration(
+                                    suffixIcon: Padding(
+                                      padding: const EdgeInsetsDirectional.only(
+                                          end: 8.0),
+                                      child: IconButton(
+                                        icon: Icon(Icons.send),
+                                        onPressed: () {
+                                          print('Send');
+                                        },
                                       ),
                                     ),
-                                  )
-                                : SizedBox();
-                          },
-                        )
+                                    hintText: 'Type your comment...',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(0)),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   );
