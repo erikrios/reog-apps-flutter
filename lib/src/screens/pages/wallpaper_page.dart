@@ -4,6 +4,7 @@ import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/wallpaper_item.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:startapp/startapp.dart';
 
 class WallpaperPage extends StatefulWidget {
   @override
@@ -62,6 +63,7 @@ class _WallpaperPageState extends State<WallpaperPage> {
             return InkWell(
               child: WallpaperItem(_urls[index]),
               onTap: () async {
+                await StartApp.showInterstitialAd();
                 bool result = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) {
                   return WallpaperDetailsPage(_urls[index]);
