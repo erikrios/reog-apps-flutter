@@ -10,6 +10,7 @@ import 'package:reog_apps_flutter/src/bloc/states/avatar_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/states/user_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/user_result_bloc.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
+import 'package:startapp/startapp.dart';
 
 class MyProfilePage extends StatelessWidget {
   final UserResultBloc _bloc =
@@ -136,6 +137,8 @@ class MyProfilePage extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: 8),
+        AdBanner(),
       ],
     );
   }
