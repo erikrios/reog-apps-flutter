@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
+import 'package:wallpaper_manager/wallpaper_manager.dart';
 
 class WallpaperDetailsPage extends StatefulWidget {
   final String _url;
@@ -14,7 +18,7 @@ class WallpaperDetailsPage extends StatefulWidget {
 
 class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
   final String _url;
-  var file;
+  File file;
 
   _WallpaperDetailsPageState(this._url);
 
@@ -91,6 +95,16 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
         ),
       ),
     );
+  }
+
+  Future<String> _setWallpaper(int location) async {
+    String result;
+    try {
+      result = await WallpaperManager.setWallpaperFromFile(file.path, location);
+    } on PlatformException {
+      result = 'Failed.';
+    }
+    return result;
   }
 
   void _navigateBack() {
