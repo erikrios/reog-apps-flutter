@@ -11,8 +11,9 @@ import 'package:reog_apps_flutter/src/utils/constants.dart';
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   final ReogAppsService service;
+  final String id;
 
-  CommentBloc({@required this.service})
+  CommentBloc({@required this.service, this.id})
       : assert(service != null),
         super(CommentInitialState());
 
@@ -45,7 +46,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
             (event as CommentPostEvent).id,
             (event as CommentPostEvent).comment.toJson());
         if (response.isSuccessful)
-          this.add(CommentGetEvent((event as CommentGetEvent).id));
+          this.add(CommentGetEvent(id));
         else {
           final CommentResult commentResult =
               CommentResult.fromJson(jsonDecode(response.error));
