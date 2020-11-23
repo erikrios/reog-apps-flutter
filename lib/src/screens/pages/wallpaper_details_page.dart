@@ -23,9 +23,21 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
   _WallpaperDetailsPageState(this._url);
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    file = await DefaultCacheManager().getSingleFile(_url);
+    DefaultCacheManager().getSingleFile(_url).then((File value) {
+      if (value == null) {
+        DefaultCacheManager().downloadFile(_url).then((FileInfo value) {
+          setState(() {
+            file = value.file;
+          });
+        });
+      } else {
+        setState(() {
+          file = value;
+        });
+      }
+    });
   }
 
   @override
@@ -50,50 +62,81 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
             MainPopUpMenu(false),
           ],
         ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Flexible(
-                flex: 1,
-                fit: FlexFit.tight,
-                child: Center(
-                  child: Image.network(_url,
-                      fit: BoxFit.contain,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width),
+        body: Builder(
+          builder: (context) => Container(
+            child: Column(
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: Center(
+                    child: (file == null)
+                        ? CircularProgressIndicator()
+                        : _loadImage(file),
+                  ),
                 ),
-              ),
-              FlatButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                minWidth: MediaQuery.of(context).size.width,
-                onPressed: () {},
-                color: Theme.of(context).primaryColor,
-                child: Text(
-                  'set_wallpaper'.tr().toUpperCase() +
-                      ' (Home Screen)'.toUpperCase(),
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                FlatButton(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  minWidth: MediaQuery.of(context).size.width,
+                  onPressed: () async {
+                    String result =
+                        await _setWallpaper(WallpaperManager.HOME_SCREEN);
+                    print('Result: $result');
+                    if (result.toLowerCase() == 'failed.') {
+                      Scaffold.of(context)
+                          .showSnackBar(SnackBar(content: Text(result)));
+                    } else {
+                      Scaffold.of(context)
+                          .showSnackBar(SnackBar(content: Text(result)));
+                    }
+                  },
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'set_wallpaper'.tr().toUpperCase() +
+                        ' (Home Screen)'.toUpperCase(),
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              Divider(
-                height: 4,
-              ),
-              FlatButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                minWidth: MediaQuery.of(context).size.width,
-                onPressed: () {},
-                color: Theme.of(context).primaryColor,
-                child: Text(
-                  'set_wallpaper'.tr().toUpperCase() +
-                      ' (Lock Screen)'.toUpperCase(),
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                Divider(
+                  height: 4,
                 ),
-              ),
-            ],
+                FlatButton(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  minWidth: MediaQuery.of(context).size.width,
+                  onPressed: () async {
+                    String result =
+                        await _setWallpaper(WallpaperManager.LOCK_SCREEN);
+                    if (result.toLowerCase() == 'failed.') {
+                      Scaffold.of(context)
+                          .showSnackBar(SnackBar(content: Text(result)));
+                    } else {
+                      Scaffold.of(context)
+                          .showSnackBar(SnackBar(content: Text(result)));
+                    }
+                  },
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'set_wallpaper'.tr().toUpperCase() +
+                        ' (Lock Screen)'.toUpperCase(),
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _loadImage(File file) {
+    return Image.file(
+      file,
+      fit: BoxFit.contain,
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
     );
   }
 
