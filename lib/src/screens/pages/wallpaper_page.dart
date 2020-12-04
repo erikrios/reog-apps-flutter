@@ -24,6 +24,7 @@ class _WallpaperPageState extends State<WallpaperPage> {
     super.initState();
     _scrollViewController = ScrollController();
     _bloc = BlocProvider.of<WallpaperBloc>(context);
+    _bloc.add(WallpaperFetchingEvent());
   }
 
   @override
@@ -51,7 +52,17 @@ class _WallpaperPageState extends State<WallpaperPage> {
             ),
           ];
         },
-        body: null,
+        body: BlocBuilder<WallpaperBloc, WallpaperState>(
+          cubit: _bloc,
+          builder: (BuildContext context, WallpaperState state) {
+            if (state is WallpaperErrorState)
+              return _buildErrorState(state, _bloc);
+            else if (state is WallpaperSuccessState)
+              return _buildSuccessState(state);
+            else
+              return _buildLoadingState();
+          },
+        ),
       ),
     );
   }
