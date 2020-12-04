@@ -127,7 +127,7 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
                 ),
                 Divider(
                   color: Colors.transparent,
-                  height: 10,
+                  height: 8,
                 ),
                 AdBanner(),
               ],
