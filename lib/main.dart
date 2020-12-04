@@ -7,6 +7,7 @@ import 'package:reog_apps_flutter/src/bloc/foods_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/histories_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/sites_result_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/wallpaper_bloc.dart';
 import 'package:reog_apps_flutter/src/db/favorites_db.dart';
 import 'package:reog_apps_flutter/src/screens/pages/splash_screen_page.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
@@ -98,6 +99,10 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) => HistoriesResultBloc(
               service: ReogAppsService.create(authTokenValue: token)),
         ),
+        BlocProvider<WallpaperBloc>(
+          create: (BuildContext context) => WallpaperBloc(
+              service: ReogAppsService.create(authTokenValue: token)),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
