@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reog_apps_flutter/src/bloc/events/wallpaper_event.dart';
 import 'package:reog_apps_flutter/src/bloc/states/wallpaper_state.dart';
 import 'package:reog_apps_flutter/src/bloc/wallpaper_bloc.dart';
@@ -16,11 +17,13 @@ class WallpaperPage extends StatefulWidget {
 
 class _WallpaperPageState extends State<WallpaperPage> {
   ScrollController _scrollViewController;
+  WallpaperBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     _scrollViewController = ScrollController();
+    _bloc = BlocProvider.of<WallpaperBloc>(context);
   }
 
   @override
