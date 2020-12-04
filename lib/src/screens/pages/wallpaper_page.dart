@@ -67,28 +67,34 @@ class _WallpaperPageState extends State<WallpaperPage> {
     );
   }
 
-  Widget _buildSuccessState(WallpaperSuccessState state) => GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 2 / 3,
-        ),
-        itemCount: state.wallpaperResult.data[0].urls.length,
-        padding: EdgeInsets.all(3.0),
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            child: WallpaperItem(state.wallpaperResult.data[0].urls[index]),
-            onTap: () async {
-              await StartApp.showInterstitialAd();
-              bool result = await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) {
-                return WallpaperDetailsPage(
-                    state.wallpaperResult.data[0].urls[index]);
-              }));
-              print(result);
-            },
-          );
-        },
-      );
+  Widget _buildSuccessState(WallpaperSuccessState state) =>
+      state.wallpaperResult.data[0].urls.isEmpty
+          ? Center(
+              child: Text('Wallpaper is empty.'),
+            )
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 2 / 3,
+              ),
+              itemCount: state.wallpaperResult.data[0].urls.length,
+              padding: EdgeInsets.all(3.0),
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  child:
+                      WallpaperItem(state.wallpaperResult.data[0].urls[index]),
+                  onTap: () async {
+                    await StartApp.showInterstitialAd();
+                    bool result = await Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return WallpaperDetailsPage(
+                          state.wallpaperResult.data[0].urls[index]);
+                    }));
+                    print(result);
+                  },
+                );
+              },
+            );
 
   Widget _buildLoadingState() => Center(child: CircularProgressIndicator());
 
