@@ -129,7 +129,7 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
                   color: Colors.transparent,
                   height: 10,
                 ),
-                AdBanner()
+                AdBanner(),
               ],
             ),
           ),
