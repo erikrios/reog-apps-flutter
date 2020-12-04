@@ -119,4 +119,11 @@ class _$ReogAppsService extends ReogAppsService {
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getWallpapers() {
+    final $url = 'api/wallpapers';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
