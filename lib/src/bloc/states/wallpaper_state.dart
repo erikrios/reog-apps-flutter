@@ -13,7 +13,7 @@ class WallpaperLoadingState extends WallpaperState {
 class WallpaperSuccessState extends WallpaperState {
   final WallpaperResult wallpaperResult;
 
-  const WallpaperSuccessState(this.wallpaperResult);
+  const WallpaperSuccessState({this.wallpaperResult});
 
   @override
   List<Object> get props => [wallpaperResult];
