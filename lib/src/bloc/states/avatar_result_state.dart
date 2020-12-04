@@ -25,5 +25,5 @@ class AvatarResultErrorState extends AvatarResultState {
   const AvatarResultErrorState({this.error});
 
   @override
-  List<Object> get props => [props];
+  List<Object> get props => [error];
 }
