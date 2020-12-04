@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/src/bloc/events/wallpaper_event.dart';
+import 'package:reog_apps_flutter/src/bloc/states/wallpaper_state.dart';
+import 'package:reog_apps_flutter/src/bloc/wallpaper_bloc.dart';
 import 'package:reog_apps_flutter/src/screens/pages/wallpaper_details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
@@ -13,7 +16,6 @@ class WallpaperPage extends StatefulWidget {
 
 class _WallpaperPageState extends State<WallpaperPage> {
   ScrollController _scrollViewController;
-  List<String> _urls;
 
   @override
   void initState() {
@@ -29,12 +31,6 @@ class _WallpaperPageState extends State<WallpaperPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_urls == null) {
-      _urls = List<String>();
-    }
-
-    setDummyArticles();
-
     return Scaffold(
       body: NestedScrollView(
         controller: _scrollViewController,
@@ -52,38 +48,44 @@ class _WallpaperPageState extends State<WallpaperPage> {
             ),
           ];
         },
-        body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 3,
-          ),
-          itemCount: _urls.length,
-          padding: EdgeInsets.all(3.0),
-          itemBuilder: (BuildContext context, int index) {
-            return InkWell(
-              child: WallpaperItem(_urls[index]),
-              onTap: () async {
-                await StartApp.showInterstitialAd();
-                bool result = await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                  return WallpaperDetailsPage(_urls[index]);
-                }));
-                print(result);
-              },
-            );
-          },
-        ),
+        body: null,
       ),
     );
   }
 
-  void setDummyArticles() {
-    for (int i = 0; i < 20; i++) {
-      _urls.add((i % 2 == 0)
-          ? 'https://1.bp.blogspot.com/-11c9jnZJ6UE/X2tLBOww-UI/AAAAAAAAAGw/dtX0eqmMlhArj3OtOGx95SATIzn2NzE8ACLcBGAsYHQ/s266/Screenshot%2Bfrom%2B2019-10-22%2B09-29-01.png'
-          : (i % 3 == 0)
-              ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/800px-The_Earth_seen_from_Apollo_17.jpg'
-              : 'https://archive.org/download/shimla_phoenix_K011P-01c_panelscan/Fromental_Conversational/F006-willow-with-embroidery-col-custom.jpg');
-    }
-  }
+  Widget _buildSuccessState(WallpaperSuccessState state) => GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 2 / 3,
+        ),
+        itemCount: state.wallpaperResult.data[0].urls.length,
+        padding: EdgeInsets.all(3.0),
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            child: WallpaperItem(state.wallpaperResult.data[0].urls[index]),
+            onTap: () async {
+              await StartApp.showInterstitialAd();
+              bool result = await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                return WallpaperDetailsPage(
+                    state.wallpaperResult.data[0].urls[index]);
+              }));
+              print(result);
+            },
+          );
+        },
+      );
+
+  Widget _buildLoadingState() => Center(child: CircularProgressIndicator());
+
+  Widget _buildErrorState(WallpaperErrorState state, WallpaperBloc bloc) =>
+      RefreshIndicator(
+        onRefresh: () {
+          bloc.add(WallpaperFetchingEvent());
+          return;
+        },
+        child: Center(
+          child: Text(state.error),
+        ),
+      );
 }
