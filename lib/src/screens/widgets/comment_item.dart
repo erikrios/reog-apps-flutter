@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
 
 class CommentItem extends StatelessWidget {
   final String author;
@@ -61,7 +62,7 @@ class CommentItem extends StatelessWidget {
                             Container(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                date,
+                                convertDate(date),
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
