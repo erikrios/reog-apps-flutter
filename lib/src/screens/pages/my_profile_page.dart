@@ -10,6 +10,7 @@ import 'package:reog_apps_flutter/src/bloc/states/avatar_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/states/user_result_state.dart';
 import 'package:reog_apps_flutter/src/bloc/user_result_bloc.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
 import 'package:startapp/startapp.dart';
 
 class MyProfilePage extends StatelessWidget {
@@ -132,8 +133,8 @@ class MyProfilePage extends StatelessWidget {
             children: [
               textItem('name'.tr(), name),
               textItem('email_address'.tr(), emailAddress),
-              textItem('member_since'.tr(), memberSince),
-              textItem('last_login'.tr(), lastLogin),
+              textItem('member_since'.tr(), convertDate(memberSince)),
+              textItem('last_login'.tr(), convertDate(lastLogin)),
             ],
           ),
         ),
