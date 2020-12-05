@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -53,8 +53,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     FormFieldItem('full_name'.tr(), 'full_name_hint'.tr(),
                         false, fullNameController),
                     SizedBox(height: 4),
-                    FormFieldItem('email_address'.tr(), 'email_hint'.tr(), false,
-                        emailController),
+                    FormFieldItem('email_address'.tr(), 'email_hint'.tr(),
+                        false, emailController),
                     SizedBox(height: 4),
                     FormFieldItem('password'.tr(), 'password_hint'.tr(), true,
                         passwordController),
@@ -89,5 +89,16 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  bool _validateRegister(String name, String email, String password) {
+    bool isValid = true;
+
+    if (name.isEmpty || email.isEmpty || password.isEmpty) isValid = false;
+    if (!RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+            .hasMatch(email) ||
+        password.length < 5) isValid = false;
+
+    return isValid;
   }
 }
