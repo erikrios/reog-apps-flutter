@@ -1,5 +1,6 @@
 library constants;
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String DARK_MODE_SHARED_PREFS_KEY = 'dark-mode-key';
@@ -13,4 +14,9 @@ getAuthToken() async {
   } catch (e) {
     throw e;
   }
+}
+
+String convertDate(String isoDate) {
+  final dateTime = DateTime.parse(isoDate);
+  return DateFormat('yyyy-MM-dd hh:mm').format(dateTime);
 }
