@@ -136,8 +136,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         },
                       ),
                       actions: <Widget>[
-                        MainPopUpMenu(getAuthToken()
-                            .then((value) => value == null ? false : true)),
+                        MainPopUpMenu(authToken == null ? false : true),
                       ],
                       expandedHeight: 56.0 * 3.5,
                       flexibleSpace: FlexibleSpaceBar(
