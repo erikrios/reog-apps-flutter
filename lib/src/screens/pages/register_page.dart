@@ -7,8 +7,6 @@ import 'package:reog_apps_flutter/src/bloc/states/register_state.dart';
 import 'package:reog_apps_flutter/src/models/register.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
-import 'package:reog_apps_flutter/src/utils/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController fullNameController = new TextEditingController();
@@ -89,14 +87,9 @@ class RegisterPage extends StatelessWidget {
                           ),
                         );
                       } else if (state is RegisterSuccessState) {
-                        _saveToken(state.authToken);
-                        _navigateToDashboard(context);
+                        _navigateToLogin(context);
                         return SizedBox();
                       } else {
-                        if (state is RegisterErrorState) {
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text(state.error)));
-                        }
                         return RaisedButton(
                           padding: EdgeInsets.only(top: 8, bottom: 8),
                           color: Color(0xffE6CB34),
@@ -137,13 +130,8 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  void _saveToken(String authToken) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(AUTH_TOKEN_SHARED_PREFS_KEY, authToken);
-  }
-
-  void _navigateToDashboard(BuildContext context) {
-    Navigator.of(context).popUntil((route) => route.isFirst);
+  void _navigateToLogin(BuildContext context) {
+    Navigator.pop(context);
   }
 
   bool _validateRegister(
