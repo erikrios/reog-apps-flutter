@@ -1,18 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/events/register_event.dart';
+import 'package:reog_apps_flutter/src/bloc/register_bloc.dart';
+import 'package:reog_apps_flutter/src/bloc/states/register_state.dart';
+import 'package:reog_apps_flutter/src/models/register.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/form_field_item.dart';
+import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class RegisterPage extends StatefulWidget {
-  @override
-  _RegisterPageState createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPage extends StatelessWidget {
   final TextEditingController fullNameController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
   final TextEditingController rePasswordController =
       new TextEditingController();
+  final RegisterBloc _bloc = RegisterBloc(service: ReogAppsService.create());
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +74,57 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Center(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width / 2,
-                  child: RaisedButton(
-                    padding: EdgeInsets.only(top: 8, bottom: 8),
-                    color: Color(0xffE6CB34),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      'register'.tr().toUpperCase(),
-                      style: TextStyle(fontSize: 26, color: Colors.white),
-                    ),
+                  child: BlocBuilder<RegisterBloc, RegisterState>(
+                    cubit: _bloc,
+                    builder: (BuildContext context, RegisterState state) {
+                      if (state is RegisterLoadingState) {
+                        return Center(
+                          child: SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.amber),
+                            ),
+                          ),
+                        );
+                      } else if (state is RegisterSuccessState) {
+                        // TODO Save Auth Token
+                        // TODO _navigateToDashboard()
+                        return SizedBox();
+                      } else {
+                        if (state is RegisterErrorState) {
+                          Scaffold.of(context).showSnackBar(
+                              SnackBar(content: Text(state.error)));
+                        }
+                        return RaisedButton(
+                          padding: EdgeInsets.only(top: 8, bottom: 8),
+                          color: Color(0xffE6CB34),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          onPressed: () {
+                            String name = fullNameController.text;
+                            String email = emailController.text;
+                            String password = passwordController.text;
+                            if (!_validateRegister(name, email, password)) {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      'Invalid full name, email, or password')));
+                            } else {
+                              _bloc.add(Registering(Register(
+                                  name: name,
+                                  email: email,
+                                  password: password)));
+                            }
+                          },
+                          child: Text(
+                            'register'.tr().toUpperCase(),
+                            style: TextStyle(fontSize: 26, color: Colors.white),
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
               ),
@@ -89,6 +133,11 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _saveToken(String authToken) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(AUTH_TOKEN_SHARED_PREFS_KEY, authToken);
   }
 
   bool _validateRegister(String name, String email, String password) {
