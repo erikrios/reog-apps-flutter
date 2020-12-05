@@ -19,6 +19,7 @@ class WallpaperPage extends StatefulWidget {
 class _WallpaperPageState extends State<WallpaperPage> {
   ScrollController _scrollViewController;
   WallpaperBloc _bloc;
+  bool _isLoggedIn;
 
   @override
   void initState() {
@@ -26,6 +27,9 @@ class _WallpaperPageState extends State<WallpaperPage> {
     _scrollViewController = ScrollController();
     _bloc = BlocProvider.of<WallpaperBloc>(context);
     _bloc.add(WallpaperFetchingEvent());
+    getAuthToken().then((value) {
+      _isLoggedIn = value == null ? false : true;
+    });
   }
 
   @override
@@ -48,8 +52,7 @@ class _WallpaperPageState extends State<WallpaperPage> {
               forceElevated: innerBoxIsScrolled,
               actions: <Widget>[
                 BrightnessMenu(),
-                MainPopUpMenu(getAuthToken()
-                    .then((value) => value == null ? false : true)),
+                MainPopUpMenu(_isLoggedIn),
               ],
             ),
           ];
