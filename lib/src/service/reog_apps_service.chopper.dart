@@ -126,4 +126,12 @@ class _$ReogAppsService extends ReogAppsService {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> register(Map<String, dynamic> body) {
+    final $url = 'api/users';
+    final $body = body;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
