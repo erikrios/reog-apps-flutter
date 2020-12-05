@@ -22,6 +22,7 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   ScrollController _scrollViewController;
   FavoriteArticlesBloc _bloc = FavoriteArticlesBloc();
+  bool _isLoggedIn;
 
   _FavoritesPageState() {
     _bloc.add(GetFavoriteArticlesEvent());
@@ -31,6 +32,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
   void initState() {
     super.initState();
     _scrollViewController = ScrollController();
+    getAuthToken().then((value) {
+      _isLoggedIn = value == null ? false : true;
+    });
   }
 
   @override
@@ -66,8 +70,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 ),
                 actions: [
                   BrightnessMenu(),
-                  MainPopUpMenu(getAuthToken()
-                      .then((value) => value == null ? false : true)),
+                  MainPopUpMenu(_isLoggedIn),
                 ],
               )
             ];
