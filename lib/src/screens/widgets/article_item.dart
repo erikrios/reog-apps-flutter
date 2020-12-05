@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
 
 class ArticleItem extends StatelessWidget {
   final String image;
@@ -86,7 +87,7 @@ class ArticleItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: Text(
-                            date,
+                            convertDate(date),
                             style: TextStyle(
                               fontSize: 10.0,
                             ),
