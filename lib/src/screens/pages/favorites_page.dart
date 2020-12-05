@@ -33,7 +33,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
     super.initState();
     _scrollViewController = ScrollController();
     getAuthToken().then((value) {
-      _isLoggedIn = value == null ? false : true;
+      setState(() {
+        _isLoggedIn = value == null ? false : true;
+      });
     });
   }
 

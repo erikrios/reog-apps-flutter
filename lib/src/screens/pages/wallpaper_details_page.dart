@@ -42,7 +42,9 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
       }
     });
     getAuthToken().then((value) {
-      _isLoggedIn = value == null ? false : true;
+      setState(() {
+        _isLoggedIn = value == null ? false : true;
+      });
     });
   }
 

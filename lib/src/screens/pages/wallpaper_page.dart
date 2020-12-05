@@ -28,7 +28,9 @@ class _WallpaperPageState extends State<WallpaperPage> {
     _bloc = BlocProvider.of<WallpaperBloc>(context);
     _bloc.add(WallpaperFetchingEvent());
     getAuthToken().then((value) {
-      _isLoggedIn = value == null ? false : true;
+      setState(() {
+        _isLoggedIn = value == null ? false : true;
+      });
     });
   }
 

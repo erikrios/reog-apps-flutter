@@ -36,7 +36,9 @@ class _HistoryPageState extends State<HistoryPage> {
     _scrollViewController = ScrollController();
     _bloc = BlocProvider.of<HistoriesResultBloc>(context);
     getAuthToken().then((value) {
-      _isLoggedIn = value == null ? false : true;
+      setState(() {
+        _isLoggedIn = value == null ? false : true;
+      });
     });
   }
 
