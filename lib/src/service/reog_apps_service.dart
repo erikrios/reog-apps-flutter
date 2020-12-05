@@ -53,6 +53,9 @@ abstract class ReogAppsService extends ChopperService {
   @Get(path: 'api/wallpapers')
   Future<Response> getWallpapers();
 
+  @Post(path: 'api/users')
+  Future<Response> register(@Body() Map<String, dynamic> body);
+
   static ReogAppsService create({String authTokenValue = ""}) {
     final client = ChopperClient(
       baseUrl: DotEnv().env['BASE_URL'],
