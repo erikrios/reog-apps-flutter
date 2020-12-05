@@ -5,6 +5,7 @@ import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -49,7 +50,8 @@ class _ExplorePageState extends State<ExplorePage>
               forceElevated: innerBoxIsScrolled,
               actions: <Widget>[
                 BrightnessMenu(),
-                MainPopUpMenu(true),
+                MainPopUpMenu(getAuthToken()
+                    .then((value) => value == null ? false : true)),
               ],
               bottom: TabBar(
                 controller: _tabController,
