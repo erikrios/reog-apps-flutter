@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<WallpaperBloc>(
           create: (BuildContext context) => WallpaperBloc(
               service: ReogAppsService.create(authTokenValue: token)),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
