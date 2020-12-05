@@ -66,7 +66,6 @@ class LoginPage extends StatelessWidget {
                             cubit: _bloc,
                             builder:
                                 (BuildContext context, AuthResultState state) {
-                              print(state.toString());
                               if (state is AuthResultLoadingState) {
                                 return Center(
                                   child: SizedBox(
