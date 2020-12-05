@@ -90,7 +90,7 @@ class RegisterPage extends StatelessWidget {
                         );
                       } else if (state is RegisterSuccessState) {
                         _saveToken(state.authToken);
-                        // TODO _navigateToDashboard()
+                        _navigateToDashboard(context);
                         return SizedBox();
                       } else {
                         if (state is RegisterErrorState) {
@@ -138,6 +138,10 @@ class RegisterPage extends StatelessWidget {
   void _saveToken(String authToken) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(AUTH_TOKEN_SHARED_PREFS_KEY, authToken);
+  }
+
+  void _navigateToDashboard(BuildContext context) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   bool _validateRegister(String name, String email, String password) {
