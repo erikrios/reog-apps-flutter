@@ -67,7 +67,16 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
               }),
           title: Text('wallpaper'.tr()),
           actions: <Widget>[
-            MainPopUpMenu(_isLoggedIn),
+            MainPopUpMenu(
+              _isLoggedIn,
+              onBackStack: () {
+                getAuthToken().then((value) {
+                  setState(() {
+                    _isLoggedIn = value == null ? false : true;
+                  });
+                });
+              },
+            ),
           ],
         ),
         body: Builder(

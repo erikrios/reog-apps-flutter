@@ -38,6 +38,7 @@ class _DetailsPageState extends State<DetailsPage> {
   ArticleDetailsResultBloc _bloc;
   CommentBloc _commentBloc;
   String authToken;
+  bool _isLoggedIn;
 
   _DetailsPageState(this._article, this._type);
 
@@ -49,6 +50,7 @@ class _DetailsPageState extends State<DetailsPage> {
     getAuthToken().then((value) {
       setState(() {
         authToken = value;
+        _isLoggedIn = value == null ? false : true;
       });
     });
     _bloc = ArticleDetailsResultBloc(
@@ -138,7 +140,16 @@ class _DetailsPageState extends State<DetailsPage> {
                         },
                       ),
                       actions: <Widget>[
-                        MainPopUpMenu(authToken == null ? false : true),
+                        MainPopUpMenu(
+                          _isLoggedIn,
+                          onBackStack: () {
+                            getAuthToken().then((value) {
+                              setState(() {
+                                _isLoggedIn = value == null ? false : true;
+                              });
+                            });
+                          },
+                        ),
                       ],
                       expandedHeight: 56.0 * 3.5,
                       flexibleSpace: FlexibleSpaceBar(

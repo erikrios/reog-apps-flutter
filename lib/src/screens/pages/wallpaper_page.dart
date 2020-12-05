@@ -54,7 +54,16 @@ class _WallpaperPageState extends State<WallpaperPage> {
               forceElevated: innerBoxIsScrolled,
               actions: <Widget>[
                 BrightnessMenu(),
-                MainPopUpMenu(_isLoggedIn),
+                MainPopUpMenu(
+                  _isLoggedIn,
+                  onBackStack: () {
+                    getAuthToken().then((value) {
+                      setState(() {
+                        _isLoggedIn = value == null ? false : true;
+                      });
+                    });
+                  },
+                ),
               ],
             ),
           ];
