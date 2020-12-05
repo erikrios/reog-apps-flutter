@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
 import 'package:startapp/startapp.dart';
 import 'package:wallpaper_manager/wallpaper_manager.dart';
 
@@ -60,7 +61,8 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
               }),
           title: Text('wallpaper'.tr()),
           actions: <Widget>[
-            MainPopUpMenu(false),
+            MainPopUpMenu(
+                getAuthToken().then((value) => value == null ? false : true)),
           ],
         ),
         body: Builder(
