@@ -28,12 +28,16 @@ class _HistoryPageState extends State<HistoryPage> {
   int _totalPage = 1;
   final int _limit = 5;
   Articles histories;
+  bool _isLoggedIn;
 
   @override
   void initState() {
     super.initState();
     _scrollViewController = ScrollController();
     _bloc = BlocProvider.of<HistoriesResultBloc>(context);
+    getAuthToken().then((value) {
+      _isLoggedIn = value == null ? false : true;
+    });
   }
 
   @override
@@ -56,8 +60,7 @@ class _HistoryPageState extends State<HistoryPage> {
               forceElevated: innerBoxIsScrolled,
               actions: <Widget>[
                 BrightnessMenu(),
-                MainPopUpMenu(getAuthToken()
-                    .then((value) => value == null ? false : true)),
+                MainPopUpMenu(_isLoggedIn),
               ],
             ),
           ];
