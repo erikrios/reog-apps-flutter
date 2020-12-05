@@ -1,10 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:reog_apps_flutter/src/screens/pages/foods_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/news_page.dart';
 import 'package:reog_apps_flutter/src/screens/pages/sites_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:reog_apps_flutter/src/utils/constants.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -16,12 +16,16 @@ class _ExplorePageState extends State<ExplorePage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   ScrollController _scrollViewController;
+  bool _isLoggedIn;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _scrollViewController = ScrollController();
+    getAuthToken().then((value) {
+      _isLoggedIn = value == null ? false : true;
+    });
   }
 
   @override
@@ -50,8 +54,7 @@ class _ExplorePageState extends State<ExplorePage>
               forceElevated: innerBoxIsScrolled,
               actions: <Widget>[
                 BrightnessMenu(),
-                MainPopUpMenu(getAuthToken()
-                    .then((value) => value == null ? false : true)),
+                MainPopUpMenu(_isLoggedIn),
               ],
               bottom: TabBar(
                 controller: _tabController,
