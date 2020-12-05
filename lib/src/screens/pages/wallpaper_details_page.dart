@@ -21,6 +21,7 @@ class WallpaperDetailsPage extends StatefulWidget {
 class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
   final String _url;
   File file;
+  bool _isLoggedIn;
 
   _WallpaperDetailsPageState(this._url);
 
@@ -39,6 +40,9 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
           file = value;
         });
       }
+    });
+    getAuthToken().then((value) {
+      _isLoggedIn = value == null ? false : true;
     });
   }
 
@@ -61,8 +65,7 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
               }),
           title: Text('wallpaper'.tr()),
           actions: <Widget>[
-            MainPopUpMenu(
-                getAuthToken().then((value) => value == null ? false : true)),
+            MainPopUpMenu(_isLoggedIn),
           ],
         ),
         body: Builder(
