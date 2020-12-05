@@ -13,6 +13,7 @@ import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/utils/article_type.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
 import 'package:startapp/startapp.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -55,7 +56,8 @@ class _HistoryPageState extends State<HistoryPage> {
               forceElevated: innerBoxIsScrolled,
               actions: <Widget>[
                 BrightnessMenu(),
-                MainPopUpMenu(false),
+                MainPopUpMenu(getAuthToken()
+                    .then((value) => value == null ? false : true)),
               ],
             ),
           ];
