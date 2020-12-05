@@ -24,7 +24,9 @@ class _ExplorePageState extends State<ExplorePage>
     _tabController = TabController(length: 3, vsync: this);
     _scrollViewController = ScrollController();
     getAuthToken().then((value) {
-      _isLoggedIn = value == null ? false : true;
+      setState(() {
+        _isLoggedIn = value == null ? false : true;
+      });
     });
   }
 

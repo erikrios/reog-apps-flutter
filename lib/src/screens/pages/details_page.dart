@@ -47,7 +47,9 @@ class _DetailsPageState extends State<DetailsPage> {
     _isBookmarked = FavoritesDb.isFavoriteArticleExists(_article.id);
     _scrollViewController = ScrollController();
     getAuthToken().then((value) {
-      authToken = value;
+      setState(() {
+        authToken = value;
+      });
     });
     _bloc = ArticleDetailsResultBloc(
         service: ReogAppsService.create(), type: _type);
