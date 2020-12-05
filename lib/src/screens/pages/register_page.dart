@@ -107,7 +107,9 @@ class RegisterPage extends StatelessWidget {
                             String name = fullNameController.text;
                             String email = emailController.text;
                             String password = passwordController.text;
-                            if (!_validateRegister(name, email, password)) {
+                            String rePassword = rePasswordController.text;
+                            if (!_validateRegister(
+                                name, email, password, rePassword)) {
                               Scaffold.of(context).showSnackBar(SnackBar(
                                   content: Text(
                                       'Invalid full name, email, or password')));
@@ -144,13 +146,15 @@ class RegisterPage extends StatelessWidget {
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
-  bool _validateRegister(String name, String email, String password) {
+  bool _validateRegister(
+      String name, String email, String password, String rePassword) {
     bool isValid = true;
 
     if (name.isEmpty || email.isEmpty || password.isEmpty) isValid = false;
     if (!RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
             .hasMatch(email) ||
         password.length < 5) isValid = false;
+    if (!(password == rePassword)) isValid = false;
 
     return isValid;
   }
