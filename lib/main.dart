@@ -12,6 +12,7 @@ import 'package:reog_apps_flutter/src/db/favorites_db.dart';
 import 'package:reog_apps_flutter/src/screens/pages/splash_screen_page.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
 import 'package:reog_apps_flutter/src/utils/config.dart';
+import 'package:reog_apps_flutter/src/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'src/utils/constants.dart' as Constants;
@@ -74,7 +75,7 @@ class _MyAppState extends State<MyApp> {
       });
     });
 
-    _getAuthToken().then((value) {
+    getAuthToken().then((value) {
       token = value ?? "";
     });
   }
@@ -127,17 +128,6 @@ class _MyAppState extends State<MyApp> {
       bool isDarkMode =
           preferences.getBool(Constants.DARK_MODE_SHARED_PREFS_KEY);
       return isDarkMode != null ? isDarkMode : false;
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  _getAuthToken() async {
-    try {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      String token =
-          preferences.getString(Constants.AUTH_TOKEN_SHARED_PREFS_KEY);
-      return token;
     } catch (err) {
       throw err;
     }
