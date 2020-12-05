@@ -89,7 +89,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                         );
                       } else if (state is RegisterSuccessState) {
-                        // TODO Save Auth Token
+                        _saveToken(state.authToken);
                         // TODO _navigateToDashboard()
                         return SizedBox();
                       } else {
@@ -135,7 +135,7 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Future<void> _saveToken(String authToken) async {
+  void _saveToken(String authToken) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(AUTH_TOKEN_SHARED_PREFS_KEY, authToken);
   }
