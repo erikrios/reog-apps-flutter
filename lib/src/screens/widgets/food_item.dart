@@ -15,12 +15,19 @@ class FoodItem extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Image.memory(
-            base64Decode(_image),
-            fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-          ),
+          _image.contains('http')
+              ? Image.network(
+                  _image,
+                  fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                )
+              : Image.memory(
+                  base64Decode(_image),
+                  fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                ),
           FractionallySizedBox(
             heightFactor: 0.2,
             widthFactor: 1.0,

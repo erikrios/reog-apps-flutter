@@ -20,7 +20,7 @@ class _FoodsPageState extends State<FoodsPage> {
   FoodsResultBloc _bloc;
   int _currentPage = 1;
   int _totalPage = 1;
-  final int _limit = 5;
+  final int _limit = 8;
   Articles foods;
 
   @override
@@ -91,6 +91,8 @@ class _FoodsPageState extends State<FoodsPage> {
                     padding: EdgeInsets.all(0),
                     children: [
                       GridView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
