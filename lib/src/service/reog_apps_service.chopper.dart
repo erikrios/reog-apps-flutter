@@ -56,7 +56,7 @@ class _$ReogAppsService extends ReogAppsService {
 
   @override
   Future<Response<dynamic>> getFoodsDetails(String id) {
-    final $url = 'api/foods/$id}';
+    final $url = 'api/foods/$id';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
