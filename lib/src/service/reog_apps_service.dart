@@ -24,7 +24,7 @@ abstract class ReogAppsService extends ChopperService {
   Future<Response> getFoods(
       {@Query('page') int page = 1, @Query('limit') int limit = 10});
 
-  @Get(path: 'api/foods/{id}}')
+  @Get(path: 'api/foods/{id}')
   Future<Response> getFoodsDetails(@Path('id') String id);
 
   @Get(path: 'api/histories')
