@@ -1,6 +1,8 @@
 library constants;
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String DARK_MODE_SHARED_PREFS_KEY = 'dark-mode-key';
@@ -17,6 +19,7 @@ getAuthToken() async {
 }
 
 String convertDate(String isoDate) {
+  initializeDateFormatting();
   final dateTime = DateTime.parse(isoDate);
   return DateFormat('yyyy-MM-dd hh:mm').format(dateTime);
 }
