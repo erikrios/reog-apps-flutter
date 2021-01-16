@@ -1,16 +1,13 @@
-# reog_apps_flutter
+# Reog Apps
 
-A new Flutter project.
+## Developed by Erik Rio Setiawan
 
-## Getting Started
+Coming Soon on Google Play Store
 
-This project is a starting point for a Flutter application.
+<img src="./screenshots/SS1.png" width="20%" /> <img src="./screenshots/SS2.png" width="20%" /> <img src="./screenshots/SS3.png" width="20%" />
 
-A few resources to get you started if this is your first Flutter project:
+<img src="./screenshots/SS4.png" width="20%" /> <img src="./screenshots/SS5.png" width="20%" /> <img src="./screenshots/SS6.png" width="20%" />
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<img src="./screenshots/SS7.png" width="20%" /> <img src="./screenshots/SS8.png" width="20%" />
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="./screenshots/GraphicFeature.png" width="20%" />
