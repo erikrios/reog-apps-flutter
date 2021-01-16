@@ -10,4 +10,4 @@ Coming Soon on Google Play Store
 
 <img src="./screenshots/SS7.png" width="20%" /> <img src="./screenshots/SS8.png" width="20%" />
 
-<img src="./screenshots/GraphicFeature.png" width="100%" />
+<img src="./screenshots/GraphicFeature.png" width="80%" />
