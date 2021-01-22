@@ -9,7 +9,6 @@ import 'package:reog_apps_flutter/src/models/articles.dart';
 import 'package:reog_apps_flutter/src/screens/pages/details_page.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/article_item.dart';
 import 'package:reog_apps_flutter/src/utils/article_type.dart';
-import 'package:startapp/startapp.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -101,7 +100,7 @@ class _NewsPageState extends State<NewsPage> {
                                     news.articles[index].description ?? "",
                               ),
                               onTap: () async {
-                                await StartApp.showInterstitialAd();
+                                // TODO INTERSTITIAL ADS
                                 _navigateToDetails(
                                     context: context,
                                     article: news.articles[index]);
