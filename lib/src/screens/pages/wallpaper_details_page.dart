@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -144,7 +145,10 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
                   color: Colors.transparent,
                   height: 8,
                 ),
-                // TODO ADS BANNER
+                AdmobBanner(
+                  adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+                  adSize: AdmobBannerSize.BANNER,
+                ),
               ],
             ),
           ),
