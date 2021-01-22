@@ -1,6 +1,8 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:reog_apps_flutter/src/bloc/events/news_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/news_result_bloc.dart';
@@ -24,6 +26,7 @@ class _NewsPageState extends State<NewsPage> {
   Articles news;
   AdmobInterstitial _admobInterstitial;
   final int _interstitialAdFrequency = 2;
+  final _nativeAdController = NativeAdmobController();
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _NewsPageState extends State<NewsPage> {
     _admobInterstitial =
         AdmobInterstitial(adUnitId: 'ca-app-pub-3940256099942544/1033173712');
     _admobInterstitial.load();
+    _nativeAdController.reloadAd(forceRefresh: true);
   }
 
   @override
@@ -116,6 +120,16 @@ class _NewsPageState extends State<NewsPage> {
                           );
                         },
                       ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: 12.0, right: 12.0, bottom: 12.0),
+                        height: 150.0,
+                        child: NativeAdmob(
+                          adUnitID: 'ca-app-pub-3940256099942544/8135179316',
+                          controller: _nativeAdController,
+                          type: NativeAdmobType.full,
+                        ),
+                      ),
                       (state is NewsResultLoadingMoreState)
                           ? Center(
                               child: CircularProgressIndicator(),
@@ -142,6 +156,9 @@ class _NewsPageState extends State<NewsPage> {
       {@required BuildContext context, Article article}) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DetailsPage(article, ArticleType.news);
-    })).then((value) => _admobInterstitial.load());
+    })).then((value) {
+      _admobInterstitial.load();
+      _nativeAdController.reloadAd(forceRefresh: true);
+    });
   }
 }
