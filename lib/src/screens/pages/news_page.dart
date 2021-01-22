@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
@@ -21,11 +22,16 @@ class _NewsPageState extends State<NewsPage> {
   int _totalPages = 1;
   final int _limit = 5;
   Articles news;
+  AdmobInterstitial _admobInterstitial;
+  final int _interstitialAdFrequency = 2;
 
   @override
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<NewsResultBloc>(context);
+    _admobInterstitial =
+        AdmobInterstitial(adUnitId: 'ca-app-pub-3940256099942544/1033173712');
+    _admobInterstitial.load();
   }
 
   @override
@@ -100,7 +106,8 @@ class _NewsPageState extends State<NewsPage> {
                                     news.articles[index].description ?? "",
                               ),
                               onTap: () async {
-                                // TODO INTERSTITIAL ADS
+                                if (index % _interstitialAdFrequency == 0)
+                                  _showAds();
                                 _navigateToDetails(
                                     context: context,
                                     article: news.articles[index]);
@@ -127,13 +134,14 @@ class _NewsPageState extends State<NewsPage> {
     }
   }
 
+  void _showAds() async {
+    if (await _admobInterstitial.isLoaded) _admobInterstitial.show();
+  }
+
   void _navigateToDetails(
       {@required BuildContext context, Article article}) async {
-    bool result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DetailsPage(article, ArticleType.news);
-    }));
-
-    print(result);
+    })).then((value) => _admobInterstitial.load());
   }
 }
