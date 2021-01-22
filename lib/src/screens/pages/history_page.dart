@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -28,6 +29,8 @@ class _HistoryPageState extends State<HistoryPage> {
   final int _limit = 5;
   Articles histories;
   bool _isLoggedIn;
+  AdmobInterstitial _admobInterstitial;
+  final int _interstitialAdFrequency = 2;
 
   @override
   void initState() {
@@ -39,6 +42,9 @@ class _HistoryPageState extends State<HistoryPage> {
         _isLoggedIn = value == null ? false : true;
       });
     });
+    _admobInterstitial =
+        AdmobInterstitial(adUnitId: 'ca-app-pub-3940256099942544/1033173712');
+    _admobInterstitial.load();
   }
 
   @override
@@ -154,7 +160,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                     histories.articles[index].description ?? "",
                               ),
                               onTap: () async {
-                                // TODO INTERSTITIAL ADS
+                                if (index % _interstitialAdFrequency == 0)
+                                  _showAds();
                                 _navigateToDetails(
                                     context: context,
                                     article: histories.articles[index]);
@@ -183,11 +190,12 @@ class _HistoryPageState extends State<HistoryPage> {
 
   void _navigateToDetails(
       {@required BuildContext context, Article article}) async {
-    bool result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DetailsPage(article, ArticleType.history);
-    }));
+    })).then((value) => _admobInterstitial.load());
+  }
 
-    print(result);
+  void _showAds() async {
+    if (await _admobInterstitial.isLoaded) _admobInterstitial.show();
   }
 }
