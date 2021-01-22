@@ -41,6 +41,7 @@ dependencies:
   wallpaper_manager: ^1.0.10
   flutter_cache_manager: ^2.0.0
   admob_flutter: ^1.0.1
+  flutter_native_admob: ^2.1.0+3
 
 dev_dependencies:
   flutter_test:
