@@ -14,7 +14,6 @@ import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/utils/article_type.dart';
 import 'package:reog_apps_flutter/src/utils/constants.dart';
-import 'package:startapp/startapp.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -155,7 +154,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     histories.articles[index].description ?? "",
                               ),
                               onTap: () async {
-                                await StartApp.showInterstitialAd();
+                                // TODO INTERSTITIAL ADS
                                 _navigateToDetails(
                                     context: context,
                                     article: histories.articles[index]);
