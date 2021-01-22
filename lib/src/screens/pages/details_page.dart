@@ -16,7 +16,6 @@ import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/service/reog_apps_service.dart';
 import 'package:reog_apps_flutter/src/utils/article_type.dart';
 import 'package:reog_apps_flutter/src/utils/constants.dart';
-import 'package:startapp/startapp.dart';
 
 class DetailsPage extends StatefulWidget {
   final Article _article;
@@ -247,7 +246,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             SizedBox(
                               height: 8,
                             ),
-                            AdBanner(),
+                            // TODO BANNER HERE
                           ],
                         )
                       : Container(

@@ -691,13 +691,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0-nullsafety.1"
-  startapp:
-    dependency: "direct main"
-    description:
-      name: startapp
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.1"
   stream_channel:
     dependency: transitive
     description:
