@@ -12,7 +12,6 @@ import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/utils/article_type.dart';
 import 'package:reog_apps_flutter/src/utils/constants.dart';
-import 'package:startapp/startapp.dart';
 
 class FavoritesPage extends StatefulWidget {
   @override
@@ -154,7 +153,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     description: articles[index].description,
                   ),
                   onTap: () async {
-                    await StartApp.showInterstitialAd();
+                    // TODO INTERSTITIAL ADS
                     ArticleType type = FavoritesDb.getFavoriteArticleTypeById(
                         articles[index].id);
                     _navigateToDetails(
