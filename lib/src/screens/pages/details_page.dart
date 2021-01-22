@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -246,7 +247,11 @@ class _DetailsPageState extends State<DetailsPage> {
                             SizedBox(
                               height: 8,
                             ),
-                            // TODO BANNER HERE
+                            AdmobBanner(
+                              adUnitId:
+                                  'ca-app-pub-3940256099942544/6300978111',
+                              adSize: AdmobBannerSize.BANNER,
+                            ),
                           ],
                         )
                       : Container(
