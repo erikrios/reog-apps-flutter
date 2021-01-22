@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,8 @@ Future main() async {
   await DotEnv().load('.env');
   _setupLogging();
   await FavoritesDb.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  Admob.initialize();
   runApp(EasyLocalization(
     child: MyApp(),
     supportedLocales: <Locale>[
