@@ -38,7 +38,6 @@ dependencies:
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   path_provider: ^1.6.24
-  startapp: ^0.5.1
   wallpaper_manager: ^1.0.10
   flutter_cache_manager: ^2.0.0
 
