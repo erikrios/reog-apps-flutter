@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/utils/constants.dart';
-import 'package:startapp/startapp.dart';
 import 'package:wallpaper_manager/wallpaper_manager.dart';
 
 class WallpaperDetailsPage extends StatefulWidget {
@@ -145,7 +144,7 @@ class _WallpaperDetailsPageState extends State<WallpaperDetailsPage> {
                   color: Colors.transparent,
                   height: 8,
                 ),
-                AdBanner(),
+                // TODO ADS BANNER
               ],
             ),
           ),
