@@ -96,8 +96,7 @@ class _SitesPageState extends State<SitesPage> {
                     padding: EdgeInsets.all(0),
                     children: [
                       Container(
-                        margin: EdgeInsets.only(
-                            left: 12.0, right: 12.0, bottom: 12.0),
+                        margin: EdgeInsets.all(12.0),
                         height: 150.0,
                         child: NativeAdmob(
                           adUnitID: 'ca-app-pub-3940256099942544/8135179316',
