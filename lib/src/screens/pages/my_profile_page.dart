@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -138,7 +139,10 @@ class MyProfilePage extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8),
-        // TODO AD BANNER
+        AdmobBanner(
+          adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+          adSize: AdmobBannerSize.BANNER,
+        ),
       ],
     );
   }
