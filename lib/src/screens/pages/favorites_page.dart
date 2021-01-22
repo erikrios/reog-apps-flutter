@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
   ScrollController _scrollViewController;
   FavoriteArticlesBloc _bloc = FavoriteArticlesBloc();
   bool _isLoggedIn;
+  AdmobInterstitial _admobInterstitial;
+  final int _interstitialAdFrequency = 2;
 
   _FavoritesPageState() {
     _bloc.add(GetFavoriteArticlesEvent());
@@ -36,6 +39,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
         _isLoggedIn = value == null ? false : true;
       });
     });
+    _admobInterstitial =
+        AdmobInterstitial(adUnitId: 'ca-app-pub-3940256099942544/1033173712');
+    _admobInterstitial.load();
   }
 
   @override
@@ -153,7 +159,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     description: articles[index].description,
                   ),
                   onTap: () async {
-                    // TODO INTERSTITIAL ADS
+                    if (index % _interstitialAdFrequency == 0) _showAds();
                     ArticleType type = FavoritesDb.getFavoriteArticleTypeById(
                         articles[index].id);
                     _navigateToDetails(
@@ -173,7 +179,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
     await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
       return DetailsPage(article, type);
-    })).then((value) => _bloc.add(GetFavoriteArticlesEvent()));
+    })).then((value) {
+      _bloc.add(GetFavoriteArticlesEvent());
+      _admobInterstitial.load();
+    });
+  }
+
+  void _showAds() async {
+    if (await _admobInterstitial.isLoaded) _admobInterstitial.show();
   }
 
   void _navigateBack() {
