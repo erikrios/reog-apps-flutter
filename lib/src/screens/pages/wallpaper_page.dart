@@ -9,7 +9,6 @@ import 'package:reog_apps_flutter/src/screens/widgets/brightness_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/main_pop_up_menu.dart';
 import 'package:reog_apps_flutter/src/screens/widgets/wallpaper_item.dart';
 import 'package:reog_apps_flutter/src/utils/constants.dart';
-import 'package:startapp/startapp.dart';
 
 class WallpaperPage extends StatefulWidget {
   @override
@@ -100,7 +99,7 @@ class _WallpaperPageState extends State<WallpaperPage> {
                   child:
                       WallpaperItem(state.wallpaperResult.data[0].urls[index]),
                   onTap: () async {
-                    await StartApp.showInterstitialAd();
+                    // TODO INTERSTITIAL ADS
                     bool result = await Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return WallpaperDetailsPage(
