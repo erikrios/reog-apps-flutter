@@ -1,6 +1,8 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:reog_apps_flutter/src/bloc/events/sites_result_event.dart';
 import 'package:reog_apps_flutter/src/bloc/sites_result_bloc.dart';
@@ -24,6 +26,7 @@ class _SitesPageState extends State<SitesPage> {
   Articles sites;
   AdmobInterstitial _admobInterstitial;
   final int _interstitialAdFrequency = 2;
+  final _nativeAdController = NativeAdmobController();
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _SitesPageState extends State<SitesPage> {
     _admobInterstitial =
         AdmobInterstitial(adUnitId: 'ca-app-pub-3940256099942544/1033173712');
     _admobInterstitial.load();
+    _nativeAdController.reloadAd(forceRefresh: true);
   }
 
   @override
@@ -91,6 +95,16 @@ class _SitesPageState extends State<SitesPage> {
                   child: ListView(
                     padding: EdgeInsets.all(0),
                     children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: 12.0, right: 12.0, bottom: 12.0),
+                        height: 150.0,
+                        child: NativeAdmob(
+                          adUnitID: 'ca-app-pub-3940256099942544/8135179316',
+                          controller: _nativeAdController,
+                          type: NativeAdmobType.full,
+                        ),
+                      ),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -141,7 +155,10 @@ class _SitesPageState extends State<SitesPage> {
       {@required BuildContext context, Article article}) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DetailsPage(article, ArticleType.sites);
-    })).then((value) => _admobInterstitial.load());
+    })).then((value) {
+      _admobInterstitial.load();
+      _nativeAdController.reloadAd(forceRefresh: true);
+    });
   }
 
   void _showAds() async {
