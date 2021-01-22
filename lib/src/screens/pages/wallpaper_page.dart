@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,8 @@ class _WallpaperPageState extends State<WallpaperPage> {
   ScrollController _scrollViewController;
   WallpaperBloc _bloc;
   bool _isLoggedIn;
+  AdmobInterstitial _admobInterstitial;
+  final int _interstitialAdFrequency = 2;
 
   @override
   void initState() {
@@ -31,6 +34,9 @@ class _WallpaperPageState extends State<WallpaperPage> {
         _isLoggedIn = value == null ? false : true;
       });
     });
+    _admobInterstitial =
+        AdmobInterstitial(adUnitId: 'ca-app-pub-3940256099942544/1033173712');
+    _admobInterstitial.load();
   }
 
   @override
@@ -99,13 +105,12 @@ class _WallpaperPageState extends State<WallpaperPage> {
                   child:
                       WallpaperItem(state.wallpaperResult.data[0].urls[index]),
                   onTap: () async {
-                    // TODO INTERSTITIAL ADS
-                    bool result = await Navigator.push(context,
+                    if (index % _interstitialAdFrequency == 0) _showAds();
+                    await Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return WallpaperDetailsPage(
                           state.wallpaperResult.data[0].urls[index]);
-                    }));
-                    print(result);
+                    })).then((value) => _admobInterstitial.load());
                   },
                 );
               },
@@ -123,4 +128,8 @@ class _WallpaperPageState extends State<WallpaperPage> {
           child: Text(state.error),
         ),
       );
+
+  void _showAds() async {
+    if (await _admobInterstitial.isLoaded) _admobInterstitial.show();
+  }
 }
